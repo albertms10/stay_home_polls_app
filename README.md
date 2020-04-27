@@ -1,4 +1,4 @@
-# stay_home_polls_app
+# Stay Home Polls App
 
 A new Flutter project.
 
