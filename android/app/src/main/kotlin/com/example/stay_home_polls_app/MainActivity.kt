@@ -1,4 +1,4 @@
-package com.example.stay_home_polls_app
+package com.example.stayhomepolls
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
