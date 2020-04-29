@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stay_home_polls_app/pages/home-page.dart';
+import 'package:stay_home_polls_app/pages/home_page.dart';
 
 void main() => runApp(StayHomePollsApp());
 
