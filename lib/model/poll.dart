@@ -7,6 +7,8 @@ class Poll {
   List<String> options;
   Timestamp createdAt;
   GeoPoint location;
+  bool isAuth;
+  int voteValue;
 
   Poll({
     @required this.id,
@@ -14,6 +16,8 @@ class Poll {
     @required this.options,
     this.createdAt,
     this.location,
+    this.isAuth = false,
+    this.voteValue,
   });
 }
 
@@ -27,6 +31,8 @@ class SliderPoll extends Poll {
     @required options,
     createdAt,
     location,
+    isAuth,
+    voteValue,
     this.voteAverage,
     this.voteCount,
   }) : super(
@@ -35,6 +41,8 @@ class SliderPoll extends Poll {
           location: location,
           options: options,
           title: title,
+          isAuth: isAuth,
+          voteValue: voteValue,
         );
 }
 
@@ -47,6 +55,8 @@ class ChoicePoll extends Poll {
     @required options,
     createdAt,
     location,
+    isAuth,
+    voteValue,
     this.voteCount,
   }) : super(
           id: id,
@@ -54,5 +64,7 @@ class ChoicePoll extends Poll {
           location: location,
           options: options,
           title: title,
+          isAuth: isAuth,
+          voteValue: voteValue,
         );
 }
