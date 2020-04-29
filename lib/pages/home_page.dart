@@ -5,7 +5,7 @@ import 'package:stay_home_polls_app/pages/user_content.dart';
 class HomePage extends StatefulWidget {
   final String title;
 
-  const HomePage({Key key, this.title}) : super(key: key);
+  const HomePage({this.title});
 
   @override
   _HomePageState createState() => _HomePageState();
