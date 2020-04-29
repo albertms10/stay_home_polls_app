@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stay_home_polls_app/pages/home-page.dart';
 
 void main() => runApp(StayHomePollsApp());
 
@@ -11,22 +12,6 @@ class StayHomePollsApp extends StatelessWidget {
         primarySwatch: Colors.teal,
       ),
       home: HomePage(title: 'Stay Home Polls'),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  final String title;
-
-  const HomePage({Key key, this.title}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Container(),
     );
   }
 }
