@@ -19,6 +19,24 @@ abstract class Poll {
     this.isAuth = false,
     this.voteValue,
   });
+
+  Poll.fromMap(Map snapshot, String id)
+      : id = id ?? '',
+        title = snapshot['title'] ?? '',
+        options = snapshot['options'] ?? [],
+        createdAt = snapshot['createdAt'] ?? null,
+        location = snapshot['location'] ?? null,
+        isAuth = snapshot['isAuth'] ?? false,
+        voteValue = snapshot['voteValue'] ?? false;
+
+  toJson() => {
+        "title": title,
+        "options": options,
+        "createdAt": createdAt,
+        "location": location,
+        "isAuth": isAuth,
+        "voteValue": voteValue,
+      };
 }
 
 class SliderPoll extends Poll {
@@ -44,6 +62,12 @@ class SliderPoll extends Poll {
           isAuth: isAuth,
           voteValue: voteValue,
         );
+
+  toJson() => {
+        ...super.toJson(),
+        "voteAverage": voteAverage,
+        "voteCount": voteCount,
+      };
 }
 
 class ChoicePoll extends Poll {
@@ -67,4 +91,9 @@ class ChoicePoll extends Poll {
           isAuth: isAuth,
           voteValue: voteValue,
         );
+
+  toJson() => {
+        ...super.toJson(),
+        "voteCount": voteCount,
+      };
 }
