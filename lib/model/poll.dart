@@ -27,7 +27,7 @@ abstract class Poll {
         createdAt = snapshot['createdAt'] ?? null,
         location = snapshot['location'] ?? null,
         isAuth = snapshot['isAuth'] ?? false,
-        voteValue = snapshot['voteValue'] ?? false;
+        voteValue = snapshot['voteValue'] ?? 0;
 
   toJson() => {
         "title": title,
@@ -63,6 +63,11 @@ class SliderPoll extends Poll {
           voteValue: voteValue,
         );
 
+  SliderPoll.fromMap(Map snapshot, String id)
+      : voteAverage = snapshot['voteAverage'] ?? 0,
+        voteCount = snapshot['voteCount'] ?? 0,
+        super.fromMap(snapshot, id);
+
   toJson() => {
         ...super.toJson(),
         "voteAverage": voteAverage,
@@ -91,6 +96,10 @@ class ChoicePoll extends Poll {
           isAuth: isAuth,
           voteValue: voteValue,
         );
+
+  ChoicePoll.fromMap(Map snapshot, String id)
+      : voteCount = snapshot['voteCount'] ?? [],
+        super.fromMap(snapshot, id);
 
   toJson() => {
         ...super.toJson(),
