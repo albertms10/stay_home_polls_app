@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 abstract class Poll {
-  String id;
-  String title;
-  List<String> options;
-  Timestamp createdAt;
-  GeoPoint location;
-  bool isAuth;
-  int voteValue;
+  final String id;
+  final String title;
+  final List<String> options;
+  final Timestamp createdAt;
+  final GeoPoint location;
+  final bool isAuth;
+  final int voteValue;
 
   Poll({
     @required this.id,

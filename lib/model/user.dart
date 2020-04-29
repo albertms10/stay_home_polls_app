@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
 
 class User {
-  String id;
+  final String id;
   String displayName;
   String userName;
   List<Poll> polls;
