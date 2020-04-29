@@ -4,13 +4,13 @@ import 'package:stay_home_polls_app/model/poll.dart';
 class User {
   String id;
   String displayName;
-  String username;
+  String userName;
   List<Poll> polls;
 
   User({
     @required this.id,
     @required this.displayName,
-    @required this.username,
+    @required this.userName,
     this.polls,
   });
 }
