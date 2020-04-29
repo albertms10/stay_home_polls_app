@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Poll {
+abstract class Poll {
   String id;
   String title;
   List<String> options;
