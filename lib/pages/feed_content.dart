@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stay_home_polls_app/widgets/polls_container.dart';
 
 class FeedContent extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class FeedContent extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            Placeholder(),
+            PollsContainer(),
             Placeholder(),
           ],
         ),
