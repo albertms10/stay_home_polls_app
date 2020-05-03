@@ -106,3 +106,18 @@ class ChoicePoll extends Poll {
         "voteCount": voteCount,
       };
 }
+
+Stream<List<Poll>> pollListSnapshots() {
+  return Firestore.instance
+      .collection('polls')
+      .orderBy('createdAt')
+      .snapshots()
+      .map((QuerySnapshot query) {
+    final List<DocumentSnapshot> docs = query.documents;
+    return docs.map((doc) =>
+       doc.data['type'] == "slider"
+          ? SliderPoll.fromFirestore(doc)
+          : ChoicePoll.fromFirestore(doc)
+    ).toList();
+  });
+}
