@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _pageController.page.floor(),
+        currentIndex: _pageController.hasClients ? _pageController.page.floor() : 0,
         onTap: (tabIndex) {
           setState(() {
             _pageController.jumpToPage(tabIndex);
