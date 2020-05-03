@@ -20,14 +20,14 @@ abstract class Poll {
     this.voteValue,
   });
 
-  Poll.fromMap(Map snapshot, String id)
-      : id = id ?? '',
-        title = snapshot['title'] ?? '',
-        options = snapshot['options'] ?? [],
-        createdAt = snapshot['createdAt'] ?? null,
-        location = snapshot['location'] ?? null,
-        isAuth = snapshot['isAuth'] ?? false,
-        voteValue = snapshot['voteValue'] ?? 0;
+  Poll.fromFirestore(DocumentSnapshot doc)
+      : id = doc.documentID,
+        title = doc.data['title'] ?? 'Title',
+        options = doc.data['options'] ?? [],
+        createdAt = doc.data['createdAt'] ?? null,
+        location = doc.data['location'] ?? null,
+        isAuth = doc.data['isAuth'] ?? false,
+        voteValue = doc.data['voteValue'] ?? 0;
 
   toJson() => {
         "title": title,
@@ -63,10 +63,10 @@ class SliderPoll extends Poll {
           voteValue: voteValue,
         );
 
-  SliderPoll.fromMap(Map snapshot, String id)
-      : voteAverage = snapshot['voteAverage'] ?? 0,
-        voteCount = snapshot['voteCount'] ?? 0,
-        super.fromMap(snapshot, id);
+  SliderPoll.fromFirestore(DocumentSnapshot doc)
+      : voteAverage = doc.data['voteAverage'] ?? 0,
+        voteCount = doc.data['voteCount'] ?? 0,
+        super.fromFirestore(doc);
 
   toJson() => {
         ...super.toJson(),
@@ -97,9 +97,9 @@ class ChoicePoll extends Poll {
           voteValue: voteValue,
         );
 
-  ChoicePoll.fromMap(Map snapshot, String id)
-      : voteCount = snapshot['voteCount'] ?? [],
-        super.fromMap(snapshot, id);
+  ChoicePoll.fromFirestore(DocumentSnapshot doc)
+      : voteCount = doc.data['voteCount'] ?? [],
+        super.fromFirestore(doc);
 
   toJson() => {
         ...super.toJson(),
