@@ -23,7 +23,7 @@ abstract class Poll {
   Poll.fromFirestore(DocumentSnapshot doc)
       : id = doc.documentID,
         title = doc.data['title'] ?? 'Title',
-        options = doc.data['options'] ?? [],
+        options = (doc.data['options'] as List<dynamic>).cast<String>() ?? [],
         createdAt = doc.data['createdAt'] ?? null,
         location = doc.data['location'] ?? null,
         isAuth = doc.data['isAuth'] ?? false,
