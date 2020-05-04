@@ -23,9 +23,9 @@ abstract class Poll {
   Poll.fromFirestore(DocumentSnapshot doc)
       : id = doc.documentID,
         title = doc.data['title'] ?? 'Title',
-        options = (doc.data['options'] as List<dynamic>).cast<String>() ?? [],
-        createdAt = doc.data['createdAt'] ?? null,
-        location = doc.data['location'] ?? null,
+        options = (doc.data['options'] as List<dynamic>).cast<String>(),
+        createdAt = doc.data['createdAt'],
+        location = doc.data['location'],
         isAuth = doc.data['isAuth'] ?? false,
         voteValue = doc.data['voteValue'] ?? 0;
 
@@ -98,7 +98,7 @@ class ChoicePoll extends Poll {
         );
 
   ChoicePoll.fromFirestore(DocumentSnapshot doc)
-      : voteCount = doc.data['voteCount'] ?? [],
+      : voteCount = (doc.data['voteCount'] as List<dynamic>).cast<int>(),
         super.fromFirestore(doc);
 
   toJson() => {
