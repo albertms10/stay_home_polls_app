@@ -114,10 +114,15 @@ Stream<List<Poll>> pollListSnapshots() {
       .snapshots()
       .map((QuerySnapshot query) {
     final List<DocumentSnapshot> docs = query.documents;
-    return docs.map((doc) =>
-       doc.data['type'] == "slider"
-          ? SliderPoll.fromFirestore(doc)
-          : ChoicePoll.fromFirestore(doc)
-    ).toList();
+    return docs.map((doc) {
+      switch (doc.data['type']) {
+        case 'slider':
+          return SliderPoll.fromFirestore(doc);
+        case 'choice':
+          return ChoicePoll.fromFirestore(doc);
+        default:
+          return null;
+      }
+    }).toList();
   });
 }
