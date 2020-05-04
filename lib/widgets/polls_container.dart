@@ -8,9 +8,9 @@ class PollsContainer extends StatelessWidget {
     return StreamBuilder<List<Poll>>(
       stream: pollListSnapshots(),
       builder: (context, AsyncSnapshot<List<Poll>> snapshot) {
-        if (snapshot.hasError) {
+        if (snapshot.hasError)
           return Center(child: Text('ERROR: ${snapshot.error.toString()}'));
-        }
+
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
             return Center(child: CircularProgressIndicator());
@@ -25,5 +25,4 @@ class PollsContainer extends StatelessWidget {
       },
     );
   }
-
 }
