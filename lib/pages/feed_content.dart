@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stay_home_polls_app/widgets/polls_container.dart';
+import 'package:stay_home_polls_app/model/poll.dart';
 
 class FeedContent extends StatelessWidget {
   @override
@@ -16,15 +17,15 @@ class FeedContent extends StatelessWidget {
               labelColor: Theme.of(context).primaryColor,
               tabs: [
                 Tab(text: "POPULAR"),
-                Tab(text: "CLOSE TO YOU"),
+                Tab(text: "LATEST"),
               ],
             ),
           ),
         ),
         body: TabBarView(
           children: [
-            PollsContainer(),
-            Placeholder(),
+            PollsContainer(popularPollListSnapshots()),
+            PollsContainer(latestPollListSnapshots()),
           ],
         ),
       ),
