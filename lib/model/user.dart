@@ -51,4 +51,16 @@ class User {
           ..replaceRange(value, value + 1, [poll.optionsVoteCount[value] + 1])
     });
   }
+
+  static dismiss(Poll poll) {
+    // TODO: Refactor this
+    String userId = 'Ap8s7eym7sY32CnuGIgM';
+
+    Firestore.instance
+        .collection('users/$userId/polls')
+        .document(poll.id)
+        .setData({
+      'dismissed': true,
+    });
+  }
 }
