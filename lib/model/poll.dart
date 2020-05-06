@@ -8,8 +8,8 @@ abstract class Poll {
   final Timestamp createdAt;
   final GeoPoint location;
   final bool isAuth;
-  final int voteValue;
-  final int voteCount;
+  int voteValue;
+  int voteCount;
 
   Poll({
     @required this.id,
