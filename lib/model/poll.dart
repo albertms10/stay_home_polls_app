@@ -44,7 +44,7 @@ abstract class Poll {
 }
 
 class SliderPoll extends Poll {
-  int voteAverage;
+  double voteAverage;
 
   SliderPoll({
     @required id,
