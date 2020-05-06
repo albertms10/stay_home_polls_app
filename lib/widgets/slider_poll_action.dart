@@ -21,7 +21,6 @@ class _SliderPollActionState extends State<SliderPollAction> {
     voted = false;
   }
 
-  // TODO: onChangeEnd not working as expected (?)
   _vote() => voted
       ? null
       : (newVote) {
