@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
+import 'package:stay_home_polls_app/model/user.dart';
 
 class SliderPollAction extends StatefulWidget {
   final SliderPoll sliderPoll;
@@ -23,11 +24,14 @@ class _SliderPollActionState extends State<SliderPollAction> {
 
   _vote() => voted
       ? null
-      : (newVote) {
-          setState(() => voteValue = newVote);
+      : (value) {
+          setState(() => voteValue = value);
         };
 
-  _voted(newVote) => setState(() => voted = true);
+  _voted(newVote) {
+    setState(() => voted = true);
+    User.vote(widget.sliderPoll, voteValue.floor());
+  }
 
   @override
   Widget build(BuildContext context) {
