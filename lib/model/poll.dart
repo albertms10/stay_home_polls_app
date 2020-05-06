@@ -78,6 +78,8 @@ class SliderPoll extends Poll {
 class ChoicePoll extends Poll {
   List<int> voteCount;
 
+  int get totalCount => voteCount.reduce((value, element) => value + element);
+
   ChoicePoll({
     @required id,
     @required title,
