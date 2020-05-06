@@ -9,6 +9,7 @@ abstract class Poll {
   final GeoPoint location;
   final bool isAuth;
   final int voteValue;
+  final int voteCount;
 
   Poll({
     @required this.id,
@@ -18,6 +19,7 @@ abstract class Poll {
     this.location,
     this.isAuth = false,
     this.voteValue,
+    this.voteCount,
   });
 
   Poll.fromFirestore(DocumentSnapshot doc)
@@ -27,7 +29,8 @@ abstract class Poll {
         createdAt = doc.data['createdAt'],
         location = doc.data['location'],
         isAuth = doc.data['isAuth'] ?? false,
-        voteValue = doc.data['voteValue'] ?? 0;
+        voteValue = doc.data['voteValue'] ?? 0,
+        voteCount = doc.data['voteCount'] ?? 0;
 
   toJson() => {
         "title": title,
@@ -36,12 +39,12 @@ abstract class Poll {
         "location": location,
         "isAuth": isAuth,
         "voteValue": voteValue,
+        "voteCount": voteCount,
       };
 }
 
 class SliderPoll extends Poll {
   int voteAverage;
-  int voteCount;
 
   SliderPoll({
     @required id,
@@ -51,8 +54,8 @@ class SliderPoll extends Poll {
     location,
     isAuth,
     voteValue,
+    voteCount,
     this.voteAverage,
-    this.voteCount,
   }) : super(
           id: id,
           createdAt: createdAt,
@@ -61,24 +64,24 @@ class SliderPoll extends Poll {
           title: title,
           isAuth: isAuth,
           voteValue: voteValue,
+          voteCount: voteCount,
         );
 
   SliderPoll.fromFirestore(DocumentSnapshot doc)
       : voteAverage = doc.data['voteAverage'] ?? 0,
-        voteCount = doc.data['voteCount'] ?? 0,
         super.fromFirestore(doc);
 
   toJson() => {
         ...super.toJson(),
         "voteAverage": voteAverage,
-        "voteCount": voteCount,
       };
 }
 
 class ChoicePoll extends Poll {
-  List<int> voteCount;
+  List<int> optionsVoteCount;
 
-  int get totalCount => voteCount.reduce((value, element) => value + element);
+  int get totalCount =>
+      optionsVoteCount.reduce((value, element) => value + element);
 
   ChoicePoll({
     @required id,
@@ -88,7 +91,8 @@ class ChoicePoll extends Poll {
     location,
     isAuth,
     voteValue,
-    this.voteCount,
+    voteCount,
+    this.optionsVoteCount,
   }) : super(
           id: id,
           createdAt: createdAt,
@@ -97,34 +101,46 @@ class ChoicePoll extends Poll {
           title: title,
           isAuth: isAuth,
           voteValue: voteValue,
+          voteCount: voteCount,
         );
 
   ChoicePoll.fromFirestore(DocumentSnapshot doc)
-      : voteCount = (doc.data['voteCount'] as List<dynamic>).cast<int>(),
+      : optionsVoteCount =
+            (doc.data['optionsVoteCount'] as List<dynamic>).cast<int>(),
         super.fromFirestore(doc);
 
   toJson() => {
         ...super.toJson(),
-        "voteCount": voteCount,
+        "optionsVoteCount": optionsVoteCount,
       };
 }
 
-Stream<List<Poll>> pollListSnapshots() {
+List<Poll> mapQueryPoll(QuerySnapshot query) {
+  final List<DocumentSnapshot> docs = query.documents;
+  return docs.map((doc) {
+    switch (doc.data['type']) {
+      case 'slider':
+        return SliderPoll.fromFirestore(doc);
+      case 'choice':
+        return ChoicePoll.fromFirestore(doc);
+      default:
+        return null;
+    }
+  }).toList();
+}
+
+Stream<List<Poll>> popularPollListSnapshots() {
   return Firestore.instance
       .collection('polls')
-      .orderBy('createdAt')
+      .orderBy('voteCount', descending: true)
       .snapshots()
-      .map((QuerySnapshot query) {
-    final List<DocumentSnapshot> docs = query.documents;
-    return docs.map((doc) {
-      switch (doc.data['type']) {
-        case 'slider':
-          return SliderPoll.fromFirestore(doc);
-        case 'choice':
-          return ChoicePoll.fromFirestore(doc);
-        default:
-          return null;
-      }
-    }).toList();
-  });
+      .map(mapQueryPoll);
+}
+
+Stream<List<Poll>> latestPollListSnapshots() {
+  return Firestore.instance
+      .collection('polls')
+      .orderBy('createdAt', descending: true)
+      .snapshots()
+      .map(mapQueryPoll);
 }
