@@ -42,8 +42,11 @@ class User {
 
     Firestore.instance.collection('polls').document(poll.id).updateData({
       'voteCount': poll.voteCount + 1,
-      if (poll is ChoicePoll)
-      // TODO: Refactor replace method (?)
+      if (poll is SliderPoll)
+        'voteAverage':
+            poll.voteAverage + (value - poll.voteAverage) / (poll.voteCount + 1)
+      else if (poll is ChoicePoll)
+        // TODO: Refactor replace method (?)
         'optionsVoteCount': poll.optionsVoteCount
           ..replaceRange(value, value + 1, [poll.optionsVoteCount[value] + 1])
     });
