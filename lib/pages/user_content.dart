@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:stay_home_polls_app/widgets/polls_container.dart';
+import 'package:stay_home_polls_app/model/user.dart';
 
 class UserContent extends StatelessWidget {
+  final user = User(id: 'Ap8s7eym7sY32CnuGIgM', displayName: 'Albert');
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -22,8 +26,8 @@ class UserContent extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            Placeholder(),
-            Placeholder(),
+            PollsContainer(user.pollsSnapshots()),
+            PollsContainer(user.pollsSnapshots()),
           ],
         ),
       ),
