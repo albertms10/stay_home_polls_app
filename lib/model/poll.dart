@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 
 abstract class Poll {
   final String id;
-  final String title;
-  final List<String> options;
-  final Timestamp createdAt;
-  final GeoPoint location;
-  final bool isAuth;
+  String title;
+  List<String> options;
+  Timestamp createdAt;
+  GeoPoint location;
+  bool isAuth;
   int voteValue;
   int voteCount;
 
   Poll({
     @required this.id,
-    @required this.title,
-    @required this.options,
+    this.title,
+    this.options,
     this.createdAt,
     this.location,
     this.isAuth = false,
@@ -48,8 +48,8 @@ class SliderPoll extends Poll {
 
   SliderPoll({
     @required id,
-    @required title,
-    @required options,
+    title,
+    options,
     createdAt,
     location,
     isAuth,
@@ -85,8 +85,8 @@ class ChoicePoll extends Poll {
 
   ChoicePoll({
     @required id,
-    @required title,
-    @required options,
+    title,
+    options,
     createdAt,
     location,
     isAuth,
@@ -118,6 +118,8 @@ class ChoicePoll extends Poll {
 List<Poll> mapQueryPoll(QuerySnapshot query) {
   final List<DocumentSnapshot> docs = query.documents;
   return docs.map((doc) {
+    if (doc.data['dismissed'] != null && doc.data['dismissed']) return null;
+
     switch (doc.data['type']) {
       case 'slider':
         return SliderPoll.fromFirestore(doc);
@@ -129,18 +131,14 @@ List<Poll> mapQueryPoll(QuerySnapshot query) {
   }).toList();
 }
 
-Stream<List<Poll>> popularPollListSnapshots() {
-  return Firestore.instance
-      .collection('polls')
-      .orderBy('voteCount', descending: true)
-      .snapshots()
-      .map(mapQueryPoll);
-}
+Stream<List<Poll>> popularPollListSnapshots() => Firestore.instance
+    .collection('polls')
+    .orderBy('voteCount', descending: true)
+    .snapshots()
+    .map(mapQueryPoll);
 
-Stream<List<Poll>> latestPollListSnapshots() {
-  return Firestore.instance
-      .collection('polls')
-      .orderBy('createdAt', descending: true)
-      .snapshots()
-      .map(mapQueryPoll);
-}
+Stream<List<Poll>> latestPollListSnapshots() => Firestore.instance
+    .collection('polls')
+    .orderBy('createdAt', descending: true)
+    .snapshots()
+    .map(mapQueryPoll);
