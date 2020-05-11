@@ -5,42 +5,39 @@ import 'package:stay_home_polls_app/model/poll.dart';
 class User {
   final String id;
   String displayName;
-  String userName;
   List<Poll> polls;
 
   User({
     @required this.id,
-    @required this.displayName,
-    @required this.userName,
+    this.displayName,
     this.polls,
   });
 
   User.fromMap(Map snapshot, String id)
       : id = id ?? '',
         displayName = snapshot['displayName'] ?? '',
-        userName = snapshot['userName'] ?? '',
         polls = snapshot['polls'] ?? [];
 
   toJson() => {
         "displayName": displayName,
-        "userName": userName,
         "polls": polls,
       };
 
-  static vote(Poll poll, int value, [bool isAuth = false]) {
-    // TODO: Refactor this
-    String userId = 'Ap8s7eym7sY32CnuGIgM';
+  Stream<List<Poll>> pollsSnapshots() => Firestore.instance
+      .collection('users/$id/polls')
+      .snapshots()
+      .map(mapQueryPoll);
 
-    Firestore.instance
-        .collection('users/$userId/polls')
-        .document(poll.id)
-        .setData({
+  vote(Poll poll, int value, [bool isAuth = false]) {
+    Firestore ref = Firestore.instance;
+    
+    ref.collection('users/$id/polls').document(poll.id).setData({
       'isAuth': isAuth,
       'type': poll is SliderPoll ? 'slider' : 'choice',
       'voteValue': value,
     });
 
-    Firestore.instance.collection('polls').document(poll.id).updateData({
+    ref.collection('polls').document(poll.id).updateData({
       'voteCount': poll.voteCount + 1,
       if (poll is SliderPoll)
         'voteAverage':
@@ -52,15 +49,10 @@ class User {
     });
   }
 
-  static dismiss(Poll poll) {
-    // TODO: Refactor this
-    String userId = 'Ap8s7eym7sY32CnuGIgM';
-
-    Firestore.instance
-        .collection('users/$userId/polls')
-        .document(poll.id)
-        .setData({
-      'dismissed': true,
-    });
-  }
+  dismiss(Poll poll) => Firestore.instance
+          .collection('users/$id/polls')
+          .document(poll.id)
+          .setData({
+        'dismissed': true,
+      });
 }
