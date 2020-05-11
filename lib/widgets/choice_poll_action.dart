@@ -4,6 +4,7 @@ import 'package:stay_home_polls_app/model/user.dart';
 
 class ChoicePollAction extends StatefulWidget {
   final ChoicePoll choicePoll;
+  final user = User(id: 'Ap8s7eym7sY32CnuGIgM', displayName: 'Albert');
 
   ChoicePollAction({@required this.choicePoll});
 
@@ -28,7 +29,7 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
             _selectedValue = value;
             voted = true;
           });
-          User.vote(widget.choicePoll, value);
+          widget.user.vote(widget.choicePoll, value);
         };
 
   @override

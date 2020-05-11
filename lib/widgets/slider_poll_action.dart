@@ -4,6 +4,7 @@ import 'package:stay_home_polls_app/model/user.dart';
 
 class SliderPollAction extends StatefulWidget {
   final SliderPoll sliderPoll;
+  final user = User(id: 'Ap8s7eym7sY32CnuGIgM', displayName: 'Albert');
 
   SliderPollAction({@required this.sliderPoll});
 
@@ -30,7 +31,7 @@ class _SliderPollActionState extends State<SliderPollAction> {
 
   _voted(newVote) {
     setState(() => voted = true);
-    User.vote(widget.sliderPoll, voteValue.floor());
+    widget.user.vote(widget.sliderPoll, voteValue.floor());
   }
 
   @override
