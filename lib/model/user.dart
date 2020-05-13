@@ -30,7 +30,7 @@ class User {
 
   vote(Poll poll, int value, [bool isAuth = false]) {
     Firestore ref = Firestore.instance;
-    
+
     ref.collection('users/$id/polls').document(poll.id).setData({
       'isAuth': isAuth,
       'type': poll is SliderPoll ? 'slider' : 'choice',
@@ -43,7 +43,7 @@ class User {
         'voteAverage':
             poll.voteAverage + (value - poll.voteAverage) / (poll.voteCount + 1)
       else if (poll is ChoicePoll)
-        // TODO: Refactor replace method (?)
+        // TODO: Refactor replace method (can be improved?)
         'optionsVoteCount': poll.optionsVoteCount
           ..replaceRange(value, value + 1, [poll.optionsVoteCount[value] + 1])
     });
@@ -54,5 +54,6 @@ class User {
           .document(poll.id)
           .setData({
         'dismissed': true,
+        'type': poll is SliderPoll ? 'slider' : 'choice',
       });
 }
