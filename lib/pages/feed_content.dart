@@ -24,8 +24,22 @@ class FeedContent extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            PollsContainer(popularPollListSnapshots()),
-            PollsContainer(latestPollListSnapshots()),
+            PollsContainer(
+              streamPollsList: popularPollListSnapshots(),
+              filterCallback: (pollsList, userPollsList) {
+                final List<Poll> polls = pollsList.where((poll) {
+                  final userPoll = userPollsList.firstWhere(
+                      (userPoll) =>
+                          userPoll != null ? poll.id == userPoll.id : false,
+                      orElse: () {});
+                  return userPoll == null ? true : false;
+                }).toList();
+                return polls;
+              },
+            ),
+            PollsContainer(
+              streamPollsList: latestPollListSnapshots(),
+            ),
           ],
         ),
       ),

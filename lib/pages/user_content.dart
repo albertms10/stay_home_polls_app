@@ -26,8 +26,12 @@ class UserContent extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            PollsContainer(user.pollsSnapshots()),
-            PollsContainer(user.pollsSnapshots()),
+            PollsContainer(
+              streamPollsList: user.pollsSnapshots(),
+            ),
+            PollsContainer(
+              streamPollsList: user.pollsSnapshots(),
+            ),
           ],
         ),
       ),
