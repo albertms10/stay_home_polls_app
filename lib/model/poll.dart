@@ -10,6 +10,7 @@ abstract class Poll {
   bool isAuth;
   int voteValue;
   int voteCount;
+  bool dismissed;
 
   Poll({
     @required this.id,
@@ -20,17 +21,21 @@ abstract class Poll {
     this.isAuth = false,
     this.voteValue,
     this.voteCount,
+    this.dismissed,
   });
 
   Poll.fromFirestore(DocumentSnapshot doc)
       : id = doc.documentID,
-        title = doc.data['title'] ?? 'Title',
-        options = (doc.data['options'] as List<dynamic>).cast<String>(),
+        title = doc.data['title'] ?? '',
+        options = doc.data['options'] != null
+            ? (doc.data['options'] as List<dynamic>).cast<String>()
+            : [],
         createdAt = doc.data['createdAt'],
         location = doc.data['location'],
         isAuth = doc.data['isAuth'] ?? false,
-        voteValue = doc.data['voteValue'] ?? 0,
-        voteCount = doc.data['voteCount'] ?? 0;
+        voteValue = doc.data['voteValue'],
+        voteCount = doc.data['voteCount'],
+        dismissed = doc.data['dismissed'] ?? false;
 
   toJson() => {
         "title": title,
@@ -41,6 +46,9 @@ abstract class Poll {
         "voteValue": voteValue,
         "voteCount": voteCount,
       };
+
+  @override
+  String toString() => id;
 }
 
 class SliderPoll extends Poll {
@@ -105,8 +113,9 @@ class ChoicePoll extends Poll {
         );
 
   ChoicePoll.fromFirestore(DocumentSnapshot doc)
-      : optionsVoteCount =
-            (doc.data['optionsVoteCount'] as List<dynamic>).cast<int>(),
+      : optionsVoteCount = doc.data['optionsVoteCount'] != null
+            ? (doc.data['optionsVoteCount'] as List<dynamic>).cast<int>()
+            : [],
         super.fromFirestore(doc);
 
   toJson() => {
