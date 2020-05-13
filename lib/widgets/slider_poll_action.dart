@@ -19,8 +19,11 @@ class _SliderPollActionState extends State<SliderPollAction> {
   @override
   void initState() {
     super.initState();
-    voteValue = 0;
-    voted = false;
+    print(widget.sliderPoll.voteValue);
+    voteValue = widget.sliderPoll.voteValue != null
+        ? widget.sliderPoll.voteValue.toDouble()
+        : 0;
+    voted = widget.sliderPoll.voteValue != null ? true : false;
   }
 
   _vote() => voted
