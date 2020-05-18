@@ -21,7 +21,12 @@ class PollsList extends StatelessWidget {
             itemBuilder: (context, int index) {
               return Dismissible(
                 key: Key(polls[index].id),
-                child: PollTile(poll: polls[index]),
+                child: Container(
+                  child: PollTile(poll: polls[index]),
+                  margin: index == polls.length - 1
+                      ? const EdgeInsets.only(bottom: 50)
+                      : null,
+                ),
                 onDismissed: (_) {
                   user.dismiss(polls[index]);
                   polls.removeAt(index);
