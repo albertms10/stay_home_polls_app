@@ -32,8 +32,13 @@ class _HomePageState extends State<HomePage> {
           UserContent(),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _pageController.hasClients ? _pageController.page.floor() : 0,
+        currentIndex:
+            _pageController.hasClients ? _pageController.page.floor() : 0,
         onTap: (tabIndex) {
           setState(() {
             _pageController.jumpToPage(tabIndex);
