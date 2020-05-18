@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class PageContent extends StatelessWidget {
-  final tabs;
-  final children;
+  final List<Tab> tabs;
+  final List<Widget> children;
 
   PageContent({@required this.tabs, @required this.children});
 
