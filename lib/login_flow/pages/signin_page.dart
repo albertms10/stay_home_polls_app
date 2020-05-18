@@ -54,70 +54,65 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_showProgress) {
-      return Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
+    if (_showProgress) return Center(child: CircularProgressIndicator());
+
     final SignInConfig config = Provider.of<SignInConfig>(context);
     final primaryColor = Theme.of(context).primaryColor;
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32.0),
-          child: Form(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                SizedBox(height: 120),
-                AuthPageTitle('Sign In'),
-                SizedBox(height: 24),
-                SignInTextField(SignInTextFieldType.email, _email),
-                SizedBox(height: 16),
-                SignInTextField(SignInTextFieldType.password, _password),
-                SizedBox(height: 32),
-                SignInButton(
-                  color: primaryColor,
-                  onPressed: () =>
-                      _waitAndCheckErrors(_signInWithEmailAndPassword),
-                ),
-                SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Need an account?',
-                      style: TextStyle(
-                        color: Colors.black45,
-                        fontStyle: FontStyle.italic,
-                      ),
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        child: Form(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              SizedBox(height: 120),
+              AuthPageTitle('Sign In'),
+              SizedBox(height: 24),
+              SignInTextField(SignInTextFieldType.email, _email),
+              SizedBox(height: 16),
+              SignInTextField(SignInTextFieldType.password, _password),
+              SizedBox(height: 32),
+              SignInButton(
+                color: primaryColor,
+                onPressed: () =>
+                    _waitAndCheckErrors(_signInWithEmailAndPassword),
+              ),
+              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Need an account?',
+                    style: TextStyle(
+                      color: Colors.black45,
+                      fontStyle: FontStyle.italic,
                     ),
-                    SizedBox(width: 16),
-                    FlatButton(
-                      child: Text('Register'),
-                      textColor: primaryColor,
-                      onPressed: () async {
-                        EmailAndPassword result =
-                            await Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => SignUpPage()),
-                        );
-                        _createUserWithEmailAndPassword(result);
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 40),
-                if (config.canLoginAnonymously)
-                  FlatButton(
-                    child: Text(
-                      'Sign in anonymously',
-                      style: TextStyle(color: Colors.grey[500]),
-                    ),
-                    onPressed: () => _waitAndCheckErrors(_signInAnonymously),
                   ),
-              ],
-            ),
+                  SizedBox(width: 16),
+                  FlatButton(
+                    child: Text('Register'),
+                    textColor: primaryColor,
+                    onPressed: () async {
+                      EmailAndPassword result =
+                          await Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => SignUpPage()),
+                      );
+                      _createUserWithEmailAndPassword(result);
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 40),
+              if (config.canLoginAnonymously)
+                FlatButton(
+                  child: Text(
+                    'Sign in anonymously',
+                    style: TextStyle(color: Colors.grey[500]),
+                  ),
+                  onPressed: () => _waitAndCheckErrors(_signInAnonymously),
+                ),
+            ],
           ),
         ),
       ),
