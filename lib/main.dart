@@ -13,6 +13,7 @@ class StayHomePollsApp extends StatelessWidget {
       title: title,
       theme: ThemeData(
         primarySwatch: Colors.teal,
+        accentColor: Colors.orangeAccent,
       ),
       home: HomePage(title: title),
     );
