@@ -43,8 +43,9 @@ class NoPolls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _headline4 = Theme.of(context).textTheme.headline4;
     final _random = Random();
-    const emojis = [
+    const _emojis = [
       "¯\\_(ツ)_/¯",
       "⚆ _ ⚆",
       "◔̯◔",
@@ -55,10 +56,20 @@ class NoPolls extends StatelessWidget {
     ];
 
     return Center(
-      child: Text(
-        '$text\n${emojis[_random.nextInt(emojis.length)]}',
-        style: Theme.of(context).textTheme.headline4.copyWith(fontSize: 24),
-        textAlign: TextAlign.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            text,
+            style: _headline4.copyWith(fontSize: 24),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8),
+          Text(
+            _emojis[_random.nextInt(_emojis.length)],
+            style: _headline4.copyWith(fontSize: 18),
+          ),
+        ],
       ),
     );
   }
