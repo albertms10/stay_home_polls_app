@@ -29,7 +29,7 @@ class User {
       .map(mapQueryPoll);
 
   vote(Poll poll, int value, [bool isAuth = false]) {
-    Firestore ref = Firestore.instance;
+    final ref = Firestore.instance;
 
     ref.collection('users/$id/polls').document(poll.id).setData({
       'isAuth': isAuth,
