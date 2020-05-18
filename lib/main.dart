@@ -6,12 +6,14 @@ void main() => runApp(StayHomePollsApp());
 class StayHomePollsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    const title = 'Stay Home Polls';
+
     return MaterialApp(
-      title: 'Stay Home Polls',
+      title: title,
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: HomePage(title: 'Stay Home Polls'),
+      home: HomePage(title: title),
     );
   }
 }
