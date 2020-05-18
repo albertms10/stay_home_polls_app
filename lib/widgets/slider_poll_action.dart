@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/model/user.dart';
 
 class SliderPollAction extends StatefulWidget {
   final SliderPoll sliderPoll;
-  final user = User(id: 'Ap8s7eym7sY32CnuGIgM', displayName: 'Albert');
 
   SliderPollAction({@required this.sliderPoll});
 
@@ -19,7 +19,6 @@ class _SliderPollActionState extends State<SliderPollAction> {
   @override
   void initState() {
     super.initState();
-    print(widget.sliderPoll.voteValue);
     voteValue = widget.sliderPoll.voteValue != null
         ? widget.sliderPoll.voteValue.toDouble()
         : 0;
@@ -34,7 +33,8 @@ class _SliderPollActionState extends State<SliderPollAction> {
 
   _voted(newVote) {
     setState(() => voted = true);
-    widget.user.vote(widget.sliderPoll, voteValue.floor());
+    final user = Provider.of<User>(context, listen: false);
+    user.vote(widget.sliderPoll, voteValue.floor());
   }
 
   @override
