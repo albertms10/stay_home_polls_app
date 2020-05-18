@@ -19,6 +19,9 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
   @override
   void initState() {
     super.initState();
+    _selectedValue = widget.choicePoll.voteValue != null
+        ? widget.choicePoll.voteValue
+        : null;
     voted = widget.choicePoll.voteValue != null ? true : false;
   }
 
