@@ -47,6 +47,11 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
+  _createUserWithEmailAndPassword(EmailAndPassword emailAndPassword) async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailAndPassword.email, password: emailAndPassword.password);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_showProgress) {
@@ -97,7 +102,7 @@ class _SignInPageState extends State<SignInPage> {
                             await Navigator.of(context).push(
                           MaterialPageRoute(builder: (_) => SignUpPage()),
                         );
-                        print(result);
+                        _createUserWithEmailAndPassword(result);
                       },
                     ),
                   ],
