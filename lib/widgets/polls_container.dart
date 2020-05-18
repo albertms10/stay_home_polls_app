@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/model/user.dart';
 import 'package:stay_home_polls_app/widgets/polls_list.dart';
@@ -33,7 +34,7 @@ class PollsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = User(id: 'Ap8s7eym7sY32CnuGIgM', displayName: 'Albert');
+    final user = Provider.of<User>(context);
 
     return _streamBuilder(streamPollsList, (List<Poll> polls) {
       return _streamBuilder(user.pollsSnapshots(), (List<Poll> userPolls) {
