@@ -20,7 +20,12 @@ class UserContent extends StatelessWidget {
                     ? poll.id == userPoll.id && userPoll.isAuth
                     : false,
                 orElse: () {});
-            return userPoll == null ? false : true;
+            if (userPoll == null) {
+              return false;
+            } else {
+              poll.voteValue = userPoll.voteValue;
+              return true;
+            }
           }).toList(),
         ),
         PollsContainer(
@@ -29,7 +34,12 @@ class UserContent extends StatelessWidget {
             final userPoll = userPollsList.firstWhere(
                 (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
                 orElse: () {});
-            return userPoll == null ? false : true;
+            if (userPoll == null) {
+              return false;
+            } else {
+              poll.voteValue = userPoll.voteValue;
+              return true;
+            }
           }).toList(),
         ),
       ],
