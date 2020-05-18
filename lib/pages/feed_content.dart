@@ -23,6 +23,12 @@ class FeedContent extends StatelessWidget {
         ),
         PollsContainer(
           streamPollsList: latestPollListSnapshots(),
+          filterCallback: (pollsList, userPollsList) => pollsList.where((poll) {
+            final userPoll = userPollsList.firstWhere(
+                (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
+                orElse: () {});
+            return userPoll == null ? true : false;
+          }).toList(),
         ),
       ],
     );
