@@ -26,6 +26,7 @@ class UserContent extends StatelessWidget {
           ),
         ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           children: [
             PollsContainer(
               streamPollsList: user.pollsSnapshots(),

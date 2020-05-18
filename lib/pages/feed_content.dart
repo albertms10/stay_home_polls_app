@@ -23,6 +23,7 @@ class FeedContent extends StatelessWidget {
           ),
         ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           children: [
             PollsContainer(
               streamPollsList: popularPollListSnapshots(),
