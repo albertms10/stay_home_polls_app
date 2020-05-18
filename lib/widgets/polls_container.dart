@@ -7,8 +7,10 @@ import 'package:stay_home_polls_app/widgets/polls_list.dart';
 class PollsContainer extends StatelessWidget {
   final Stream<List<Poll>> streamPollsList;
   final Function filterCallback;
+  final String emptyMessage;
 
-  PollsContainer({this.streamPollsList, this.filterCallback});
+  PollsContainer(
+      {this.streamPollsList, this.filterCallback, this.emptyMessage});
 
   StreamBuilder _streamBuilder(stream, Function callback) {
     return StreamBuilder(
@@ -39,9 +41,10 @@ class PollsContainer extends StatelessWidget {
     return _streamBuilder(streamPollsList, (List<Poll> polls) {
       return _streamBuilder(user.pollsSnapshots(), (List<Poll> userPolls) {
         return PollsList(
-            polls: filterCallback != null
-                ? filterCallback(polls, userPolls)
-                : polls);
+          polls:
+              filterCallback != null ? filterCallback(polls, userPolls) : polls,
+          emptyMessage: emptyMessage,
+        );
       });
     });
   }

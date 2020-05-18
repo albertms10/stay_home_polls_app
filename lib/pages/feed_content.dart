@@ -20,6 +20,7 @@ class FeedContent extends StatelessWidget {
                 orElse: () {});
             return userPoll == null ? true : false;
           }).toList(),
+          emptyMessage: 'You ran out of polls',
         ),
         PollsContainer(
           streamPollsList: latestPollListSnapshots(),
@@ -29,6 +30,7 @@ class FeedContent extends StatelessWidget {
                 orElse: () {});
             return userPoll == null ? true : false;
           }).toList(),
+          emptyMessage: 'You ran out of polls',
         ),
       ],
     );

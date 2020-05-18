@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
@@ -8,8 +7,9 @@ import 'package:stay_home_polls_app/widgets/poll_tile.dart';
 
 class PollsList extends StatelessWidget {
   final List<Poll> polls;
+  final String emptyMessage;
 
-  PollsList({this.polls});
+  PollsList({this.polls, this.emptyMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +33,15 @@ class PollsList extends StatelessWidget {
                 },
               );
             })
-        : NoPolls();
+        : NoPolls(text: emptyMessage);
   }
 }
 
 class NoPolls extends StatelessWidget {
+  final String text;
+
+  NoPolls({this.text = 'No polls yet'});
+
   @override
   Widget build(BuildContext context) {
     final _random = Random();
@@ -53,7 +57,7 @@ class NoPolls extends StatelessWidget {
 
     return Center(
       child: Text(
-        'No polls yet.\n${emojis[_random.nextInt(emojis.length)]}',
+        '$text\n${emojis[_random.nextInt(emojis.length)]}',
         style: Theme.of(context).textTheme.headline4.copyWith(fontSize: 24),
         textAlign: TextAlign.center,
       ),
