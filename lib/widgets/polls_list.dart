@@ -7,9 +7,8 @@ import 'package:stay_home_polls_app/widgets/poll_tile.dart';
 
 class PollsList extends StatelessWidget {
   final List<Poll> polls;
-  final String emptyMessage;
 
-  PollsList({this.polls, this.emptyMessage});
+  PollsList({this.polls});
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +32,14 @@ class PollsList extends StatelessWidget {
                 },
               );
             })
-        : NoPolls(text: emptyMessage);
+        : NoPolls(text: Provider.of<String>(context));
   }
 }
 
 class NoPolls extends StatelessWidget {
   final String text;
 
-  NoPolls({this.text = 'No polls yet'});
+  NoPolls({this.text});
 
   @override
   Widget build(BuildContext context) {

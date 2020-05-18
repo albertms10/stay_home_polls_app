@@ -11,6 +11,7 @@ class UserContent extends StatelessWidget {
         Tab(text: "POSTED"),
         Tab(text: "VOTED"),
       ],
+      emptyMessage: 'No polls yet',
       children: [
         PollsContainer(
           streamPollsList: popularPollListSnapshots(),

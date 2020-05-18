@@ -20,16 +20,15 @@ class FeedContent extends StatelessWidget {
         Tab(text: "POPULAR"),
         Tab(text: "LATEST"),
       ],
+      emptyMessage: 'You ran out of polls',
       children: [
         PollsContainer(
           streamPollsList: popularPollListSnapshots(),
           filterCallback: _filterCallback,
-          emptyMessage: 'You ran out of polls',
         ),
         PollsContainer(
           streamPollsList: latestPollListSnapshots(),
           filterCallback: _filterCallback,
-          emptyMessage: 'You ran out of polls',
         ),
       ],
     );
