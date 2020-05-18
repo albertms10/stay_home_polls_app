@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/model/user.dart';
 
 class ChoicePollAction extends StatefulWidget {
   final ChoicePoll choicePoll;
-  final user = User(id: 'Ap8s7eym7sY32CnuGIgM', displayName: 'Albert');
 
   ChoicePollAction({@required this.choicePoll});
 
@@ -29,7 +29,8 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
             _selectedValue = value;
             voted = true;
           });
-          widget.user.vote(widget.choicePoll, value);
+          final user = Provider.of<User>(context, listen: false);
+          user.vote(widget.choicePoll, value);
         };
 
   @override
