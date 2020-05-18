@@ -50,8 +50,8 @@ class _HomePageState extends State<HomePage> {
             title: Text('Feed'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.perm_identity),
-            title: Text('Profile'),
+            icon: Icon(Icons.person),
+            title: Text('Me'),
           ),
         ],
         backgroundColor: Theme.of(context).primaryColor,
