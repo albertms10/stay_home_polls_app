@@ -6,7 +6,7 @@ import 'package:stay_home_polls_app/widgets/polls_list.dart';
 
 class PollsContainer extends StatelessWidget {
   final Stream<List<Poll>> streamPollsList;
-  final Function filterCallback;
+  final Function(List<Poll>, List<Poll>) filterCallback;
   final String emptyMessage;
 
   PollsContainer(
