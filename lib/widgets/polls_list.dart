@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
@@ -12,16 +14,43 @@ class PollsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    
-    return ListView.builder(
-      itemCount: polls.length,
-      itemBuilder: (context, int index) => Dismissible(
-        key: Key(polls[index].id),
-        child: PollTile(poll: polls[index]),
-        onDismissed: (_) {
-          user.dismiss(polls[index]);
-          polls.removeAt(index);
-        },
+
+    return polls.length > 0
+        ? ListView.builder(
+            itemCount: polls.length,
+            itemBuilder: (context, int index) {
+              return Dismissible(
+                key: Key(polls[index].id),
+                child: PollTile(poll: polls[index]),
+                onDismissed: (_) {
+                  user.dismiss(polls[index]);
+                  polls.removeAt(index);
+                },
+              );
+            })
+        : NoPolls();
+  }
+}
+
+class NoPolls extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final _random = Random();
+    const emojis = [
+      "¯\\_(ツ)_/¯",
+      "⚆ _ ⚆",
+      "◔̯◔",
+      "(╯°□°)╯",
+      "ԅ། – ‸ – །ᕗ",
+      "ᕙ(⇀‸↼‶)ᕗ",
+      "( ͡° ͜ʖ ͡°)",
+    ];
+
+    return Center(
+      child: Text(
+        'No polls yet.\n${emojis[_random.nextInt(emojis.length)]}',
+        style: Theme.of(context).textTheme.headline4.copyWith(fontSize: 24),
+        textAlign: TextAlign.center,
       ),
     );
   }
