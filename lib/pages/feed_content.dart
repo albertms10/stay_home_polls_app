@@ -26,16 +26,14 @@ class FeedContent extends StatelessWidget {
           children: [
             PollsContainer(
               streamPollsList: popularPollListSnapshots(),
-              filterCallback: (pollsList, userPollsList) {
-                final List<Poll> polls = pollsList.where((poll) {
-                  final userPoll = userPollsList.firstWhere(
-                      (userPoll) =>
-                          userPoll != null ? poll.id == userPoll.id : false,
-                      orElse: () {});
-                  return userPoll == null ? true : false;
-                }).toList();
-                return polls;
-              },
+              filterCallback: (pollsList, userPollsList) =>
+                  pollsList.where((poll) {
+                final userPoll = userPollsList.firstWhere(
+                    (userPoll) =>
+                        userPoll != null ? poll.id == userPoll.id : false,
+                    orElse: () {});
+                return userPoll == null ? true : false;
+              }).toList(),
             ),
             PollsContainer(
               streamPollsList: latestPollListSnapshots(),
