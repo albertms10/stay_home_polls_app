@@ -25,7 +25,7 @@ class PageContent extends StatelessWidget {
               height: 50.0,
               child: TabBar(
                 unselectedLabelColor: Colors.grey,
-                labelColor: Theme.of(context).primaryColor,
+                labelColor: Theme.of(context).accentColor,
                 tabs: tabs,
               ),
             ),
