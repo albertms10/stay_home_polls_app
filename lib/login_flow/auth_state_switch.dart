@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stay_home_polls_app/login_flow/signin_flow_app.dart';
 import 'package:stay_home_polls_app/login_flow/pages/splash_page.dart';
 import 'package:provider/provider.dart';
+import 'package:stay_home_polls_app/model/user.dart';
 
 class SignInConfig {
   bool canLoginAnonymously;
@@ -37,8 +38,11 @@ class AuthStateSwitch extends StatelessWidget {
                       value: signInConfig,
                       child: SignInFlowApp(),
                     )
-                  : Provider<FirebaseUser>.value(
-                      value: user,
+                  : Provider<User>.value(
+                      value: User(
+                        id: user.uid,
+                        displayName: user.displayName,
+                      ),
                       child: this.app,
                     );
             }
