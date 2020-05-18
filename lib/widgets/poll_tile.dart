@@ -11,7 +11,7 @@ class PollTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(16),
+      margin: EdgeInsets.only(top: 16, right: 16, left: 16),
       child: Container(
         padding: EdgeInsets.all(16),
         child: Column(
