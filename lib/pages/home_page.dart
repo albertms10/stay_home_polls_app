@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
             title: Text('Feed'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.account_circle),
             title: Text('Me'),
           ),
         ],
