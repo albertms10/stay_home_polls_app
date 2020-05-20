@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stay_home_polls_app/pages/feed_content.dart';
+import 'package:stay_home_polls_app/pages/new_poll.dart';
 import 'package:stay_home_polls_app/pages/user_content.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,7 +35,13 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (builder) => NewPoll(),
+            ),
+          );
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex:
