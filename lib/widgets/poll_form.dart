@@ -37,8 +37,8 @@ class _PollFormState extends State<PollForm> {
           children: <Widget>[
             PollTypeToggleButtons(
               onPressed: (int index) {
-                setState(() => _formKey.currentState.save());
                 setState(() {
+                  _formKey.currentState.save();
                   if (!_isSelected[index])
                     _isSelected = _isSelected.map((value) => !value).toList();
                 });
