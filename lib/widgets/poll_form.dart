@@ -52,11 +52,15 @@ class _PollFormState extends State<PollForm> {
                 children: <Widget>[
                   TextFormField(
                     controller: _titleController,
+                    validator: (title) {
+                      if (title.isEmpty) return "Please, provide a title";
+                      return null;
+                    },
+                    onSaved: _saveTitleValue,
                     decoration: InputDecoration(
                       labelText: 'Question title',
                       border: OutlineInputBorder(),
                     ),
-                    onSaved: _saveTitleValue,
                   ),
                   SizedBox(height: 16),
                   Divider(),
@@ -80,10 +84,10 @@ class _PollFormState extends State<PollForm> {
                     child: OutlineButton(
                       child: Text('Create poll'),
                       onPressed: () {
-                        if (_formKey.currentState.validate())
-                          Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text('Validated')),
-                          );
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          Navigator.of(context).pop(_poll);
+                        }
                       },
                     ),
                   ),
