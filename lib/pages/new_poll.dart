@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stay_home_polls_app/main.dart';
 import 'package:stay_home_polls_app/widgets/poll_form.dart';
 
 class NewPoll extends StatelessWidget {
@@ -6,7 +7,12 @@ class NewPoll extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New poll'),
+        title: Text(
+          'New poll',
+          style: AppConstants.of(context).font.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
       ),
       body: PollForm(),
     );
