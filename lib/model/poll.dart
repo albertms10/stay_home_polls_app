@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
-abstract class Poll {
-  final String id;
+class Poll {
+  String id;
   String title;
   List<String> options;
   Timestamp createdAt;
@@ -13,7 +12,7 @@ abstract class Poll {
   bool dismissed;
 
   Poll({
-    @required this.id,
+    this.id,
     this.title,
     this.options,
     this.createdAt,
@@ -55,7 +54,7 @@ class SliderPoll extends Poll {
   double voteAverage;
 
   SliderPoll({
-    @required id,
+    id,
     title,
     options,
     createdAt,
@@ -92,7 +91,7 @@ class ChoicePoll extends Poll {
       optionsVoteCount.reduce((value, element) => value + element);
 
   ChoicePoll({
-    @required id,
+    id,
     title,
     options,
     createdAt,
@@ -120,7 +119,7 @@ class ChoicePoll extends Poll {
 
   toJson() => {
         ...super.toJson(),
-        "optionsVoteCount": optionsVoteCount,
+        'optionsVoteCount': optionsVoteCount,
       };
 }
 
