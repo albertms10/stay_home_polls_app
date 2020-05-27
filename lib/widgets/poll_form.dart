@@ -49,6 +49,7 @@ class _PollFormState extends State<PollForm> {
             Form(
               key: _formKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   TextFormField(
                     controller: _titleController,
@@ -79,17 +80,18 @@ class _PollFormState extends State<PollForm> {
                       initialOptions: _poll.options,
                       saveValue: _saveOptionValue,
                     ),
-                  Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: OutlineButton(
-                      child: Text('Create poll'),
-                      onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          Navigator.of(context).pop(_poll);
-                        }
-                      },
-                    ),
+                  SizedBox(height: 16),
+                  FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Text('Create poll'),
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                        Navigator.of(context).pop(_poll);
+                      }
+                    },
                   ),
                 ],
               ),
