@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:stay_home_polls_app/constants/font_const.dart';
 import 'package:stay_home_polls_app/login_flow/pages/signin_page.dart';
-import 'package:stay_home_polls_app/login_flow/pages/splash_page.dart';
 
 class SignInFlowApp extends StatelessWidget {
   @override
@@ -9,10 +10,9 @@ class SignInFlowApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
         accentColor: Colors.orangeAccent,
-        fontFamily: 'Nunito',
+        textTheme: GoogleFonts.getTextTheme(fontFamily),
       ),
       home: Scaffold(
-        /*  body: SplashPage(), */
         body: SignInPage(),
         backgroundColor: Colors.white,
       ),

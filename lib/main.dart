@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:stay_home_polls_app/constants/font_const.dart';
 import 'package:stay_home_polls_app/login_flow/auth_state_switch.dart';
 import 'package:stay_home_polls_app/pages/home_page.dart';
 
@@ -14,7 +16,7 @@ class StayHomePollsApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
         accentColor: Colors.orangeAccent,
-        fontFamily: 'Nunito',
+        textTheme: GoogleFonts.getTextTheme(fontFamily),
       ),
       home: HomePage(title: title),
     );

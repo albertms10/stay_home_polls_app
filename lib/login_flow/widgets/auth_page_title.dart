@@ -14,7 +14,6 @@ class AuthPageTitle extends StatelessWidget {
           fontSize: 30,
           color: Colors.grey[500],
           fontWeight: FontWeight.w300,
-          fontFamily: 'Nunito',
         ),
       ),
     );

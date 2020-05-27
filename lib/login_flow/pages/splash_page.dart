@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:stay_home_polls_app/constants/font_const.dart';
 import 'package:stay_home_polls_app/login_flow/widgets/auth_page_title.dart';
 
 class SplashPage extends StatelessWidget {
@@ -11,7 +13,7 @@ class SplashPage extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
         accentColor: Colors.orangeAccent,
-        fontFamily: 'Nunito',
+        textTheme: GoogleFonts.getTextTheme(fontFamily),
       ),
       home: Scaffold(
         body: Padding(
