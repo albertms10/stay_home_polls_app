@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/model/user.dart';
@@ -67,7 +68,10 @@ class NoPolls extends StatelessWidget {
           SizedBox(height: 8),
           Text(
             _emojis[_random.nextInt(_emojis.length)],
-            style: _headline4.copyWith(fontSize: 18),
+            style: _headline4.copyWith(
+              fontSize: 18,
+              fontFamily: GoogleFonts.notoSans().fontFamily,
+            ),
           ),
         ],
       ),
