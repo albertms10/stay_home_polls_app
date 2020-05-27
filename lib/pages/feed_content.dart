@@ -4,17 +4,18 @@ import 'package:stay_home_polls_app/pages/page_content.dart';
 import 'package:stay_home_polls_app/widgets/polls_container.dart';
 
 class FeedContent extends StatelessWidget {
+  List<Poll> _filterCallback(List<Poll> pollsList, List<Poll> userPollsList) {
+    return pollsList.where((poll) {
+      final userPoll = userPollsList.firstWhere(
+          (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
+          orElse: () {});
+
+      return userPoll == null ? true : false;
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    _filterCallback(List<Poll> pollsList, List<Poll> userPollsList) {
-      return pollsList.where((poll) {
-        final userPoll = userPollsList.firstWhere(
-            (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
-            orElse: () {});
-        return userPoll == null ? true : false;
-      }).toList();
-    }
-
     return PageContent(
       tabs: [
         Tab(text: "POPULAR"),
