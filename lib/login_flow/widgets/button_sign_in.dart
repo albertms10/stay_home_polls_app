@@ -6,7 +6,7 @@ class SignInButton extends StatelessWidget {
   final Function onPressed;
   SignInButton({
     this.text = "Sign In",
-    this.color = Colors.blue,
+    this.color = Colors.white,
     @required this.onPressed,
   });
 

@@ -5,7 +5,9 @@ enum SignInTextFieldType { email, password }
 class SignInTextField extends StatefulWidget {
   final SignInTextFieldType type;
   final TextEditingController controller;
-  SignInTextField(this.type, this.controller);
+  final Color accentColor;
+
+  SignInTextField(this.type, this.controller, this.accentColor);
 
   @override
   _SignInTextFieldState createState() => _SignInTextFieldState();
@@ -30,15 +32,15 @@ class _SignInTextFieldState extends State<SignInTextField> {
     return TextFormField(
       controller: widget.controller,
       decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.white,
+        fillColor: widget.accentColor,
         border: OutlineInputBorder(),
-        hintText: isPassword ? 'Password' : 'Email',
-        hintStyle: TextStyle(color: Colors.grey[400]),
+        labelText: isPassword ? 'Password' : 'Email',
+        labelStyle: TextStyle(color: Colors.grey[600]),
         suffixIcon: eye,
       ),
-      keyboardType:
-          widget.type == SignInTextFieldType.email ? TextInputType.emailAddress : TextInputType.text,
+      keyboardType: widget.type == SignInTextFieldType.email
+          ? TextInputType.emailAddress
+          : TextInputType.text,
       obscureText: isPassword && !_viewPassword,
     );
   }

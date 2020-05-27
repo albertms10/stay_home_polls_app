@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stay_home_polls_app/login_flow/widgets/auth_page_title.dart';
 
 class SplashPage extends StatelessWidget {
   final String error;
@@ -7,9 +8,33 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.teal,
+        accentColor: Colors.orangeAccent,
+        fontFamily: 'Nunito',
+      ),
       home: Scaffold(
-        body: Center(
-          child: error != null ? Text(error) : CircularProgressIndicator(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Image(
+                  image: AssetImage('assets/icons/logo.png'),
+                  height: 100,
+                ),
+                SizedBox(height: 6),
+                AuthPageTitle('StayHomePolls'),
+                SizedBox(height: 24),
+                Center(
+                  child:
+                      error != null ? Text(error) : CircularProgressIndicator(),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
