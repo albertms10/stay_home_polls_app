@@ -13,9 +13,9 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  bool _showProgress = false;
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  var _showProgress = false;
+  var _email = TextEditingController();
+  var _password = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
