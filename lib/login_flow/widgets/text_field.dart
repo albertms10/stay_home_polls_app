@@ -19,14 +19,14 @@ class _SignInTextFieldState extends State<SignInTextField> {
   @override
   Widget build(BuildContext context) {
     Widget eye;
-    if (isPassword) {
+    if (isPassword)
       eye = IconButton(
         icon: Icon(_viewPassword ? Icons.visibility_off : Icons.visibility),
         onPressed: () {
           setState(() => _viewPassword = !_viewPassword);
         },
       );
-    }
+
     return TextFormField(
       controller: widget.controller,
       decoration: InputDecoration(
@@ -38,7 +38,7 @@ class _SignInTextFieldState extends State<SignInTextField> {
         suffixIcon: eye,
       ),
       keyboardType:
-          isPassword ? TextInputType.emailAddress : TextInputType.text,
+          widget.type == SignInTextFieldType.email ? TextInputType.emailAddress : TextInputType.text,
       obscureText: isPassword && !_viewPassword,
     );
   }
