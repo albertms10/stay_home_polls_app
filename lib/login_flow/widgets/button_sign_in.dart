@@ -16,14 +16,14 @@ class SignInButton extends StatelessWidget {
     return FlatButton(
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
       child: Text(
         text,
         style: TextStyle(color: Colors.white, fontSize: 16),
       ),
       color: color,
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
     );
   }
 }

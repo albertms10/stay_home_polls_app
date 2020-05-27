@@ -32,7 +32,7 @@ class _PollFormState extends State<PollForm> {
 
     return SingleChildScrollView(
       child: Container(
-        margin: EdgeInsets.all(16),
+        margin: const EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
             PollTypeToggleButtons(
@@ -82,7 +82,7 @@ class _PollFormState extends State<PollForm> {
                     ),
                   SizedBox(height: 16),
                   FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Text('Create poll'),
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,

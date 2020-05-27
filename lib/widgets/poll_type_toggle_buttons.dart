@@ -10,7 +10,7 @@ class PollTypeToggleButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return ToggleButtons(
       selectedBorderColor: Theme.of(context).primaryColor,
-      borderRadius: BorderRadius.circular(4),
+      borderRadius: const BorderRadius.all(Radius.circular(4)),
       children: <Widget>[
         PollTypeToggleButton(
           icon: Icon(Icons.tune),
@@ -36,7 +36,7 @@ class PollTypeToggleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 32,
         vertical: 16,
       ),
