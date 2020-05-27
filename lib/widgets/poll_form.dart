@@ -28,37 +28,7 @@ class _PollFormState extends State<PollForm> {
         margin: EdgeInsets.all(16),
         child: Column(
           children: <Widget>[
-            ToggleButtons(
-              selectedBorderColor: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(4),
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(Icons.tune),
-                      SizedBox(height: 4),
-                      Text('Slider'),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Icon(Icons.format_list_bulleted),
-                      SizedBox(height: 4),
-                      Text('Choice'),
-                    ],
-                  ),
-                )
-              ],
+            PollTypeToggleButtons(
               onPressed: (int index) {
                 setState(() {
                   if (!_isSelected[index])
