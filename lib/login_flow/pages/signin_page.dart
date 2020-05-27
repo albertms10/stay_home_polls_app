@@ -17,6 +17,8 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController _email = TextEditingController();
   TextEditingController _password = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   _showSnackbar(String message, [Color backgroundColor = Colors.black87]) {
     Scaffold.of(context).showSnackBar(
       SnackBar(
@@ -62,8 +64,9 @@ class _SignInPageState extends State<SignInPage> {
 
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        padding: const EdgeInsets.symmetric(horizontal: 32),
         child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -72,25 +75,28 @@ class _SignInPageState extends State<SignInPage> {
                 image: AssetImage('assets/icons/logo.png'),
                 height: 100,
               ),
-              SizedBox(height: 6),
+              SizedBox(height: 16),
               AuthPageTitle('StayHomePolls'),
               SizedBox(height: 32),
               SignInTextField(
-                SignInTextFieldType.email,
-                _email,
-                accentColor,
+                type: SignInTextFieldType.email,
+                controller: _email,
+                accentColor: accentColor,
               ),
               SizedBox(height: 16),
               SignInTextField(
-                SignInTextFieldType.password,
-                _password,
-                accentColor,
+                type: SignInTextFieldType.password,
+                controller: _password,
+                accentColor: accentColor,
               ),
               SizedBox(height: 32),
               SignInButton(
                 color: primaryColor,
-                onPressed: () =>
-                    _waitAndCheckErrors(_signInWithEmailAndPassword),
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                    _waitAndCheckErrors(_signInWithEmailAndPassword);
+                  }
+                },
               ),
               SizedBox(height: 12),
               Row(
@@ -102,17 +108,19 @@ class _SignInPageState extends State<SignInPage> {
                       color: Colors.black45,
                     ),
                   ),
+                  SizedBox(width: 8),
                   FlatButton(
+                    padding: const EdgeInsets.all(8),
                     child: Text('Register'),
                     textColor: primaryColor,
-                    onPressed: () async {
-                      EmailAndPassword result =
-                          await Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => SignUpPage()),
-                      );
-                      if (result != null) {
-                        _createUserWithEmailAndPassword(result);
-                      }
+                    onPressed: () {
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(
+                              builder: (builder) => SignUpPage()))
+                          .then((result) {
+                        if (result != null && result is EmailAndPassword)
+                          _createUserWithEmailAndPassword(result);
+                      });
                     },
                   ),
                 ],
