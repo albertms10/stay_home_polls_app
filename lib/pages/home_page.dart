@@ -27,10 +27,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title,
-            style: AppConstants.of(context)
-                .font
-                .copyWith(fontWeight: FontWeight.bold)),
+        title: Text(
+          widget.title,
+          style: AppConstants.of(context)
+              .font
+              .copyWith(fontWeight: FontWeight.bold),
+        ),
       ),
       body: PageView(
         controller: _pageController,
