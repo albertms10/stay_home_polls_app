@@ -4,6 +4,22 @@ import 'package:stay_home_polls_app/pages/page_content.dart';
 import 'package:stay_home_polls_app/widgets/polls_container.dart';
 
 class UserContent extends StatelessWidget {
+  List<Poll> _filterCallback(List<Poll> pollsList, List<Poll> userPollsList,
+      Function(Poll, Poll) check) {
+    return pollsList.where((poll) {
+      final userPoll = userPollsList.firstWhere(
+          (userPoll) => userPoll != null ? check(poll, userPoll) : false,
+          orElse: () {});
+
+      if (userPoll == null) {
+        return false;
+      } else {
+        poll.voteValue = userPoll.voteValue;
+        return true;
+      }
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageContent(
@@ -15,34 +31,18 @@ class UserContent extends StatelessWidget {
       children: [
         PollsContainer(
           streamPollsList: popularPollListSnapshots(),
-          filterCallback: (pollsList, userPollsList) => pollsList.where((poll) {
-            final userPoll = userPollsList.firstWhere(
-                (userPoll) => userPoll != null
-                    ? poll.id == userPoll.id && userPoll.isAuth
-                    : false,
-                orElse: () {});
-            if (userPoll == null) {
-              return false;
-            } else {
-              poll.voteValue = userPoll.voteValue;
-              return true;
-            }
-          }).toList(),
+          filterCallback: (pollsList, userPollsList) => _filterCallback(
+              pollsList,
+              userPollsList,
+              (poll, userPoll) => poll.id == userPoll.id && userPoll.isAuth),
         ),
         PollsContainer(
           streamPollsList: popularPollListSnapshots(),
-          filterCallback: (pollsList, userPollsList) => pollsList.where((poll) {
-            final userPoll = userPollsList.firstWhere(
-                (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
-                orElse: () {});
-            if (userPoll == null) {
-              return false;
-            } else {
-              poll.voteValue = userPoll.voteValue;
-              return true;
-            }
-          }).toList(),
-        ),
+          filterCallback: (pollsList, userPollsList) => _filterCallback(
+              pollsList,
+              userPollsList,
+              (poll, userPoll) => poll.id == userPoll.id),
+        )
       ],
     );
   }
