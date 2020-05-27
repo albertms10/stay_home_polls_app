@@ -36,7 +36,7 @@ class Poll {
         voteCount = doc.data['voteCount'],
         dismissed = doc.data['dismissed'] ?? false;
 
-  toJson() => {
+  Map<String, dynamic> toJson() => {
         "title": title,
         "options": options,
         "createdAt": createdAt,
@@ -47,7 +47,7 @@ class Poll {
       };
 
   @override
-  String toString() => id;
+  String toString() => '$id $title, ${options.length} options';
 }
 
 class SliderPoll extends Poll {
