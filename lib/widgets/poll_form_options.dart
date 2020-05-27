@@ -62,30 +62,35 @@ class _PollFormOptionsState extends State<PollFormOptions> {
       children: <Widget>[
         for (int i = 0; i < _controllers.length; i++)
           Container(
-              margin: EdgeInsets.only(bottom: 16),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextFormField(
-                      controller: _controllers[i],
-                      onSaved: (value) => widget.saveValue(value, i),
-                      decoration: InputDecoration(
-                        labelText: '${widget.optionTitles[i]} option',
-                        border: OutlineInputBorder(),
-                      ),
+            margin: EdgeInsets.only(bottom: 16),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextFormField(
+                    controller: _controllers[i],
+                    validator: (option) {
+                      if (option.isEmpty) return "Please, provide an option";
+                      return null;
+                    },
+                    onSaved: (value) => widget.saveValue(value, i),
+                    decoration: InputDecoration(
+                      labelText: '${widget.optionTitles[i]} option',
+                      border: OutlineInputBorder(),
                     ),
                   ),
-                  if (i >= widget.initialOptionsCount)
-                    Container(
-                      margin: EdgeInsets.only(left: 8),
-                      child: IconButton(
-                        icon: Icon(Icons.delete),
-                        color: Colors.grey[700],
-                        onPressed: () => setState(() => _removeController(i)),
-                      ),
+                ),
+                if (i >= widget.initialOptionsCount)
+                  Container(
+                    margin: EdgeInsets.only(left: 8),
+                    child: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Colors.grey[700],
+                      onPressed: () => setState(() => _removeController(i)),
                     ),
-                ],
-              )),
+                  ),
+              ],
+            ),
+          ),
         if (_canAddOptions)
           OutlineButton.icon(
             icon: Icon(Icons.add),
