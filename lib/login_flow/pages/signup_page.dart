@@ -19,13 +19,13 @@ class _SignUpPageState extends State<SignUpPage> {
   var _email = TextEditingController();
   var _password = TextEditingController();
 
-  final primaryColor = Colors.teal;
-  final accentColor = Colors.orangeAccent;
-
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final _primaryColor = Theme.of(context).primaryColor;
+    final _accentColor = Theme.of(context).accentColor;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -46,18 +46,18 @@ class _SignUpPageState extends State<SignUpPage> {
                 SignInTextField(
                   type: SignInTextFieldType.email,
                   controller: _email,
-                  accentColor: accentColor,
+                  accentColor: _accentColor,
                 ),
                 SizedBox(height: 24),
                 SignInTextField(
                   type: SignInTextFieldType.password,
                   controller: _password,
-                  accentColor: accentColor,
+                  accentColor: _accentColor,
                 ),
                 SizedBox(height: 48),
                 SignInButton(
                   text: 'Register',
-                  color: primaryColor,
+                  color: _primaryColor,
                   onPressed: () {
                     if (_formKey.currentState.validate())
                       Navigator.of(context).pop(
@@ -79,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     FlatButton(
                       padding: const EdgeInsets.all(8),
                       child: Text('Sign in'),
-                      textColor: primaryColor,
+                      textColor: _primaryColor,
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
