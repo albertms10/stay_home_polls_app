@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:stay_home_polls_app/main.dart';
 
 class PageContent extends StatelessWidget {
   final List<Tab> tabs;
@@ -25,6 +26,9 @@ class PageContent extends StatelessWidget {
               height: 50.0,
               child: TabBar(
                 unselectedLabelColor: Colors.grey,
+                labelStyle: AppConstants.of(context)
+                    .font
+                    .copyWith(fontWeight: FontWeight.bold),
                 labelColor: Theme.of(context).accentColor,
                 tabs: tabs,
               ),

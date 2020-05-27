@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:stay_home_polls_app/main.dart';
+import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/pages/feed_content.dart';
 import 'package:stay_home_polls_app/pages/new_poll.dart';
 import 'package:stay_home_polls_app/pages/user_content.dart';
@@ -24,7 +26,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+        title: Text(widget.title,
+            style: AppConstants.of(context)
+                .font
+                .copyWith(fontWeight: FontWeight.bold)),
+      ),
       body: PageView(
         controller: _pageController,
         physics: NeverScrollableScrollPhysics(),
@@ -36,11 +43,11 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (builder) => NewPoll(),
-            ),
-          );
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (builder) => NewPoll()))
+              .then((poll) {
+            if (poll != null && poll is Poll) print(poll);
+          });
         },
       ),
       bottomNavigationBar: BottomNavigationBar(

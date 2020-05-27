@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:stay_home_polls_app/constants/font_const.dart';
 import 'package:stay_home_polls_app/login_flow/widgets/auth_page_title.dart';
+import 'package:stay_home_polls_app/main.dart';
 
 class SplashPage extends StatelessWidget {
   final String error;
@@ -13,7 +12,7 @@ class SplashPage extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
         accentColor: Colors.orangeAccent,
-        textTheme: GoogleFonts.getTextTheme(fontFamily),
+        textTheme: AppConstants.of(context).textTheme,
       ),
       home: Scaffold(
         body: Padding(
