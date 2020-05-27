@@ -7,7 +7,7 @@ class SignInTextField extends StatefulWidget {
   final TextEditingController controller;
   final Color accentColor;
 
-  SignInTextField(this.type, this.controller, this.accentColor);
+  SignInTextField({this.type, this.controller, this.accentColor});
 
   @override
   _SignInTextFieldState createState() => _SignInTextFieldState();
@@ -31,6 +31,10 @@ class _SignInTextFieldState extends State<SignInTextField> {
 
     return TextFormField(
       controller: widget.controller,
+      validator: (value) {
+        if (value.isEmpty) return "Please, fill this field";
+        return null;
+      },
       decoration: InputDecoration(
         fillColor: widget.accentColor,
         border: OutlineInputBorder(),

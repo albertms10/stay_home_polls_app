@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stay_home_polls_app/login_flow/pages/signin_page.dart';
 import 'package:stay_home_polls_app/login_flow/widgets/auth_page_title.dart';
 import 'package:stay_home_polls_app/login_flow/widgets/button_sign_in.dart';
 import 'package:stay_home_polls_app/login_flow/widgets/text_field.dart';
@@ -17,10 +16,13 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  TextEditingController _email = TextEditingController();
-  TextEditingController _password = TextEditingController();
+  var _email = TextEditingController();
+  var _password = TextEditingController();
+
   final primaryColor = Colors.teal;
   final accentColor = Colors.orangeAccent;
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,53 +30,64 @@ class _SignUpPageState extends State<SignUpPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(
-          color: Colors.teal, //change your color here
-        ),
+        iconTheme: IconThemeData(color: Colors.teal),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SizedBox(height: 70),
-              AuthPageTitle('Register'),
-              SizedBox(height: 24),
-              SignInTextField(SignInTextFieldType.email, _email, accentColor),
-              SizedBox(height: 24),
-              SignInTextField(
-                  SignInTextFieldType.password, _password, accentColor),
-              SizedBox(height: 48),
-              SignInButton(
-                text: 'Register',
-                color: primaryColor,
-                onPressed: () {
-                  Navigator.of(context).pop(
-                    EmailAndPassword(_email.text, _password.text),
-                  );
-                },
-              ),
-              SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Already have an account?',
-                    style: TextStyle(
-                      color: Colors.black45,
+          padding: const EdgeInsets.all(32),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                SizedBox(height: 70),
+                AuthPageTitle('Register'),
+                SizedBox(height: 24),
+                SignInTextField(
+                  type: SignInTextFieldType.email,
+                  controller: _email,
+                  accentColor: accentColor,
+                ),
+                SizedBox(height: 24),
+                SignInTextField(
+                  type: SignInTextFieldType.password,
+                  controller: _password,
+                  accentColor: accentColor,
+                ),
+                SizedBox(height: 48),
+                SignInButton(
+                  text: 'Register',
+                  color: primaryColor,
+                  onPressed: () {
+                    if (_formKey.currentState.validate())
+                      Navigator.of(context).pop(
+                        EmailAndPassword(_email.text, _password.text),
+                      );
+                  },
+                ),
+                SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Already have an account?',
+                      style: TextStyle(
+                        color: Colors.black45,
+                      ),
                     ),
-                  ),
-                  FlatButton(
-                    child: Text('Go back'),
-                    textColor: primaryColor,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              ),
-            ],
+                    SizedBox(width: 8),
+                    FlatButton(
+                      padding: const EdgeInsets.all(8),
+                      child: Text('Sign in'),
+                      textColor: primaryColor,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
