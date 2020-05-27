@@ -19,7 +19,7 @@ class _SignInPageState extends State<SignInPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  _showSnackbar(String message, [Color backgroundColor = Colors.black87]) {
+  void _showSnackbar(String message, [Color backgroundColor = Colors.black87]) {
     Scaffold.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -28,28 +28,28 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  _waitAndCheckErrors(Function signInFunc) async {
+  void _waitAndCheckErrors(Function signInFunction) async {
     setState(() => _showProgress = true);
     try {
-      await signInFunc();
+      await signInFunction();
     } catch (e) {
       _showSnackbar(e.toString(), Colors.red);
       setState(() => _showProgress = false);
     }
   }
 
-  _signInAnonymously() async {
+  void _signInAnonymously() async {
     await FirebaseAuth.instance.signInAnonymously();
   }
 
-  _signInWithEmailAndPassword() async {
+  void _signInWithEmailAndPassword() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _email.text,
       password: _password.text,
     );
   }
 
-  _createUserWithEmailAndPassword(EmailAndPassword emailAndPassword) async {
+  void _createUserWithEmailAndPassword(EmailAndPassword emailAndPassword) async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailAndPassword.email, password: emailAndPassword.password);
   }

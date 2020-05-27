@@ -10,7 +10,7 @@ class PollsContainer extends StatelessWidget {
 
   PollsContainer({this.streamPollsList, this.filterCallback});
 
-  StreamBuilder _streamBuilder(stream, Function callback) {
+  StreamBuilder _streamBuilder(stream, Function(List<Poll>) callback) {
     return StreamBuilder(
       stream: stream,
       builder: (context, AsyncSnapshot snapshot) {
@@ -36,8 +36,8 @@ class PollsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
-    return _streamBuilder(streamPollsList, (List<Poll> polls) {
-      return _streamBuilder(user.pollsSnapshots(), (List<Poll> userPolls) {
+    return _streamBuilder(streamPollsList, (polls) {
+      return _streamBuilder(user.pollsSnapshots(), (userPolls) {
         return PollsList(
             polls: filterCallback != null
                 ? filterCallback(polls, userPolls)
