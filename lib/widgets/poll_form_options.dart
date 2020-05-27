@@ -84,6 +84,7 @@ class _PollFormOptionsState extends State<PollFormOptions> {
                     margin: EdgeInsets.only(left: 8),
                     child: IconButton(
                       icon: Icon(Icons.delete),
+                      tooltip: "Delete option",
                       color: Colors.grey[700],
                       onPressed: () => setState(() => _removeController(i)),
                     ),
