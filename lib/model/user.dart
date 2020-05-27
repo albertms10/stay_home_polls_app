@@ -18,7 +18,7 @@ class User {
         displayName = snapshot['displayName'] ?? '',
         polls = snapshot['polls'] ?? [];
 
-  toJson() => {
+  Map<String, dynamic> toJson() => {
         "displayName": displayName,
         "polls": polls,
       };
@@ -28,12 +28,13 @@ class User {
       .snapshots()
       .map(mapQueryPoll);
 
-  vote(Poll poll, int value, [bool isAuth = false]) {
+  void vote(Poll poll, int value, [bool isAuth = false]) {
     final ref = Firestore.instance;
 
     ref.collection('users/$id/polls').document(poll.id).setData({
       'isAuth': isAuth,
-      'type': poll is SliderPoll ? 'slider' : 'choice',
+      'type':
+          poll is SliderPoll ? 'slider' : (poll is ChoicePoll ? 'choice' : ''),
       'voteValue': value,
     });
 
@@ -43,17 +44,18 @@ class User {
         'voteAverage':
             poll.voteAverage + (value - poll.voteAverage) / (poll.voteCount + 1)
       else if (poll is ChoicePoll)
-        // TODO: Refactor replace method (can be improved?)
         'optionsVoteCount': poll.optionsVoteCount
           ..replaceRange(value, value + 1, [poll.optionsVoteCount[value] + 1])
     });
   }
 
-  dismiss(Poll poll) => Firestore.instance
+  void dismiss(Poll poll) => Firestore.instance
           .collection('users/$id/polls')
           .document(poll.id)
           .setData({
         'dismissed': true,
-        'type': poll is SliderPoll ? 'slider' : 'choice',
+        'type': poll is SliderPoll
+            ? 'slider'
+            : (poll is ChoicePoll ? 'choice' : ''),
       });
 }

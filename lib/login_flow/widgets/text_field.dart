@@ -14,19 +14,18 @@ class SignInTextField extends StatefulWidget {
 }
 
 class _SignInTextFieldState extends State<SignInTextField> {
-  bool _viewPassword = false;
+  var _viewPassword = false;
 
   get isPassword => widget.type == SignInTextFieldType.password;
 
   @override
   Widget build(BuildContext context) {
     Widget eye;
+
     if (isPassword)
       eye = IconButton(
         icon: Icon(_viewPassword ? Icons.visibility_off : Icons.visibility),
-        onPressed: () {
-          setState(() => _viewPassword = !_viewPassword);
-        },
+        onPressed: () => setState(() => _viewPassword = !_viewPassword),
       );
 
     return TextFormField(

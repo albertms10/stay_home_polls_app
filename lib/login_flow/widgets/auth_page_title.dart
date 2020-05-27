@@ -9,7 +9,7 @@ class AuthPageTitle extends StatelessWidget {
     return Align(
       alignment: Alignment.center,
       child: Text(
-        this.text,
+        text,
         style: TextStyle(
           fontSize: 30,
           color: Colors.grey[500],
