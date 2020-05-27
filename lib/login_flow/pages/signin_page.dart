@@ -118,7 +118,7 @@ class _SignInPageState extends State<SignInPage> {
                 ],
               ),
               SizedBox(height: 40),
-              if (config.canLoginAnonymously)
+              if (config.canSignInAnonymously)
                 FlatButton(
                   child: Text(
                     'Sign in anonymously',

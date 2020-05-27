@@ -6,14 +6,14 @@ import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/model/user.dart';
 
 class SignInConfig {
-  bool canLoginAnonymously;
-  SignInConfig(this.canLoginAnonymously);
+  bool canSignInAnonymously;
+  SignInConfig(this.canSignInAnonymously);
 }
 
 class AuthStateSwitch extends StatelessWidget {
-  final signInConfig;
+  final SignInConfig signInConfig;
   final Widget app;
-  AuthStateSwitch(this.app, {canSignInAnonymously = false})
+  AuthStateSwitch(this.app, {bool canSignInAnonymously = false})
       : signInConfig = SignInConfig(canSignInAnonymously);
 
   @override
@@ -31,21 +31,19 @@ class AuthStateSwitch extends StatelessWidget {
             return SplashPage();
 
           case ConnectionState.active:
-            {
-              final FirebaseUser user = snapshot.data;
-              return user == null
-                  ? Provider<SignInConfig>.value(
-                      value: signInConfig,
-                      child: SignInFlowApp(),
-                    )
-                  : Provider<User>.value(
-                      value: User(
-                        id: user.uid,
-                        displayName: user.displayName,
-                      ),
-                      child: this.app,
-                    );
-            }
+            final FirebaseUser user = snapshot.data;
+            return user == null
+                ? Provider<SignInConfig>.value(
+                    value: signInConfig,
+                    child: SignInFlowApp(),
+                  )
+                : Provider<User>.value(
+                    value: User(
+                      id: user.uid,
+                      displayName: user.displayName,
+                    ),
+                    child: this.app,
+                  );
 
           case ConnectionState.done:
           default:
