@@ -58,6 +58,7 @@ class _SignInPageState extends State<SignInPage> {
 
     final SignInConfig config = Provider.of<SignInConfig>(context);
     final primaryColor = Theme.of(context).primaryColor;
+    final accentColor = Theme.of(context).accentColor;
 
     return SingleChildScrollView(
       child: Padding(
@@ -67,29 +68,40 @@ class _SignInPageState extends State<SignInPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               SizedBox(height: 120),
-              AuthPageTitle('Sign In'),
-              SizedBox(height: 24),
-              SignInTextField(SignInTextFieldType.email, _email),
+              Image(
+                image: AssetImage('assets/icons/logo.png'),
+                height: 100,
+              ),
+              SizedBox(height: 6),
+              AuthPageTitle('StayHomePolls'),
+              SizedBox(height: 32),
+              SignInTextField(
+                SignInTextFieldType.email,
+                _email,
+                accentColor,
+              ),
               SizedBox(height: 16),
-              SignInTextField(SignInTextFieldType.password, _password),
+              SignInTextField(
+                SignInTextFieldType.password,
+                _password,
+                accentColor,
+              ),
               SizedBox(height: 32),
               SignInButton(
                 color: primaryColor,
                 onPressed: () =>
                     _waitAndCheckErrors(_signInWithEmailAndPassword),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Need an account?',
+                    'First time here?',
                     style: TextStyle(
                       color: Colors.black45,
-                      fontStyle: FontStyle.italic,
                     ),
                   ),
-                  SizedBox(width: 16),
                   FlatButton(
                     child: Text('Register'),
                     textColor: primaryColor,
@@ -98,7 +110,9 @@ class _SignInPageState extends State<SignInPage> {
                           await Navigator.of(context).push(
                         MaterialPageRoute(builder: (_) => SignUpPage()),
                       );
-                      _createUserWithEmailAndPassword(result);
+                      if (result != null) {
+                        _createUserWithEmailAndPassword(result);
+                      }
                     },
                   ),
                 ],

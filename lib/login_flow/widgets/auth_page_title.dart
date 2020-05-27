@@ -7,13 +7,14 @@ class AuthPageTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.center,
       child: Text(
         this.text,
         style: TextStyle(
-          fontSize: 40,
-          color: Theme.of(context).primaryColor,
+          fontSize: 30,
+          color: Colors.grey[500],
           fontWeight: FontWeight.w300,
+          fontFamily: 'Nunito',
         ),
       ),
     );
