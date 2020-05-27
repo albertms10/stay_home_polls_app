@@ -13,6 +13,7 @@ class SignInConfig {
 class AuthStateSwitch extends StatelessWidget {
   final SignInConfig signInConfig;
   final Widget app;
+
   AuthStateSwitch(this.app, {bool canSignInAnonymously = false})
       : signInConfig = SignInConfig(canSignInAnonymously);
 

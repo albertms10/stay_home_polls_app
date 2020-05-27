@@ -20,7 +20,7 @@ class Poll {
     this.isAuth = false,
     this.voteValue,
     this.voteCount,
-    this.dismissed,
+    this.dismissed = false,
   });
 
   Poll.fromFirestore(DocumentSnapshot doc)
@@ -54,14 +54,15 @@ class SliderPoll extends Poll {
   double voteAverage;
 
   SliderPoll({
-    id,
-    title,
-    options,
-    createdAt,
-    location,
-    isAuth,
-    voteValue,
-    voteCount,
+    String id,
+    String title,
+    List<String> options,
+    Timestamp createdAt,
+    GeoPoint location,
+    bool isAuth,
+    int voteValue,
+    int voteCount,
+    bool dismissed,
     this.voteAverage,
   }) : super(
           id: id,
@@ -72,13 +73,14 @@ class SliderPoll extends Poll {
           isAuth: isAuth,
           voteValue: voteValue,
           voteCount: voteCount,
+          dismissed: dismissed,
         );
 
   SliderPoll.fromFirestore(DocumentSnapshot doc)
       : voteAverage = doc.data['voteAverage'] ?? 0,
         super.fromFirestore(doc);
 
-  toJson() => {
+  Map<String, dynamic> toJson() => {
         ...super.toJson(),
         "voteAverage": voteAverage,
       };
@@ -91,14 +93,15 @@ class ChoicePoll extends Poll {
       optionsVoteCount.reduce((value, element) => value + element);
 
   ChoicePoll({
-    id,
-    title,
-    options,
-    createdAt,
-    location,
-    isAuth,
-    voteValue,
-    voteCount,
+    String id,
+    String title,
+    List<String> options,
+    Timestamp createdAt,
+    GeoPoint location,
+    bool isAuth,
+    int voteValue,
+    int voteCount,
+    bool dismissed,
     this.optionsVoteCount,
   }) : super(
           id: id,
@@ -109,6 +112,7 @@ class ChoicePoll extends Poll {
           isAuth: isAuth,
           voteValue: voteValue,
           voteCount: voteCount,
+          dismissed: dismissed,
         );
 
   ChoicePoll.fromFirestore(DocumentSnapshot doc)
@@ -117,7 +121,7 @@ class ChoicePoll extends Poll {
             : [],
         super.fromFirestore(doc);
 
-  toJson() => {
+  Map<String, dynamic> toJson() => {
         ...super.toJson(),
         'optionsVoteCount': optionsVoteCount,
       };
@@ -131,8 +135,10 @@ List<Poll> mapQueryPoll(QuerySnapshot query) {
     switch (doc.data['type']) {
       case 'slider':
         return SliderPoll.fromFirestore(doc);
+
       case 'choice':
         return ChoicePoll.fromFirestore(doc);
+
       default:
         return null;
     }

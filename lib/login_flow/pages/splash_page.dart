@@ -31,7 +31,7 @@ class SplashPage extends StatelessWidget {
                 SizedBox(height: 24),
                 Center(
                   child:
-                      error != null ? Text(error) : CircularProgressIndicator(),
+                      error != null ? Text(error) : CircularProgressIndicator()
                 ),
               ],
             ),

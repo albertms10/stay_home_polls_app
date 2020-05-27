@@ -19,7 +19,7 @@ class SignInButton extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(4)),
       ),
       child: Text(
-        this.text,
+        text,
         style: TextStyle(color: Colors.white, fontSize: 16),
       ),
       color: color,
