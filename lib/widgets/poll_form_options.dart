@@ -12,7 +12,11 @@ class PollFormOptions extends StatefulWidget {
     this.saveValue,
     this.initialOptionsCount = 2,
     this.initialOptions,
-  }) : super(key: key);
+  })  : assert(
+            initialOptionsCount <= optionTitles.length,
+            initialOptions != null &&
+                initialOptions.length >= initialOptionsCount),
+        super(key: key);
 
   @override
   _PollFormOptionsState createState() => _PollFormOptionsState();
@@ -45,19 +49,8 @@ class _PollFormOptionsState extends State<PollFormOptions> {
       for (int i = 0; i < widget.initialOptionsCount; i++) _addController();
   }
 
-  void _initChecks() {
-    if (widget.initialOptionsCount > widget.optionTitles.length)
-      throw ('Failed assertion: initialOptionsCount <= optionTitle.length');
-
-    if (widget.initialOptions != null &&
-        widget.initialOptions.length < widget.initialOptionsCount)
-      throw ('Failed assertion: initialOptions.length >= initialOptionsCount');
-  }
-
   @override
   Widget build(BuildContext context) {
-    _initChecks();
-
     return Column(
       children: <Widget>[
         for (int i = 0; i < _controllers.length; i++)
