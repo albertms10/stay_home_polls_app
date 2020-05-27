@@ -62,7 +62,7 @@ class _PollFormOptionsState extends State<PollFormOptions> {
       children: <Widget>[
         for (int i = 0; i < _controllers.length; i++)
           Container(
-            margin: EdgeInsets.only(bottom: 16),
+            margin: const EdgeInsets.only(bottom: 16),
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -81,7 +81,7 @@ class _PollFormOptionsState extends State<PollFormOptions> {
                 ),
                 if (i >= widget.initialOptionsCount)
                   Container(
-                    margin: EdgeInsets.only(left: 8),
+                    margin: const EdgeInsets.only(left: 8),
                     child: IconButton(
                       icon: Icon(Icons.delete),
                       tooltip: "Delete option",
