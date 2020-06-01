@@ -89,7 +89,12 @@ class _PollFormState extends State<PollForm> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        Navigator.of(context).pop(_poll);
+
+                        _poll.isAuth = true;
+
+                        Navigator.of(context).pop(_isSelected[0]
+                            ? SliderPoll.fromPoll(_poll)
+                            : ChoicePoll.fromPoll(_poll));
                       }
                     },
                   ),
