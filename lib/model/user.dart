@@ -41,8 +41,7 @@ class User {
 
     ref.collection('users/$id/polls').document(poll.id).setData({
       'isAuth': isAuth,
-      'type':
-          poll is SliderPoll ? 'slider' : (poll is ChoicePoll ? 'choice' : ''),
+      'type': poll.type,
       'voteValue': value,
     });
 
@@ -62,8 +61,6 @@ class User {
           .document(poll.id)
           .setData({
         'dismissed': true,
-        'type': poll is SliderPoll
-            ? 'slider'
-            : (poll is ChoicePoll ? 'choice' : ''),
+        'type': poll.type,
       });
 }
