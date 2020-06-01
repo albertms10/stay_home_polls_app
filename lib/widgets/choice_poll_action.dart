@@ -54,7 +54,7 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                   child: LinearPercentIndicator(
                     animation: true,
                     lineHeight: 40.0,
-                    animationDuration: 2000,
+                    animationDuration: 500,
                     percent: votes[i],
                     backgroundColor: Colors.teal[50],
                     center: Row(
@@ -86,14 +86,3 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
     );
   }
 }
-
-/* new LinearPercentIndicator(
-                width: MediaQuery.of(context).size.width - 50,
-                animation: true,
-                lineHeight: 20.0,
-                animationDuration: 2500,
-                percent: 0.8,
-                center: Text("80.0%"),
-                linearStrokeCap: LinearStrokeCap.roundAll,
-                progressColor: Colors.green,
-              ), */
