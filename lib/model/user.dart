@@ -28,6 +28,14 @@ class User {
       .snapshots()
       .map(mapQueryPoll);
 
+  void addPoll(Poll poll) {
+    final res = Firestore.instance;
+
+    res.collection('polls').add(poll.genericToJson());
+
+    res.collection('users/$id/polls').add(poll.userToJson());
+  }
+
   void vote(Poll poll, int value, [bool isAuth = false]) {
     final ref = Firestore.instance;
 

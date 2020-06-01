@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/main.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
+import 'package:stay_home_polls_app/model/user.dart';
 import 'package:stay_home_polls_app/pages/feed_content.dart';
 import 'package:stay_home_polls_app/pages/new_poll.dart';
 import 'package:stay_home_polls_app/pages/user_content.dart';
@@ -48,7 +50,8 @@ class _HomePageState extends State<HomePage> {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (builder) => NewPoll()))
               .then((poll) {
-            if (poll != null && poll is Poll) print(poll);
+            if (poll != null && poll is Poll)
+              Provider.of<User>(context, listen: false).addPoll(poll);
           });
         },
       ),
