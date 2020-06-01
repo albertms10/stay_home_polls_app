@@ -32,17 +32,19 @@ class UserContent extends StatelessWidget {
         PollsContainer(
           streamPollsList: popularPollListSnapshots(),
           filterCallback: (pollsList, userPollsList) => _filterCallback(
-              pollsList,
-              userPollsList,
-              (poll, userPoll) => poll.id == userPoll.id && userPoll.isAuth),
+            pollsList,
+            userPollsList,
+            (poll, userPoll) => poll.id == userPoll.id && userPoll.isAuth,
+          ),
         ),
         PollsContainer(
           streamPollsList: popularPollListSnapshots(),
           filterCallback: (pollsList, userPollsList) => _filterCallback(
-              pollsList,
-              userPollsList,
-              (poll, userPoll) => poll.id == userPoll.id),
-        )
+            pollsList,
+            userPollsList,
+            (poll, userPoll) => poll.id == userPoll.id && !userPoll.isAuth,
+          ),
+        ),
       ],
     );
   }
