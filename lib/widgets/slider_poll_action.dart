@@ -25,13 +25,10 @@ class _SliderPollActionState extends State<SliderPollAction> {
     voted = widget.sliderPoll.voteValue != null ? true : false;
   }
 
-  _vote() => voted
-      ? null
-      : (value) {
-          setState(() => voteValue = value);
-        };
+  Function _vote() =>
+      voted ? null : (value) => setState(() => voteValue = value);
 
-  _voted(newVote) {
+  void _voted(newVote) {
     setState(() => voted = true);
     final user = Provider.of<User>(context, listen: false);
     user.vote(widget.sliderPoll, voteValue.floor());
