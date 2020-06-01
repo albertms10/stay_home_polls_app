@@ -13,9 +13,10 @@ class PollFormOptions extends StatefulWidget {
     this.initialOptionsCount = 2,
     this.initialOptions,
   })  : assert(
-            initialOptionsCount <= optionTitles.length,
-            initialOptions != null &&
-                initialOptions.length >= initialOptionsCount),
+          initialOptionsCount <= optionTitles.length,
+          initialOptions != null &&
+              initialOptions.length >= initialOptionsCount,
+        ),
         super(key: key);
 
   @override
