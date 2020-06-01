@@ -52,8 +52,6 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: LinearPercentIndicator(
-                    /* trailing: Text(
-                        '${(widget.choicePoll.optionsVoteCount[i] / widget.choicePoll.totalCount * 100).round()}%'), */
                     animation: true,
                     lineHeight: 40.0,
                     animationDuration: 2000,
