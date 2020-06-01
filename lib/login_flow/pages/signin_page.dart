@@ -44,14 +44,14 @@ class _SignInPageState extends State<SignInPage> {
 
   void _signInWithEmailAndPassword() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _email.text,
-      password: _password.text,
+      email: _email.text.trim(),
+      password: _password.text.trim(),
     );
   }
 
   void _createUserWithEmailAndPassword(EmailAndPassword emailAndPassword) async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailAndPassword.email, password: emailAndPassword.password);
+        email: emailAndPassword.email.trim(), password: emailAndPassword.password.trim());
   }
 
   @override
