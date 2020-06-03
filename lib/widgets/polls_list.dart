@@ -11,26 +11,39 @@ class PollsList extends StatelessWidget {
 
   PollsList({this.polls});
 
+  final _listKey = GlobalKey<AnimatedListState>();
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
     return polls.length > 0
-        ? ListView.builder(
-            itemCount: polls.length,
-            itemBuilder: (context, int index) {
-              return Dismissible(
-                key: Key(polls[index].id),
-                child: Container(
-                  child: PollTile(poll: polls[index]),
-                  margin: index == polls.length - 1
-                      ? const EdgeInsets.only(bottom: 50)
-                      : null,
+        ? AnimatedList(
+            key: _listKey,
+            initialItemCount: polls.length,
+            itemBuilder: (context, index, animation) {
+              return SlideTransition(
+                position: animation.drive(
+                  Tween<Offset>(
+                    begin: const Offset(0, 0),
+                    end: const Offset(0, 0),
+                  ),
                 ),
-                onDismissed: (_) {
-                  user.dismiss(polls[index]);
-                  polls.removeAt(index);
-                },
+                child: Dismissible(
+                  key: Key(polls[index].id),
+                  child: Container(
+                    child: PollTile(poll: polls[index]),
+                    margin: index == polls.length - 1
+                        ? const EdgeInsets.only(bottom: 50)
+                        : null,
+                  ),
+                  onDismissed: (_) {
+                    polls.removeAt(index);
+                    _listKey.currentState.removeItem(index,
+                        (context, animation) => PollTile(poll: polls[index]));
+                    user.dismiss(polls[index]);
+                  },
+                ),
               );
             })
         : NoPolls(text: Provider.of<String>(context));
