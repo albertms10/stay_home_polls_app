@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/main.dart';
@@ -35,6 +36,27 @@ class _HomePageState extends State<HomePage> {
               .font
               .copyWith(fontWeight: FontWeight.bold),
         ),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: (selected) {
+              switch (selected) {
+                case "Log out":
+                  return FirebaseAuth.instance.signOut();
+
+                default:
+                  return null;
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return {'Log out'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: PageView(
         controller: _pageController,
