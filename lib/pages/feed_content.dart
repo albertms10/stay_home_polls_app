@@ -7,10 +7,14 @@ class FeedContent extends StatelessWidget {
   List<Poll> _filterCallback(List<Poll> pollsList, List<Poll> userPollsList) {
     return pollsList.where((poll) {
       final userPoll = userPollsList.firstWhere(
-          (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
+          (userPoll) => userPoll != null
+              ? poll.id == userPoll.id && userPoll.finished
+              : false,
           orElse: () {});
 
-      return userPoll == null ? true : false;
+      if (userPoll == null) return true;
+      poll.voteValue = userPoll.voteValue;
+      return false;
     }).toList();
   }
 
