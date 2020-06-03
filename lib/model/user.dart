@@ -36,13 +36,14 @@ class User {
     res.collection('users/$id/polls').add(poll.userToJson());
   }
 
-  void vote(Poll poll, int value, [bool isAuth = false]) {
+  void vote(Poll poll, int value, [bool isAuth = false]) async {
     final ref = Firestore.instance;
 
     ref.collection('users/$id/polls').document(poll.id).setData({
       'isAuth': isAuth,
       'type': poll.type,
       'voteValue': value,
+      'finished': false,
     });
 
     ref.collection('polls').document(poll.id).updateData({
@@ -54,6 +55,11 @@ class User {
         'optionsVoteCount': poll.optionsVoteCount
           ..replaceRange(value, value + 1, [poll.optionsVoteCount[value] + 1])
     });
+
+    Future.delayed(const Duration(seconds: 5)).then(
+        (_) => ref.collection('users/$id/polls').document(poll.id).updateData({
+              'finished': true,
+            }));
   }
 
   void dismiss(Poll poll) => Firestore.instance
