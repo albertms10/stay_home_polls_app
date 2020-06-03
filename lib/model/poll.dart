@@ -11,6 +11,7 @@ class Poll {
   int voteValue;
   int voteCount;
   bool dismissed;
+  bool finished;
 
   Poll({
     this.id,
@@ -23,6 +24,7 @@ class Poll {
     this.voteValue,
     this.voteCount = 0,
     this.dismissed = false,
+    this.finished = true,
   });
 
   Poll.fromFirestore(DocumentSnapshot doc)
@@ -37,7 +39,8 @@ class Poll {
         isAuth = doc.data['isAuth'] ?? false,
         voteValue = doc.data['voteValue'],
         voteCount = doc.data['voteCount'] ?? 0,
-        dismissed = doc.data['dismissed'] ?? false;
+        dismissed = doc.data['dismissed'] ?? false,
+        finished = doc.data['finished'] ?? true;
 
   Map<String, dynamic> genericToJson() => {
         "title": title,
@@ -53,6 +56,7 @@ class Poll {
         "type": type,
         "voteValue": voteValue,
         "dismissed": dismissed,
+        "finished": finished,
       };
 
   @override
@@ -74,6 +78,7 @@ class SliderPoll extends Poll {
           voteValue: poll.voteValue,
           voteCount: poll.voteCount,
           dismissed: poll.dismissed,
+          finished: poll.finished,
         );
 
   SliderPoll({
@@ -87,6 +92,7 @@ class SliderPoll extends Poll {
     int voteValue,
     int voteCount,
     bool dismissed,
+    bool finished,
     this.voteAverage,
   }) : super(
           id: id,
@@ -99,6 +105,7 @@ class SliderPoll extends Poll {
           voteValue: voteValue,
           voteCount: voteCount,
           dismissed: dismissed,
+          finished: finished,
         );
 
   @override
@@ -133,6 +140,7 @@ class ChoicePoll extends Poll {
           voteValue: poll.voteValue,
           voteCount: poll.voteCount,
           dismissed: poll.dismissed,
+          finished: poll.finished,
         );
 
   ChoicePoll({
@@ -146,6 +154,7 @@ class ChoicePoll extends Poll {
     int voteValue,
     int voteCount,
     bool dismissed,
+    bool finished,
     this.optionsVoteCount,
   }) : super(
           id: id,
@@ -158,6 +167,7 @@ class ChoicePoll extends Poll {
           voteValue: voteValue,
           voteCount: voteCount,
           dismissed: dismissed,
+          finished: finished,
         );
 
   int get totalCount =>
