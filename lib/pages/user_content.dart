@@ -11,12 +11,9 @@ class UserContent extends StatelessWidget {
           (userPoll) => userPoll != null ? check(poll, userPoll) : false,
           orElse: () {});
 
-      if (userPoll == null) {
-        return false;
-      } else {
-        poll.voteValue = userPoll.voteValue;
-        return true;
-      }
+      if (userPoll == null) return false;
+      poll.voteValue = userPoll.voteValue;
+      return true;
     }).toList();
   }
 
