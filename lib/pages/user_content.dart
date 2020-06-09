@@ -9,7 +9,7 @@ class UserContent extends StatelessWidget {
     return pollsList.where((poll) {
       final userPoll = userPollsList.firstWhere(
           (userPoll) => userPoll != null ? check(poll, userPoll) : false,
-          orElse: () {});
+          orElse: () => null);
 
       if (userPoll == null) return false;
       poll.voteValue = userPoll.voteValue;
