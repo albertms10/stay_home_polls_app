@@ -55,6 +55,11 @@ class _SignInPageState extends State<SignInPage> {
         email: emailAndPassword.email.trim(),
         password: emailAndPassword.password.trim());
   }
+
+  void _signIn() {
+    if (_formKey.currentState.validate()) {
+      _waitAndCheckErrors(_signInWithEmailAndPassword);
+    }
   }
 
   @override
@@ -91,15 +96,12 @@ class _SignInPageState extends State<SignInPage> {
                 type: SignInTextFieldType.password,
                 controller: _password,
                 accentColor: accentColor,
+                action: _signIn,
               ),
               SizedBox(height: 32),
               SignInButton(
                 color: primaryColor,
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    _waitAndCheckErrors(_signInWithEmailAndPassword);
-                  }
-                },
+                onPressed: _signIn,
               ),
               SizedBox(height: 12),
               Row(

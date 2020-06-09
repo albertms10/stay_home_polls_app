@@ -6,8 +6,9 @@ class SignInTextField extends StatefulWidget {
   final SignInTextFieldType type;
   final TextEditingController controller;
   final Color accentColor;
+  final Function action;
 
-  SignInTextField({this.type, this.controller, this.accentColor});
+  SignInTextField({this.type, this.controller, this.accentColor, this.action});
 
   @override
   _SignInTextFieldState createState() => _SignInTextFieldState();
@@ -41,6 +42,12 @@ class _SignInTextFieldState extends State<SignInTextField> {
         labelStyle: TextStyle(color: Colors.grey[600]),
         suffixIcon: eye,
       ),
+      textInputAction: widget.type == SignInTextFieldType.email
+          ? TextInputAction.next
+          : TextInputAction.done,
+      onFieldSubmitted: (_) => widget.type == SignInTextFieldType.email
+          ? FocusScope.of(context).nextFocus()
+          : widget.action(),
       keyboardType: widget.type == SignInTextFieldType.email
           ? TextInputType.emailAddress
           : TextInputType.text,
