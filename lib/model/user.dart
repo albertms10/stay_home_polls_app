@@ -28,12 +28,15 @@ class User {
       .snapshots()
       .map(mapQueryPoll);
 
-  void addPoll(Poll poll) {
-    final res = Firestore.instance;
+  void addPoll(Poll poll) async {
+    final ref = Firestore.instance;
 
-    res.collection('polls').add(poll.genericToJson());
+    final pollRef = await ref.collection('polls').add(poll.genericToJson());
 
-    res.collection('users/$id/polls').add(poll.userToJson());
+    ref
+        .collection('users/$id/polls')
+        .document(pollRef.documentID)
+        .setData(poll.userToJson());
   }
 
   void vote(Poll poll, int value, [bool isAuth = false]) async {
