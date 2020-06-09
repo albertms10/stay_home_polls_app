@@ -49,9 +49,12 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  void _createUserWithEmailAndPassword(EmailAndPassword emailAndPassword) async {
+  void _createUserWithEmailAndPassword(
+      EmailAndPassword emailAndPassword) async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailAndPassword.email.trim(), password: emailAndPassword.password.trim());
+        email: emailAndPassword.email.trim(),
+        password: emailAndPassword.password.trim());
+  }
   }
 
   @override
