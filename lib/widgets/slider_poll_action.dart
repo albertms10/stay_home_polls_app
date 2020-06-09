@@ -73,6 +73,7 @@ class _SliderPollActionState extends State<SliderPollAction> {
                         thumbRadius: 40 * .4,
                         min: 1,
                         max: 100,
+                        state: voted,
                       ),
                       overlayColor: Colors.white.withOpacity(.4),
                       valueIndicatorColor: Colors.white,

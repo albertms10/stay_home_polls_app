@@ -4,9 +4,11 @@ class CustomSliderThumbCircle extends SliderComponentShape {
   final double thumbRadius;
   final int min;
   final int max;
+  final bool state;
 
   const CustomSliderThumbCircle({
     @required this.thumbRadius,
+    this.state = true,
     this.min = 0,
     this.max = 10,
   });
@@ -32,14 +34,14 @@ class CustomSliderThumbCircle extends SliderComponentShape {
     final Canvas canvas = context.canvas;
 
     final paint = Paint()
-      ..color = Colors.white
+      ..color = state ? Colors.teal : Colors.white
       ..style = PaintingStyle.fill;
 
     TextSpan span = new TextSpan(
       style: new TextStyle(
         fontSize: thumbRadius * .8,
         fontWeight: FontWeight.w700,
-        color: Colors.orangeAccent,
+        color: state ? Colors.white : Colors.orangeAccent,
       ),
       text: getValue(value),
     );
