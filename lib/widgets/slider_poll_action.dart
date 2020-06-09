@@ -18,6 +18,11 @@ class _SliderPollActionState extends State<SliderPollAction> {
   bool voted;
 
   @override
+  void setState(cb) {
+    if (this.mounted) super.setState(cb);
+  }
+
+  @override
   void initState() {
     super.initState();
     voteValue = widget.sliderPoll.voteValue != null
