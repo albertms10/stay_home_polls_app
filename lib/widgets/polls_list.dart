@@ -38,10 +38,10 @@ class PollsList extends StatelessWidget {
                         : null,
                   ),
                   onDismissed: (_) {
-                    polls.removeAt(index);
+                    user.dismiss(polls[index]);
                     _listKey.currentState.removeItem(index,
                         (context, animation) => PollTile(poll: polls[index]));
-                    user.dismiss(polls[index]);
+                    polls.removeAt(index);
                   },
                 ),
               );
