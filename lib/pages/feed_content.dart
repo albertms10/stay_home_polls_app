@@ -14,6 +14,7 @@ class FeedContent extends StatelessWidget {
 
       if (userPoll == null) return true;
       poll.voteValue = userPoll.voteValue;
+      poll.isAuth = userPoll.isAuth;
       return false;
     }).toList();
   }
