@@ -39,12 +39,10 @@ class User {
         .setData(poll.userToJson());
   }
 
-  void vote(Poll poll, int value, [bool isAuth = false]) async {
+  void vote(Poll poll, int value) async {
     final ref = Firestore.instance;
 
-    ref.collection('users/$id/polls').document(poll.id).setData({
-      'isAuth': isAuth,
-      'type': poll.type,
+    ref.collection('users/$id/polls').document(poll.id).updateData({
       'voteValue': value,
       'finished': false,
     });
