@@ -13,6 +13,7 @@ class UserContent extends StatelessWidget {
 
       if (userPoll == null) return false;
       poll.voteValue = userPoll.voteValue;
+      poll.isAuth = userPoll.isAuth;
       return true;
     }).toList();
   }
