@@ -10,7 +10,7 @@ class FeedContent extends StatelessWidget {
           (userPoll) => userPoll != null
               ? poll.id == userPoll.id && userPoll.finished
               : false,
-          orElse: () {});
+          orElse: () => null);
 
       if (userPoll == null) return true;
       poll.voteValue = userPoll.voteValue;
