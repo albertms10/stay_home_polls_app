@@ -22,6 +22,13 @@ class PollsList extends StatelessWidget {
             key: _listKey,
             initialItemCount: polls.length,
             itemBuilder: (context, index, animation) {
+              final _container = Container(
+                child: PollTile(poll: polls[index]),
+                margin: index == polls.length - 1
+                    ? const EdgeInsets.only(bottom: 50)
+                    : null,
+              );
+
               return SlideTransition(
                 position: animation.drive(
                   Tween<Offset>(
@@ -29,21 +36,20 @@ class PollsList extends StatelessWidget {
                     end: const Offset(0, 0),
                   ),
                 ),
-                child: Dismissible(
-                  key: Key(polls[index].id),
-                  child: Container(
-                    child: PollTile(poll: polls[index]),
-                    margin: index == polls.length - 1
-                        ? const EdgeInsets.only(bottom: 50)
-                        : null,
-                  ),
-                  onDismissed: (_) {
-                    user.dismiss(polls[index]);
-                    _listKey.currentState.removeItem(index,
-                        (context, animation) => PollTile(poll: polls[index]));
-                    polls.removeAt(index);
-                  },
-                ),
+                child: polls[index].isAuth || polls[index].voteValue != null
+                    ? _container
+                    : Dismissible(
+                        key: Key(polls[index].id),
+                        child: _container,
+                        onDismissed: (_) {
+                          user.dismiss(polls[index]);
+                          _listKey.currentState.removeItem(
+                              index,
+                              (context, animation) =>
+                                  PollTile(poll: polls[index]));
+                          polls.removeAt(index);
+                        },
+                      ),
               );
             })
         : NoPolls(text: Provider.of<String>(context));
