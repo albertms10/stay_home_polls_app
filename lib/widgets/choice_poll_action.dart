@@ -39,7 +39,7 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
 
   @override
   Widget build(BuildContext context) {
-    List<double> votes = new List(4);
+    List<double> votes = List(4);
 
     for (int i = 0; i < widget.choicePoll.optionsVoteCount.length; i++)
       votes[i] =

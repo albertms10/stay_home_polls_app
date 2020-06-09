@@ -60,9 +60,10 @@ class User {
     });
 
     Future.delayed(const Duration(seconds: 5)).then(
-        (_) => ref.collection('users/$id/polls').document(poll.id).updateData({
-              'finished': true,
-            }));
+      (_) => ref.collection('users/$id/polls').document(poll.id).updateData({
+        'finished': true,
+      }),
+    );
   }
 
   void dismiss(Poll poll) => Firestore.instance
