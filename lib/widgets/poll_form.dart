@@ -92,9 +92,18 @@ class _PollFormState extends State<PollForm> {
 
                         _poll.isAuth = true;
 
-                        Navigator.of(context).pop(_isSelected[0]
-                            ? SliderPoll.fromPoll(_poll)
-                            : ChoicePoll.fromPoll(_poll));
+                        Navigator.of(context).pop(
+                          _isSelected[0]
+                              ? SliderPoll.fromPoll(_poll)
+                              : ChoicePoll.fromPoll(
+                                  _poll,
+                                  List.filled(
+                                    _poll.options.length,
+                                    0,
+                                    growable: false,
+                                  ),
+                                ),
+                        );
                       }
                     },
                   ),
