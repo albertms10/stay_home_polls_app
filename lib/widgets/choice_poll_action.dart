@@ -23,7 +23,7 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
     _selectedValue = widget.choicePoll.voteValue != null
         ? widget.choicePoll.voteValue
         : null;
-    voted = widget.choicePoll.voteValue != null ? true : false;
+    voted = widget.choicePoll.voteValue != null;
   }
 
   _vote() => voted

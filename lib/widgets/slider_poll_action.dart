@@ -28,7 +28,7 @@ class _SliderPollActionState extends State<SliderPollAction> {
     voteValue = widget.sliderPoll.voteValue != null
         ? widget.sliderPoll.voteValue.toDouble()
         : 0;
-    voted = widget.sliderPoll.voteValue != null ? true : false;
+    voted = widget.sliderPoll.voteValue != null;
   }
 
   Function _vote() =>
