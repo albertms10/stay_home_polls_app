@@ -93,6 +93,11 @@ class _SliderPollActionState extends State<SliderPollAction> {
                   ),
                 ),
               ),
+              Text(
+                'Average: ${widget.sliderPoll.voteAverage.round()}',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.grey[600]),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
