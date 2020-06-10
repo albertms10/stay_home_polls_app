@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 
-class CustomSliderThumbCircle extends SliderComponentShape {
+class SliderPollThumbCircle extends SliderComponentShape {
   final double thumbRadius;
   final int min;
   final int max;
-  final bool state;
+  final bool voted;
 
-  const CustomSliderThumbCircle({
+  const SliderPollThumbCircle({
     @required this.thumbRadius,
-    this.state = true,
     this.min = 0,
     this.max = 10,
+    this.voted = false,
   });
 
   @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
-    return Size.fromRadius(thumbRadius);
-  }
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) =>
+      Size.fromRadius(thumbRadius);
 
   @override
   void paint(
@@ -34,23 +33,24 @@ class CustomSliderThumbCircle extends SliderComponentShape {
     final Canvas canvas = context.canvas;
 
     final paint = Paint()
-      ..color = state ? Colors.teal : Colors.white
+      ..color = voted ? Colors.white : Colors.teal
       ..style = PaintingStyle.fill;
 
-    TextSpan span = new TextSpan(
-      style: new TextStyle(
+    TextSpan span = TextSpan(
+      style: TextStyle(
         fontSize: thumbRadius * .8,
         fontWeight: FontWeight.w700,
-        color: state ? Colors.white : Colors.orangeAccent,
+        color: voted ? Colors.orangeAccent : Colors.white,
       ),
       text: getValue(value),
     );
 
-    TextPainter tp = new TextPainter(
+    TextPainter tp = TextPainter(
         text: span,
         textAlign: TextAlign.center,
         textDirection: TextDirection.ltr);
     tp.layout();
+
     Offset textCenter =
         Offset(center.dx - (tp.width / 2), center.dy - (tp.height / 2));
 
@@ -58,7 +58,5 @@ class CustomSliderThumbCircle extends SliderComponentShape {
     tp.paint(canvas, textCenter);
   }
 
-  String getValue(double value) {
-    return ((max * value).round()).toString();
-  }
+  String getValue(double value) => (max * value).round().toString();
 }
