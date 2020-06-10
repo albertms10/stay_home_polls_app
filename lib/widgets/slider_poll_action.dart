@@ -103,15 +103,11 @@ class _SliderPollActionState extends State<SliderPollAction> {
                 children: <Widget>[
                   Text(
                     widget.sliderPoll.options[0],
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(color: Colors.grey[600]),
                   ),
                   Text(
                     widget.sliderPoll.options[1],
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(color: Colors.grey[600]),
                   ),
                 ],
               )
