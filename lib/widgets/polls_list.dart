@@ -41,13 +41,12 @@ class PollsList extends StatelessWidget {
                     : Dismissible(
                         key: Key(polls[index].id),
                         child: _container,
-                        onDismissed: (_) {
+                        onDismissed: (direction) {
                           user.dismiss(polls[index]);
-                          _listKey.currentState.removeItem(
-                              index,
-                              (context, animation) =>
-                                  PollTile(poll: polls[index]));
                           polls.removeAt(index);
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text("Dismissed"),
+                          ));
                         },
                       ),
               );
