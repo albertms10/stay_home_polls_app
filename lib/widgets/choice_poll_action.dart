@@ -59,6 +59,22 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                     animationDuration: 500,
                     percent: _voteRatio(optionsVoteCount[i], totalCount),
                     backgroundColor: Colors.teal[50],
+                    linearGradient: LinearGradient(
+                      colors: [
+                        Colors.teal[400],
+                        Colors.teal[700],
+                      ]
+                          .map(
+                            (color) => color.withOpacity(
+                              _voteRatio(optionsVoteCount[i], totalCount),
+                            ),
+                          )
+                          .toList(),
+                      begin: const FractionalOffset(0.0, 0.0),
+                      end: const FractionalOffset(1.0, 1.0),
+                      stops: [0.0, 1.0],
+                      tileMode: TileMode.clamp,
+                    ),
                     center: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -69,9 +85,6 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                       ],
                     ),
                     linearStrokeCap: LinearStrokeCap.roundAll,
-                    progressColor: Colors.teal.withOpacity(
-                      _voteRatio(optionsVoteCount[i], totalCount),
-                    ),
                   ),
                 )
               : RadioListTile<int>(
