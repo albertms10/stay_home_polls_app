@@ -37,17 +37,19 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
           user.vote(widget.choicePoll, value);
         };
 
+  double _voteRatio(voteCount, totalCount) => voteCount / totalCount;
+
+  int _votePercentage(voteCount, totalCount) =>
+      (_voteRatio(voteCount, totalCount) * 100).round();
+
   @override
   Widget build(BuildContext context) {
-    List<double> votes = List(4);
-
-    for (int i = 0; i < widget.choicePoll.optionsVoteCount.length; i++)
-      votes[i] =
-          widget.choicePoll.optionsVoteCount[i] / widget.choicePoll.totalCount;
+    final List<int> optionsVoteCount = widget.choicePoll.optionsVoteCount;
+    final int totalCount = widget.choicePoll.totalCount;
 
     return Column(
       children: <Widget>[
-        for (int i = 0; i < widget.choicePoll.optionsVoteCount.length; i++)
+        for (int i = 0; i < optionsVoteCount.length; i++)
           voted
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -55,28 +57,29 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                     animation: true,
                     lineHeight: 40.0,
                     animationDuration: 500,
-                    percent: votes[i],
+                    percent: _voteRatio(optionsVoteCount[i], totalCount),
                     backgroundColor: Colors.teal[50],
                     center: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
+                        Text(widget.choicePoll.options[i]),
                         Text(
-                          widget.choicePoll.options[i],
-                        ),
-                        Text(
-                          '${(widget.choicePoll.optionsVoteCount[i] / widget.choicePoll.totalCount * 100).round()}%',
+                          '${_votePercentage(optionsVoteCount, totalCount)}%',
                         ),
                       ],
                     ),
                     linearStrokeCap: LinearStrokeCap.roundAll,
-                    progressColor: Colors.teal[(votes[i] * 10).round() * 100],
+                    progressColor: Colors.teal.withOpacity(
+                      _voteRatio(optionsVoteCount[i], totalCount),
+                    ),
                   ),
                 )
               : RadioListTile<int>(
                   title: Text(widget.choicePoll.options[i]),
                   secondary: voted
                       ? Text(
-                          '${(widget.choicePoll.optionsVoteCount[i] / widget.choicePoll.totalCount * 100).round()}%')
+                          '${_votePercentage(optionsVoteCount, totalCount)}%',
+                        )
                       : null,
                   value: i,
                   groupValue: _selectedValue,
