@@ -64,7 +64,7 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                       children: <Widget>[
                         Text(widget.choicePoll.options[i]),
                         Text(
-                          '${_votePercentage(optionsVoteCount, totalCount)}%',
+                          '${_votePercentage(optionsVoteCount[i], totalCount)}%',
                         ),
                       ],
                     ),
@@ -78,7 +78,7 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                   title: Text(widget.choicePoll.options[i]),
                   secondary: voted
                       ? Text(
-                          '${_votePercentage(optionsVoteCount, totalCount)}%',
+                          '${_votePercentage(optionsVoteCount[i], totalCount)}%',
                         )
                       : null,
                   value: i,
