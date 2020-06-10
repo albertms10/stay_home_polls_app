@@ -119,14 +119,13 @@ class SliderPollTrackShape extends SliderTrackShape {
     if (!rightTrackSegment.isEmpty)
       context.canvas.drawRect(rightTrackSegment, rightTrackPaint);
 
-    if (average != null)
-      context.canvas.drawCircle(
-        Offset(
-          trackRect.left + average * (trackRect.right - trackRect.left) / 100,
-          trackRect.top + trackRect.height / 2,
-        ),
-        4,
-        Paint()..color = Colors.orange[300],
+    if (average != null) {
+      final Offset offset = Offset(
+        trackRect.left + average * (trackRect.right - trackRect.left) / 100,
+        trackRect.top + trackRect.height / 2,
       );
+      context.canvas.drawCircle(offset, 6, Paint()..color = Colors.white);
+      context.canvas.drawCircle(offset, 4, Paint()..color = Colors.orange[300]);
+    }
   }
 }
