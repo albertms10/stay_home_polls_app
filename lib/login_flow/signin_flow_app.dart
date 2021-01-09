@@ -11,6 +11,7 @@ class SignInFlowApp extends StatelessWidget {
         accentColor: Colors.orangeAccent,
         textTheme: AppConstants.of(context).textTheme,
       ),
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SignInPage(),
         backgroundColor: Colors.white,
