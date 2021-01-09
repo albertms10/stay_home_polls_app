@@ -42,6 +42,7 @@ class StayHomePollsApp extends StatelessWidget {
         accentColor: Colors.orangeAccent,
         textTheme: AppConstants.of(context).textTheme,
       ),
+      debugShowCheckedModeBanner: false,
       home: HomePage(title: title),
     );
   }
