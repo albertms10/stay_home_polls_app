@@ -4,16 +4,16 @@ import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/model/user.dart';
 import 'package:stay_home_polls_app/widgets/polls_list.dart';
 
-class PollsContainer extends StatelessWidget {
-  final Stream<List<Poll>> streamPollsList;
-  final List<Poll> Function(List<Poll>, List<Poll>) filterCallback;
+class PollsContainer<T extends Poll> extends StatelessWidget {
+  final Stream<List<T>> streamPollsList;
+  final List<T> Function(List<T>, List<T>) filterCallback;
 
   const PollsContainer({this.streamPollsList, this.filterCallback});
 
-  StreamBuilder<List<Poll>> _streamBuilder(
-    stream,
-    Widget Function(List<Poll>) callback,
-  ) {
+  StreamBuilder<List<T>> _streamBuilder({
+    Stream<List<T>> stream,
+    Widget Function(BuildContext, List<T>) builder,
+  }) {
     return StreamBuilder(
       stream: stream,
       builder: (context, snapshot) {
@@ -26,7 +26,7 @@ class PollsContainer extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
 
           case ConnectionState.active:
-            return callback(snapshot.data);
+            return builder(context, snapshot.data);
 
           case ConnectionState.done:
             return const Center(child: Text('Connection done'));
@@ -43,13 +43,20 @@ class PollsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
-    return _streamBuilder(streamPollsList, (polls) {
-      return _streamBuilder(user.pollsSnapshots(), (userPolls) {
-        return PollsList(
-          polls:
-              filterCallback != null ? filterCallback(polls, userPolls) : polls,
+    return _streamBuilder(
+      stream: streamPollsList,
+      builder: (context, polls) {
+        return _streamBuilder(
+          stream: user.pollsSnapshots(),
+          builder: (context, userPolls) {
+            return PollsList(
+              polls: filterCallback != null
+                  ? filterCallback(polls, userPolls)
+                  : polls,
+            );
+          },
         );
-      });
-    });
+      },
+    );
   }
 }

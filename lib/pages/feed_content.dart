@@ -3,10 +3,10 @@ import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/pages/page_content.dart';
 import 'package:stay_home_polls_app/widgets/polls_container.dart';
 
-class FeedContent extends StatelessWidget {
+class FeedContent<T extends Poll> extends StatelessWidget {
   const FeedContent();
 
-  List<Poll> _filterCallback(List<Poll> pollsList, List<Poll> userPollsList) {
+  List<T> _filterCallback(List<T> pollsList, List<T> userPollsList) {
     return pollsList.where((poll) {
       final userPoll = userPollsList.firstWhere(
         (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
@@ -33,11 +33,11 @@ class FeedContent extends StatelessWidget {
       ],
       emptyMessage: 'You ran out of polls',
       children: [
-        PollsContainer(
+        PollsContainer<T>(
           streamPollsList: popularPollListSnapshots(),
           filterCallback: _filterCallback,
         ),
-        PollsContainer(
+        PollsContainer<T>(
           streamPollsList: latestPollListSnapshots(),
           filterCallback: _filterCallback,
         ),

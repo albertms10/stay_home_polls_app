@@ -3,13 +3,13 @@ import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/pages/page_content.dart';
 import 'package:stay_home_polls_app/widgets/polls_container.dart';
 
-class UserContent extends StatelessWidget {
+class UserContent<T extends Poll> extends StatelessWidget {
   const UserContent();
 
-  List<Poll> _filterCallback(
-    List<Poll> pollsList,
-    List<Poll> userPollsList,
-    bool Function(Poll, Poll) check,
+  List<T> _filterCallback(
+    List<T> pollsList,
+    List<T> userPollsList,
+    bool Function(T, T) check,
   ) {
     return pollsList.where((poll) {
       final userPoll = userPollsList.firstWhere(
@@ -35,7 +35,7 @@ class UserContent extends StatelessWidget {
       ],
       emptyMessage: 'No polls yet',
       children: [
-        PollsContainer(
+        PollsContainer<T>(
           streamPollsList: popularPollListSnapshots(),
           filterCallback: (pollsList, userPollsList) => _filterCallback(
             pollsList,
@@ -43,7 +43,7 @@ class UserContent extends StatelessWidget {
             (poll, userPoll) => poll.id == userPoll.id && userPoll.isAuth,
           ),
         ),
-        PollsContainer(
+        PollsContainer<T>(
           streamPollsList: popularPollListSnapshots(),
           filterCallback: (pollsList, userPollsList) => _filterCallback(
             pollsList,
