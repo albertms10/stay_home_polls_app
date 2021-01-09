@@ -9,12 +9,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.2
   cloud_firestore: ^0.13.5
+  cupertino_icons: ^0.1.2
   firebase_auth: ^0.15.3+1
-  provider: ^4.0.1
   google_fonts: ^1.1.0
+  pedantic: ^1.9.2
   percent_indicator: ^2.1.1
+  provider: ^4.0.1
 
 dev_dependencies:
   flutter_test:
