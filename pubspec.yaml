@@ -1,5 +1,5 @@
 name: stay_home_polls_app
-description: A new Flutter project.
+description: Stay Home Polls App
 
 version: 0.1.0+1
 
@@ -29,4 +29,5 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icons/logo.png"
+  image_path_ios: "assets/icons/ios_icon.png"
+  image_path_android: "assets/icons/android_icon.png"
