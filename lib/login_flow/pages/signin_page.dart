@@ -20,7 +20,7 @@ class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
 
   void _showSnackbar(String message, [Color backgroundColor = Colors.black87]) {
-    Scaffold.of(context).showSnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
         backgroundColor: backgroundColor,
@@ -80,7 +80,7 @@ class _SignInPageState extends State<SignInPage> {
             children: <Widget>[
               SizedBox(height: 120),
               Image(
-                image: AssetImage('assets/icons/logo.png'),
+                image: AssetImage('assets/icons/android_icon.png'),
                 height: 100,
               ),
               SizedBox(height: 16),
