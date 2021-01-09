@@ -13,6 +13,7 @@ class NewPoll extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
         ),
+        brightness: Brightness.dark,
       ),
       body: PollForm(),
     );

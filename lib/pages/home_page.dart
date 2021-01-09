@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
               .font
               .copyWith(fontWeight: FontWeight.bold),
         ),
+        brightness: Brightness.dark,
         actions: <Widget>[
           PopupMenuButton<String>(
             onSelected: (selected) {
@@ -88,11 +89,11 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Feed'),
+            label: 'Feed',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_circle),
-            title: Text('Me'),
+            label: 'Me',
           ),
         ],
         backgroundColor: Theme.of(context).primaryColor,
