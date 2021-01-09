@@ -6,27 +6,34 @@ import 'package:stay_home_polls_app/widgets/polls_list.dart';
 
 class PollsContainer extends StatelessWidget {
   final Stream<List<Poll>> streamPollsList;
-  final Function(List<Poll>, List<Poll>) filterCallback;
+  final List<Poll> Function(List<Poll>, List<Poll>) filterCallback;
 
-  PollsContainer({this.streamPollsList, this.filterCallback});
+  const PollsContainer({this.streamPollsList, this.filterCallback});
 
-  StreamBuilder _streamBuilder(stream, Function(List<Poll>) callback) {
+  StreamBuilder<List<Poll>> _streamBuilder(
+    stream,
+    Widget Function(List<Poll>) callback,
+  ) {
     return StreamBuilder(
       stream: stream,
-      builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError)
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
+        }
 
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
+
           case ConnectionState.active:
             return callback(snapshot.data);
+
           case ConnectionState.done:
-            return Center(child: Text("Connection done"));
+            return const Center(child: Text('Connection done'));
+
           case ConnectionState.none:
           default:
-            return Center(child: Text("No stream"));
+            return const Center(child: Text('No stream'));
         }
       },
     );
@@ -39,9 +46,9 @@ class PollsContainer extends StatelessWidget {
     return _streamBuilder(streamPollsList, (polls) {
       return _streamBuilder(user.pollsSnapshots(), (userPolls) {
         return PollsList(
-            polls: filterCallback != null
-                ? filterCallback(polls, userPolls)
-                : polls);
+          polls:
+              filterCallback != null ? filterCallback(polls, userPolls) : polls,
+        );
       });
     });
   }

@@ -7,7 +7,7 @@ class PageContent extends StatelessWidget {
   final List<Widget> children;
   final String emptyMessage;
 
-  PageContent({
+  const PageContent({
     @required this.tabs,
     @required this.children,
     this.emptyMessage,
@@ -18,10 +18,10 @@ class PageContent extends StatelessWidget {
     return Provider<String>.value(
       value: emptyMessage,
       child: DefaultTabController(
-        length: 2,
+        length: tabs.length,
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(kToolbarHeight),
+            preferredSize: const Size.fromHeight(kToolbarHeight),
             child: Container(
               height: 50.0,
               child: TabBar(
@@ -35,7 +35,7 @@ class PageContent extends StatelessWidget {
             ),
           ),
           body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             children: children,
           ),
         ),

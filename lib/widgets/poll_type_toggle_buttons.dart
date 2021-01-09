@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class PollTypeToggleButtons extends StatelessWidget {
-  final Function(int) onPressed;
+  final void Function(int) onPressed;
   final List<bool> isSelected;
 
-  PollTypeToggleButtons({@required this.onPressed, this.isSelected});
+  const PollTypeToggleButtons({@required this.onPressed, this.isSelected});
 
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
       selectedBorderColor: Theme.of(context).primaryColor,
-      borderRadius: const BorderRadius.all(Radius.circular(4)),
-      children: <Widget>[
+      borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+      children: const [
         PollTypeToggleButton(
           icon: Icon(Icons.tune),
           title: Text('Slider'),
@@ -37,13 +37,13 @@ class PollTypeToggleButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: 32,
-        vertical: 16,
+        horizontal: 32.0,
+        vertical: 16.0,
       ),
       child: Column(
-        children: <Widget>[
+        children: [
           icon,
-          SizedBox(height: 4),
+          const SizedBox(height: 4.0),
           title,
         ],
       ),

@@ -7,7 +7,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 class ChoicePollAction extends StatefulWidget {
   final ChoicePoll choicePoll;
 
-  ChoicePollAction({@required this.choicePoll});
+  const ChoicePollAction({@required this.choicePoll});
 
   @override
   _ChoicePollActionState createState() => _ChoicePollActionState();
@@ -15,49 +15,46 @@ class ChoicePollAction extends StatefulWidget {
 
 class _ChoicePollActionState extends State<ChoicePollAction> {
   int _selectedValue;
-  bool voted;
+  bool _voted;
 
   @override
   void initState() {
     super.initState();
-    _selectedValue = widget.choicePoll.voteValue != null
-        ? widget.choicePoll.voteValue
-        : null;
-    voted = widget.choicePoll.voteValue != null;
+
+    _selectedValue = widget.choicePoll.voteValue;
+    _voted = widget.choicePoll.voteValue != null;
   }
 
-  _vote() => voted
+  void Function(int) _getVoteFunction() => _voted
       ? null
       : (value) {
           setState(() {
             _selectedValue = value;
-            voted = true;
+            _voted = true;
           });
           final user = Provider.of<User>(context, listen: false);
           user.vote(widget.choicePoll, value);
         };
 
-  double _voteRatio(voteCount, totalCount) => voteCount / totalCount;
-
   int _votePercentage(voteCount, totalCount) =>
-      (_voteRatio(voteCount, totalCount) * 100).round();
+      ((voteCount / totalCount) * 100.0).round();
 
   @override
   Widget build(BuildContext context) {
-    final List<int> optionsVoteCount = widget.choicePoll.optionsVoteCount;
-    final int totalCount = widget.choicePoll.totalCount;
+    final optionsVoteCount = widget.choicePoll.optionsVoteCount;
+    final totalCount = widget.choicePoll.totalCount;
 
     return Column(
-      children: <Widget>[
-        for (int i = 0; i < optionsVoteCount.length; i++)
-          voted
+      children: [
+        for (var i = 0; i < optionsVoteCount.length; i++)
+          _voted
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: LinearPercentIndicator(
                     animation: true,
                     lineHeight: 40.0,
                     animationDuration: 500,
-                    percent: _voteRatio(optionsVoteCount[i], totalCount),
+                    percent: optionsVoteCount[i] / totalCount,
                     backgroundColor: Colors.teal[50],
                     linearGradient: LinearGradient(
                       colors: [
@@ -65,19 +62,18 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                         Colors.teal[700],
                       ]
                           .map(
-                            (color) => color.withOpacity(
-                              _voteRatio(optionsVoteCount[i], totalCount),
-                            ),
+                            (color) => color
+                                .withOpacity(optionsVoteCount[i] / totalCount),
                           )
                           .toList(),
                       begin: const FractionalOffset(0.0, 0.0),
                       end: const FractionalOffset(1.0, 1.0),
-                      stops: [0.0, 1.0],
+                      stops: const [0.0, 1.0],
                       tileMode: TileMode.clamp,
                     ),
                     center: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
+                      children: [
                         Text(widget.choicePoll.options[i]),
                         Text(
                           '${_votePercentage(optionsVoteCount[i], totalCount)}%',
@@ -89,14 +85,14 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                 )
               : RadioListTile<int>(
                   title: Text(widget.choicePoll.options[i]),
-                  secondary: voted
+                  secondary: _voted
                       ? Text(
                           '${_votePercentage(optionsVoteCount[i], totalCount)}%',
                         )
                       : null,
                   value: i,
                   groupValue: _selectedValue,
-                  onChanged: _vote(),
+                  onChanged: _getVoteFunction(),
                 ),
       ],
     );

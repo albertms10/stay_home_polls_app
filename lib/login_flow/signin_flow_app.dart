@@ -3,6 +3,8 @@ import 'package:stay_home_polls_app/login_flow/pages/signin_page.dart';
 import 'package:stay_home_polls_app/main.dart';
 
 class SignInFlowApp extends StatelessWidget {
+  const SignInFlowApp();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,7 +14,7 @@ class SignInFlowApp extends StatelessWidget {
         textTheme: AppConstants.of(context).textTheme,
       ),
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      home: const Scaffold(
         body: SignInPage(),
         backgroundColor: Colors.white,
       ),

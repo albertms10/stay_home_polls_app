@@ -6,88 +6,106 @@ import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/model/user.dart';
 import 'package:stay_home_polls_app/widgets/poll_tile.dart';
 
-class PollsList extends StatelessWidget {
+class PollsList extends StatefulWidget {
   final List<Poll> polls;
 
-  PollsList({this.polls});
+  const PollsList({this.polls});
 
-  final _listKey = GlobalKey<AnimatedListState>();
+  @override
+  _PollsListState createState() => _PollsListState();
+}
+
+class _PollsListState extends State<PollsList> {
+  GlobalKey<AnimatedListState> _listKey;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _listKey = GlobalKey<AnimatedListState>();
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
-    return polls.length > 0
-        ? AnimatedList(
-            key: _listKey,
-            initialItemCount: polls.length,
-            itemBuilder: (context, index, animation) {
-              final _container = Container(
-                child: PollTile(poll: polls[index]),
-                margin: index == polls.length - 1
-                    ? const EdgeInsets.only(bottom: 50)
-                    : null,
-              );
+    if (widget.polls.isEmpty) {
+      return NoPolls(text: Provider.of<String>(context));
+    }
 
-              return SlideTransition(
-                position: animation.drive(
-                  Tween<Offset>(
-                    begin: const Offset(0, 0),
-                    end: const Offset(0, 0),
-                  ),
+    return AnimatedList(
+      key: _listKey,
+      initialItemCount: widget.polls.length,
+      itemBuilder: (context, index, animation) {
+        final container = Container(
+          child: PollTile(poll: widget.polls[index]),
+          margin: index == widget.polls.length - 1
+              ? const EdgeInsets.only(bottom: 50.0)
+              : null,
+        );
+
+        return SlideTransition(
+          position: animation.drive(
+            Tween<Offset>(
+              begin: const Offset(0.0, 0.0),
+              end: const Offset(0.0, 0.0),
+            ),
+          ),
+          child: widget.polls[index].isAuth ||
+                  widget.polls[index].voteValue != null
+              ? container
+              : Dismissible(
+                  key: Key(widget.polls[index].id),
+                  child: container,
+                  onDismissed: (direction) {
+                    user.dismiss(widget.polls[index]);
+                    widget.polls.removeAt(index);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Dismissed')),
+                    );
+                  },
                 ),
-                child: polls[index].isAuth || polls[index].voteValue != null
-                    ? _container
-                    : Dismissible(
-                        key: Key(polls[index].id),
-                        child: _container,
-                        onDismissed: (direction) {
-                          user.dismiss(polls[index]);
-                          polls.removeAt(index);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Dismissed")),
-                          );
-                        },
-                      ),
-              );
-            })
-        : NoPolls(text: Provider.of<String>(context));
+        );
+      },
+    );
   }
 }
 
 class NoPolls extends StatelessWidget {
   final String text;
 
-  NoPolls({this.text});
+  const NoPolls({this.text});
 
   @override
   Widget build(BuildContext context) {
-    final _headline4 = Theme.of(context).textTheme.headline4;
-    final _random = Random();
-    const _emojis = [
-      "¯\\_(ツ)_/¯",
-      "⚆ _ ⚆",
-      "◔̯◔",
-      "(╯°□°)╯",
-      "ԅ། – . – །ᕗ",
-      "ᕙ(⇀ _ ↼)ᕗ",
-      "( ͡° ͜ʖ ͡°)",
+    final headline4 = Theme.of(context).textTheme.headline4;
+
+    const emojis = [
+      '¯\\_(ツ)_/¯',
+      '⚆ _ ⚆',
+      '◔̯◔',
+      '(╯°□°)╯',
+      'ԅ། – . – །ᕗ',
+      'ᕙ(⇀ _ ↼)ᕗ',
+      '( ͡° ͜ʖ ͡°)',
     ];
+
+    final nextEmojiIndex = Random().nextInt(emojis.length);
 
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
+        children: [
           Text(
             text,
-            style: _headline4.copyWith(fontSize: 24),
+            style: headline4.copyWith(fontSize: 24.0),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8.0),
           Text(
-            _emojis[_random.nextInt(_emojis.length)],
-            style: _headline4.copyWith(
-              fontSize: 18,
+            emojis[nextEmojiIndex],
+            style: headline4.copyWith(
+              fontSize: 18.0,
               fontFamily: GoogleFonts.notoSans().fontFamily,
             ),
           ),

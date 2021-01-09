@@ -6,38 +6,52 @@ class SignInTextField extends StatefulWidget {
   final SignInTextFieldType type;
   final TextEditingController controller;
   final Color accentColor;
-  final Function action;
+  final void Function() action;
 
-  SignInTextField({this.type, this.controller, this.accentColor, this.action});
+  const SignInTextField({
+    this.type,
+    this.controller,
+    this.accentColor,
+    this.action,
+  });
 
   @override
   _SignInTextFieldState createState() => _SignInTextFieldState();
 }
 
 class _SignInTextFieldState extends State<SignInTextField> {
-  var _viewPassword = false;
+  bool _viewPassword;
 
-  get isPassword => widget.type == SignInTextFieldType.password;
+  @override
+  void initState() {
+    super.initState();
+
+    _viewPassword = false;
+  }
+
+  bool get isPassword => widget.type == SignInTextFieldType.password;
 
   @override
   Widget build(BuildContext context) {
     Widget eye;
 
-    if (isPassword)
+    if (isPassword) {
       eye = IconButton(
         icon: Icon(_viewPassword ? Icons.visibility_off : Icons.visibility),
         onPressed: () => setState(() => _viewPassword = !_viewPassword),
       );
+    }
 
     return TextFormField(
       controller: widget.controller,
       validator: (value) {
-        if (value.isEmpty) return "Please, fill this field";
+        if (value.isEmpty) return 'Please, fill this field';
+
         return null;
       },
       decoration: InputDecoration(
         fillColor: widget.accentColor,
-        border: OutlineInputBorder(),
+        border: const OutlineInputBorder(),
         labelText: isPassword ? 'Password' : 'Email',
         labelStyle: TextStyle(color: Colors.grey[600]),
         suffixIcon: eye,
@@ -45,7 +59,7 @@ class _SignInTextFieldState extends State<SignInTextField> {
       textInputAction: widget.type == SignInTextFieldType.email
           ? TextInputAction.next
           : TextInputAction.done,
-      onFieldSubmitted: (_) => widget.type == SignInTextFieldType.email
+      onFieldSubmitted: (value) => widget.type == SignInTextFieldType.email
           ? FocusScope.of(context).nextFocus()
           : widget.action(),
       keyboardType: widget.type == SignInTextFieldType.email

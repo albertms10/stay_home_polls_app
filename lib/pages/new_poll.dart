@@ -3,6 +3,8 @@ import 'package:stay_home_polls_app/main.dart';
 import 'package:stay_home_polls_app/widgets/poll_form.dart';
 
 class NewPoll extends StatelessWidget {
+  const NewPoll();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +17,7 @@ class NewPoll extends StatelessWidget {
         ),
         brightness: Brightness.dark,
       ),
-      body: PollForm(),
+      body: const PollForm(),
     );
   }
 }

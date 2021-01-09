@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class PollFormOptions extends StatefulWidget {
   final List<String> optionTitles;
-  final Function(String, int) saveValue;
+  final void Function(String, int) saveValue;
   final int initialOptionsCount;
   final List<String> initialOptions;
 
-  PollFormOptions({
+  const PollFormOptions({
     Key key,
     @required this.optionTitles,
     this.saveValue,
@@ -24,14 +24,31 @@ class PollFormOptions extends StatefulWidget {
 }
 
 class _PollFormOptionsState extends State<PollFormOptions> {
-  List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controllers = [];
+
+    if (widget.initialOptions != null) {
+      for (final initialOption in widget.initialOptions) {
+        _addController(initialOption);
+      }
+    } else {
+      for (var i = 0; i < widget.initialOptionsCount; i++) {
+        _addController();
+      }
+    }
+  }
 
   bool get _canAddOptions => _controllers.length < widget.optionTitles.length;
 
   bool get _canRemoveOptions =>
       _controllers.length > widget.initialOptionsCount;
 
-  void _addController([text = ""]) {
+  void _addController([text = '']) {
     if (_canAddOptions) _controllers.add(TextEditingController(text: text));
   }
 
@@ -40,45 +57,35 @@ class _PollFormOptionsState extends State<PollFormOptions> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    if (widget.initialOptions != null)
-      for (int i = 0; i < widget.initialOptions.length; i++)
-        _addController(widget.initialOptions[i]);
-    else
-      for (int i = 0; i < widget.initialOptionsCount; i++) _addController();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
-        for (int i = 0; i < _controllers.length; i++)
+      children: [
+        for (var i = 0; i < _controllers.length; i++)
           Container(
-            margin: const EdgeInsets.only(bottom: 16),
+            margin: const EdgeInsets.only(bottom: 16.0),
             child: Row(
-              children: <Widget>[
+              children: [
                 Expanded(
                   child: TextFormField(
                     controller: _controllers[i],
                     validator: (option) {
-                      if (option.isEmpty) return "Please, provide an option";
+                      if (option.isEmpty) return 'Please, provide an option';
+
                       return null;
                     },
                     onSaved: (value) => widget.saveValue(value, i),
                     decoration: InputDecoration(
                       labelText: '${widget.optionTitles[i]} option',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
                     ),
                   ),
                 ),
                 if (i >= widget.initialOptionsCount)
                   Container(
-                    margin: const EdgeInsets.only(left: 8),
+                    margin: const EdgeInsets.only(left: 8.0),
                     child: IconButton(
-                      icon: Icon(Icons.delete),
-                      tooltip: "Delete option",
+                      icon: const Icon(Icons.delete),
+                      tooltip: 'Delete option',
                       color: Colors.grey[700],
                       onPressed: () => setState(() => _removeController(i)),
                     ),
@@ -88,8 +95,8 @@ class _PollFormOptionsState extends State<PollFormOptions> {
           ),
         if (_canAddOptions)
           OutlineButton.icon(
-            icon: Icon(Icons.add),
-            label: Text('Add option'),
+            icon: const Icon(Icons.add),
+            label: const Text('Add option'),
             onPressed: () => setState(_addController),
           ),
       ],

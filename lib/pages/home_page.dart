@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     _pageController = PageController();
   }
 
@@ -37,19 +38,19 @@ class _HomePageState extends State<HomePage> {
               .copyWith(fontWeight: FontWeight.bold),
         ),
         brightness: Brightness.dark,
-        actions: <Widget>[
+        actions: [
           PopupMenuButton<String>(
             onSelected: (selected) {
               switch (selected) {
-                case "Log out":
+                case 'Log out':
                   return FirebaseAuth.instance.signOut();
 
                 default:
                   return null;
               }
             },
-            itemBuilder: (BuildContext context) {
-              return {'Log out'}.map((String choice) {
+            itemBuilder: (context) {
+              return {'Log out'}.map((choice) {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice),
@@ -61,21 +62,22 @@ class _HomePageState extends State<HomePage> {
       ),
       body: PageView(
         controller: _pageController,
-        physics: NeverScrollableScrollPhysics(),
-        children: <Widget>[
+        physics: const NeverScrollableScrollPhysics(),
+        children: const [
           FeedContent(),
           UserContent(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (builder) => NewPoll()))
-              .then((poll) {
-            if (poll != null && poll is Poll)
-              Provider.of<User>(context, listen: false).addPoll(poll);
-          });
+        child: const Icon(Icons.add),
+        onPressed: () async {
+          final poll = await Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const NewPoll()),
+          );
+
+          if (poll != null && poll is Poll) {
+            Provider.of<User>(context, listen: false).addPoll(poll);
+          }
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -86,7 +88,7 @@ class _HomePageState extends State<HomePage> {
             _pageController.jumpToPage(tabIndex);
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Feed',

@@ -6,49 +6,57 @@ import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/model/user.dart';
 
 class SignInConfig {
-  bool canSignInAnonymously;
-  SignInConfig(this.canSignInAnonymously);
+  final bool canSignInAnonymously;
+
+  const SignInConfig({this.canSignInAnonymously = false});
 }
 
 class AuthStateSwitch extends StatelessWidget {
-  final SignInConfig signInConfig;
   final Widget app;
+  final SignInConfig signInConfig;
 
-  AuthStateSwitch(this.app, {bool canSignInAnonymously = false})
-      : signInConfig = SignInConfig(canSignInAnonymously);
+  const AuthStateSwitch({
+    this.app,
+    this.signInConfig = const SignInConfig(),
+  });
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<FirebaseUser>(
       stream: FirebaseAuth.instance.onAuthStateChanged,
-      builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+      builder: (context, snapshot) {
         if (snapshot.hasError) return SplashPage(error: snapshot.error);
 
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            return SplashPage(error: "Connection state is none");
+            return const SplashPage(error: 'Connection state is none');
 
           case ConnectionState.waiting:
-            return SplashPage();
+            return const SplashPage();
 
           case ConnectionState.active:
-            final FirebaseUser user = snapshot.data;
-            return user == null
-                ? Provider<SignInConfig>.value(
-                    value: signInConfig,
-                    child: SignInFlowApp(),
-                  )
-                : Provider<User>.value(
-                    value: User(
-                      id: user.uid,
-                      displayName: user.displayName,
-                    ),
-                    child: this.app,
-                  );
+            final user = snapshot.data;
+
+            if (user == null) {
+              return Provider<SignInConfig>.value(
+                value: signInConfig,
+                child: const SignInFlowApp(),
+              );
+            } else {
+              return Provider<User>.value(
+                value: User(
+                  id: user.uid,
+                  displayName: user.displayName,
+                ),
+                child: app,
+              );
+            }
+
+            break;
 
           case ConnectionState.done:
           default:
-            return SplashPage(error: "Connection state is done");
+            return const SplashPage(error: 'Connection state is done');
         }
       },
     );
