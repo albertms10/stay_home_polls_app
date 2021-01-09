@@ -44,9 +44,9 @@ class PollsList extends StatelessWidget {
                         onDismissed: (direction) {
                           user.dismiss(polls[index]);
                           polls.removeAt(index);
-                          Scaffold.of(context).showSnackBar(SnackBar(
-                            content: Text("Dismissed"),
-                          ));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Dismissed")),
+                          );
                         },
                       ),
               );
