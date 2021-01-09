@@ -29,34 +29,34 @@ class Poll {
 
   Poll.fromFirestore(DocumentSnapshot doc)
       : id = doc.documentID,
-        title = doc.data['title'] ?? '',
-        type = doc.data['type'] ?? '',
+        title = doc.data['title'] as String ?? '',
+        type = doc.data['type'] as String ?? '',
         options = doc.data['options'] != null
             ? (doc.data['options'] as List<dynamic>).cast<String>()
             : [],
-        createdAt = doc.data['createdAt'],
-        location = doc.data['location'],
-        isAuth = doc.data['isAuth'] ?? false,
-        voteValue = doc.data['voteValue'],
-        voteCount = doc.data['voteCount'] ?? 0,
-        dismissed = doc.data['dismissed'] ?? false,
-        finished = doc.data['finished'] ?? true;
+        createdAt = doc.data['createdAt'] as Timestamp,
+        location = doc.data['location'] as GeoPoint,
+        isAuth = doc.data['isAuth'] as bool ?? false,
+        voteValue = doc.data['voteValue'] as int,
+        voteCount = doc.data['voteCount'] as int ?? 0,
+        dismissed = doc.data['dismissed'] as bool ?? false,
+        finished = doc.data['finished'] as bool ?? true;
 
   Map<String, dynamic> genericToJson() => {
-        "title": title,
-        "type": type,
-        "options": options,
-        "createdAt": createdAt,
-        "location": location,
-        "voteCount": voteCount,
+        'title': title,
+        'type': type,
+        'options': options,
+        'createdAt': createdAt,
+        'location': location,
+        'voteCount': voteCount,
       };
 
   Map<String, dynamic> userToJson() => {
-        "isAuth": isAuth,
-        "type": type,
-        "voteValue": voteValue,
-        "dismissed": dismissed,
-        "finished": finished,
+        'isAuth': isAuth,
+        'type': type,
+        'voteValue': voteValue,
+        'dismissed': dismissed,
+        'finished': finished,
       };
 
   @override
@@ -65,21 +65,6 @@ class Poll {
 
 class SliderPoll extends Poll {
   double voteAverage;
-
-  SliderPoll.fromPoll(Poll poll, [this.voteAverage])
-      : super(
-          id: poll.id,
-          title: poll.title,
-          type: 'slider',
-          options: poll.options,
-          createdAt: poll.createdAt,
-          location: poll.location,
-          isAuth: poll.isAuth,
-          voteValue: poll.voteValue,
-          voteCount: poll.voteCount,
-          dismissed: poll.dismissed,
-          finished: poll.finished,
-        );
 
   SliderPoll({
     String id,
@@ -108,31 +93,11 @@ class SliderPoll extends Poll {
           finished: finished,
         );
 
-  @override
-  SliderPoll.fromFirestore(DocumentSnapshot doc)
-      : voteAverage = doc.data['voteAverage'] ?? 0,
-        super.fromFirestore(doc);
-
-  @override
-  Map<String, dynamic> genericToJson() => {
-        ...super.genericToJson(),
-        "voteAverage": voteAverage,
-      };
-
-  @override
-  String toString() {
-    return super.toString() + ' (${options[0]}, ${options[1]})';
-  }
-}
-
-class ChoicePoll extends Poll {
-  List<int> optionsVoteCount;
-
-  ChoicePoll.fromPoll(Poll poll, [this.optionsVoteCount])
+  SliderPoll.fromPoll(Poll poll, [this.voteAverage])
       : super(
           id: poll.id,
           title: poll.title,
-          type: 'choice',
+          type: 'slider',
           options: poll.options,
           createdAt: poll.createdAt,
           location: poll.location,
@@ -142,6 +107,26 @@ class ChoicePoll extends Poll {
           dismissed: poll.dismissed,
           finished: poll.finished,
         );
+
+  @override
+  SliderPoll.fromFirestore(DocumentSnapshot doc)
+      : voteAverage = doc.data['voteAverage'] as double ?? 0.0,
+        super.fromFirestore(doc);
+
+  @override
+  Map<String, dynamic> genericToJson() => {
+        ...super.genericToJson(),
+        'voteAverage': voteAverage,
+      };
+
+  @override
+  String toString() {
+    return super.toString() + ' (${options.first}, ${options.last})';
+  }
+}
+
+class ChoicePoll extends Poll {
+  List<int> optionsVoteCount;
 
   ChoicePoll({
     String id,
@@ -170,6 +155,21 @@ class ChoicePoll extends Poll {
           finished: finished,
         );
 
+  ChoicePoll.fromPoll(Poll poll, [this.optionsVoteCount])
+      : super(
+          id: poll.id,
+          title: poll.title,
+          type: 'choice',
+          options: poll.options,
+          createdAt: poll.createdAt,
+          location: poll.location,
+          isAuth: poll.isAuth,
+          voteValue: poll.voteValue,
+          voteCount: poll.voteCount,
+          dismissed: poll.dismissed,
+          finished: poll.finished,
+        );
+
   int get totalCount =>
       optionsVoteCount.reduce((value, element) => value + element);
 
@@ -183,7 +183,7 @@ class ChoicePoll extends Poll {
   @override
   Map<String, dynamic> genericToJson() => {
         ...super.genericToJson(),
-        "optionsVoteCount": optionsVoteCount,
+        'optionsVoteCount': optionsVoteCount,
       };
 
   @override
@@ -193,8 +193,7 @@ class ChoicePoll extends Poll {
 }
 
 List<Poll> mapQueryPoll(QuerySnapshot query) {
-  final List<DocumentSnapshot> docs = query.documents;
-  return docs.map((doc) {
+  return query.documents.map((doc) {
     if (doc.data['dismissed'] != null && doc.data['dismissed']) return null;
 
     switch (doc.data['type']) {

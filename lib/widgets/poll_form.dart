@@ -4,86 +4,116 @@ import 'package:stay_home_polls_app/widgets/poll_form_options.dart';
 import 'package:stay_home_polls_app/widgets/poll_type_toggle_buttons.dart';
 
 class PollForm extends StatefulWidget {
+  const PollForm();
+
   @override
   _PollFormState createState() => _PollFormState();
 }
 
 class _PollFormState extends State<PollForm> {
-  var _isSelected = [true, false];
-  var _poll = Poll();
-  var _titleController = TextEditingController();
+  GlobalKey<FormState> _formKey;
 
-  final _formKey = GlobalKey<FormState>();
+  TextEditingController _titleController;
 
-  void _saveTitleValue(String title) => setState(() => _poll.title = title);
+  Poll _poll;
+  List<bool> _isSelected;
 
-  void _saveOptionValue(String option, int index) => setState(() {
-        if (_poll.options == null) _poll.options = [];
-        if (index >= _poll.options.length)
-          _poll.options.add(option);
-        else
-          _poll.options[index] = option;
-      });
+  @override
+  void initState() {
+    super.initState();
+
+    _formKey = GlobalKey<FormState>();
+
+    _titleController = TextEditingController();
+
+    _poll = Poll();
+    _isSelected = [true, false];
+  }
+
+  void _saveTitleValue(String title) {
+    setState(() => _poll.title = title);
+  }
+
+  void _saveOptionValue(String option, int index) {
+    setState(() {
+      _poll.options ??= [];
+
+      if (index >= _poll.options.length) {
+        _poll.options.add(option);
+      } else {
+        _poll.options[index] = option;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    const _sliderPollOptions = ["Left", "Right"];
-    const _choicePollOptions = ["First", "Second", "Extra", "Extra"];
+    const sliderPollOptions = ['Left', 'Right'];
+    const choicePollOptions = ['First', 'Second', 'Extra', 'Extra'];
 
     return SingleChildScrollView(
       child: Container(
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.all(16.0),
         child: Column(
-          children: <Widget>[
+          children: [
             PollTypeToggleButtons(
               onPressed: (int index) {
                 setState(() {
                   _formKey.currentState.save();
-                  if (!_isSelected[index])
+
+                  if (!_isSelected[index]) {
                     _isSelected = _isSelected.map((value) => !value).toList();
+                  }
                 });
               },
               isSelected: _isSelected,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16.0),
             Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
+                children: [
                   TextFormField(
                     controller: _titleController,
                     validator: (title) {
-                      if (title.isEmpty) return "Please, provide a title";
+                      if (title.isEmpty) return 'Please, provide a title';
                       return null;
                     },
                     onSaved: _saveTitleValue,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Question title',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 16),
-                  Divider(),
-                  SizedBox(height: 16),
-                  if (_isSelected[0])
+                  const SizedBox(height: 16.0),
+                  const Divider(),
+                  const SizedBox(height: 16.0),
+                  if (_isSelected.first)
                     PollFormOptions(
-                      key: Key("slider"),
-                      optionTitles: _sliderPollOptions,
+                      key: const Key('slider'),
+                      optionTitles: sliderPollOptions,
                       initialOptions: _poll.options,
                       saveValue: _saveOptionValue,
                     )
                   else
                     PollFormOptions(
-                      key: Key("choice"),
-                      optionTitles: _choicePollOptions,
+                      key: const Key('choice'),
+                      optionTitles: choicePollOptions,
                       initialOptions: _poll.options,
                       saveValue: _saveOptionValue,
                     ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16.0),
                   FlatButton(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Text('Create poll'),
+                    child: const Text('Create poll'),
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
                     onPressed: () {
@@ -93,7 +123,7 @@ class _PollFormState extends State<PollForm> {
                         _poll.isAuth = true;
 
                         Navigator.of(context).pop(
-                          _isSelected[0]
+                          _isSelected.first
                               ? SliderPoll.fromPoll(_poll)
                               : ChoicePoll.fromPoll(
                                   _poll,

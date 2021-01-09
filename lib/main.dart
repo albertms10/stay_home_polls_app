@@ -7,30 +7,32 @@ void main() => runApp(
       AppConstants(
         font: GoogleFonts.getFont('Nunito'),
         textTheme: GoogleFonts.getTextTheme('Nunito'),
-        child: AuthStateSwitch(StayHomePollsApp()),
+        child: const AuthStateSwitch(app: StayHomePollsApp()),
       ),
     );
 
 class AppConstants extends InheritedWidget {
-  static AppConstants of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<AppConstants>();
-
-  const AppConstants({
-    @required this.font,
-    @required this.textTheme,
-    Widget child,
-    Key key,
-  })  : assert(font != null, textTheme != null),
-        super(key: key, child: child);
-
   final TextStyle font;
   final TextTheme textTheme;
 
+  const AppConstants({
+    Key key,
+    @required this.font,
+    @required this.textTheme,
+    Widget child,
+  })  : assert(font != null, textTheme != null),
+        super(key: key, child: child);
+
+  static AppConstants of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<AppConstants>();
+
   @override
-  bool updateShouldNotify(AppConstants oldWidget) => false;
+  bool updateShouldNotify(covariant AppConstants oldWidget) => false;
 }
 
 class StayHomePollsApp extends StatelessWidget {
+  const StayHomePollsApp();
+
   @override
   Widget build(BuildContext context) {
     const title = 'Stay Home Polls';
@@ -43,7 +45,7 @@ class StayHomePollsApp extends StatelessWidget {
         textTheme: AppConstants.of(context).textTheme,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(title: title),
+      home: const HomePage(title: title),
     );
   }
 }

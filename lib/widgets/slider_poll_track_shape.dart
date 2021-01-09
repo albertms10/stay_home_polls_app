@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class SliderPollTrackShape extends SliderTrackShape {
   final double average;
 
-  SliderPollTrackShape({this.average});
+  const SliderPollTrackShape({this.average});
 
   @override
   Rect getPreferredRect({
@@ -15,18 +15,19 @@ class SliderPollTrackShape extends SliderTrackShape {
     bool isEnabled,
     bool isDiscrete,
   }) {
-    final double thumbWidth =
+    final thumbWidth =
         sliderTheme.thumbShape.getPreferredSize(true, isDiscrete).width;
-    final double trackHeight = sliderTheme.trackHeight;
-    assert(thumbWidth >= 0);
-    assert(trackHeight >= 0);
+    final trackHeight = sliderTheme.trackHeight;
+
+    assert(thumbWidth >= 0.0);
+    assert(trackHeight >= 0.0);
     assert(parentBox.size.width >= thumbWidth);
     assert(parentBox.size.height >= trackHeight);
 
-    final double trackLeft = offset.dx + thumbWidth / 2;
-    final double trackTop =
-        offset.dy + (parentBox.size.height - trackHeight) / 2;
-    final double trackWidth = parentBox.size.width - thumbWidth;
+    final trackLeft = offset.dx + thumbWidth / 2.0;
+    final trackTop = offset.dy + (parentBox.size.height - trackHeight) / 2.0;
+    final trackWidth = parentBox.size.width - thumbWidth;
+
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 
@@ -55,32 +56,37 @@ class SliderPollTrackShape extends SliderTrackShape {
     assert(textDirection != null);
     assert(thumbCenter != null);
 
-    if (sliderTheme.trackHeight <= 0) return;
+    if (sliderTheme.trackHeight <= 0.0) return;
 
-    final ColorTween activeTrackColorTween = ColorTween(
-        begin: sliderTheme.disabledActiveTrackColor,
-        end: sliderTheme.activeTrackColor);
-    final ColorTween inactiveTrackColorTween = ColorTween(
-        begin: sliderTheme.disabledInactiveTrackColor,
-        end: sliderTheme.inactiveTrackColor);
-    final Paint activePaint = Paint()
+    final activeTrackColorTween = ColorTween(
+      begin: sliderTheme.disabledActiveTrackColor,
+      end: sliderTheme.activeTrackColor,
+    );
+    final inactiveTrackColorTween = ColorTween(
+      begin: sliderTheme.disabledInactiveTrackColor,
+      end: sliderTheme.inactiveTrackColor,
+    );
+    final activePaint = Paint()
       ..color = activeTrackColorTween.evaluate(enableAnimation);
-    final Paint inactivePaint = Paint()
+    final inactivePaint = Paint()
       ..color = inactiveTrackColorTween.evaluate(enableAnimation);
+
     Paint leftTrackPaint;
     Paint rightTrackPaint;
+
     switch (textDirection) {
       case TextDirection.ltr:
         leftTrackPaint = activePaint;
         rightTrackPaint = inactivePaint;
         break;
+
       case TextDirection.rtl:
         leftTrackPaint = inactivePaint;
         rightTrackPaint = activePaint;
         break;
     }
 
-    final Rect trackRect = getPreferredRect(
+    final trackRect = getPreferredRect(
       parentBox: parentBox,
       offset: offset,
       sliderTheme: sliderTheme,
@@ -88,44 +94,80 @@ class SliderPollTrackShape extends SliderTrackShape {
       isDiscrete: isDiscrete,
     );
 
-    final Rect leftTrackArcRect = Rect.fromLTWH(
-        trackRect.left, trackRect.top, trackRect.height, trackRect.height);
-    if (!leftTrackArcRect.isEmpty)
-      context.canvas.drawArc(
-          leftTrackArcRect, math.pi / 2, math.pi, false, leftTrackPaint);
-    final Rect rightTrackArcRect = Rect.fromLTWH(
-        trackRect.right - trackRect.height / 2,
-        trackRect.top,
-        trackRect.height,
-        trackRect.height);
-    if (!rightTrackArcRect.isEmpty)
-      context.canvas.drawArc(
-          rightTrackArcRect, -math.pi / 2, math.pi, false, rightTrackPaint);
+    final leftTrackArcRect = Rect.fromLTWH(
+      trackRect.left,
+      trackRect.top,
+      trackRect.height,
+      trackRect.height,
+    );
 
-    final Size thumbSize =
+    if (!leftTrackArcRect.isEmpty) {
+      context.canvas.drawArc(
+        leftTrackArcRect,
+        math.pi / 2.0,
+        math.pi,
+        false,
+        leftTrackPaint,
+      );
+    }
+
+    final rightTrackArcRect = Rect.fromLTWH(
+      trackRect.right - trackRect.height / 2.0,
+      trackRect.top,
+      trackRect.height,
+      trackRect.height,
+    );
+
+    if (!rightTrackArcRect.isEmpty) {
+      context.canvas.drawArc(
+        rightTrackArcRect,
+        -math.pi / 2.0,
+        math.pi,
+        false,
+        rightTrackPaint,
+      );
+    }
+
+    final thumbSize =
         sliderTheme.thumbShape.getPreferredSize(isEnabled, isDiscrete);
-    final Rect leftTrackSegment = Rect.fromLTRB(
-        trackRect.left + trackRect.height / 2,
-        trackRect.top,
-        thumbCenter.dx - thumbSize.width / 2,
-        trackRect.bottom);
-    if (!leftTrackSegment.isEmpty)
+    final leftTrackSegment = Rect.fromLTRB(
+      trackRect.left + trackRect.height / 2.0,
+      trackRect.top,
+      thumbCenter.dx - thumbSize.width / 2.0,
+      trackRect.bottom,
+    );
+
+    if (!leftTrackSegment.isEmpty) {
       context.canvas.drawRect(leftTrackSegment, leftTrackPaint);
-    final Rect rightTrackSegment = Rect.fromLTRB(
-        thumbCenter.dx + thumbSize.width / 2,
-        trackRect.top,
-        trackRect.right,
-        trackRect.bottom);
-    if (!rightTrackSegment.isEmpty)
+    }
+
+    final rightTrackSegment = Rect.fromLTRB(
+      thumbCenter.dx + thumbSize.width / 2.0,
+      trackRect.top,
+      trackRect.right,
+      trackRect.bottom,
+    );
+
+    if (!rightTrackSegment.isEmpty) {
       context.canvas.drawRect(rightTrackSegment, rightTrackPaint);
+    }
 
     if (average != null) {
-      final Offset offset = Offset(
-        trackRect.left + average * (trackRect.right - trackRect.left) / 100,
-        trackRect.top + trackRect.height / 2,
+      final offset = Offset(
+        trackRect.left + average * (trackRect.right - trackRect.left) / 100.0,
+        trackRect.top + trackRect.height / 2.0,
       );
-      context.canvas.drawCircle(offset, 6, Paint()..color = Colors.white);
-      context.canvas.drawCircle(offset, 4, Paint()..color = Colors.orange[300]);
+
+      context.canvas.drawCircle(
+        offset,
+        6.0,
+        Paint()..color = Colors.white,
+      );
+      context.canvas.drawCircle(
+        offset,
+        4.0,
+        Paint()..color = Colors.orange[300],
+      );
     }
   }
 }

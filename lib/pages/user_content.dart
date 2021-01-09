@@ -4,16 +4,24 @@ import 'package:stay_home_polls_app/pages/page_content.dart';
 import 'package:stay_home_polls_app/widgets/polls_container.dart';
 
 class UserContent extends StatelessWidget {
-  List<Poll> _filterCallback(List<Poll> pollsList, List<Poll> userPollsList,
-      Function(Poll, Poll) check) {
+  const UserContent();
+
+  List<Poll> _filterCallback(
+    List<Poll> pollsList,
+    List<Poll> userPollsList,
+    bool Function(Poll, Poll) check,
+  ) {
     return pollsList.where((poll) {
       final userPoll = userPollsList.firstWhere(
-          (userPoll) => userPoll != null ? check(poll, userPoll) : false,
-          orElse: () => null);
+        (userPoll) => userPoll != null ? check(poll, userPoll) : false,
+        orElse: () => null,
+      );
 
       if (userPoll == null) return false;
+
       poll.voteValue = userPoll.voteValue;
       poll.isAuth = userPoll.isAuth;
+
       return true;
     }).toList();
   }
@@ -21,9 +29,9 @@ class UserContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageContent(
-      tabs: [
-        Tab(text: "POSTED"),
-        Tab(text: "VOTED"),
+      tabs: const [
+        Tab(text: 'POSTED'),
+        Tab(text: 'VOTED'),
       ],
       emptyMessage: 'No polls yet',
       children: [

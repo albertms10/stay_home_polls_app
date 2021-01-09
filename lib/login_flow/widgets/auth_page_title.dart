@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class AuthPageTitle extends StatelessWidget {
   final String text;
-  AuthPageTitle(this.text);
+
+  const AuthPageTitle(this.text);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class AuthPageTitle extends StatelessWidget {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 30,
+          fontSize: 30.0,
           color: Colors.grey[500],
           fontWeight: FontWeight.w300,
         ),

@@ -4,11 +4,14 @@ import 'package:stay_home_polls_app/pages/page_content.dart';
 import 'package:stay_home_polls_app/widgets/polls_container.dart';
 
 class FeedContent extends StatelessWidget {
+  const FeedContent();
+
   List<Poll> _filterCallback(List<Poll> pollsList, List<Poll> userPollsList) {
     return pollsList.where((poll) {
       final userPoll = userPollsList.firstWhere(
-          (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
-          orElse: () => null);
+        (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
+        orElse: () => null,
+      );
 
       if (userPoll == null) return true;
 
@@ -16,6 +19,7 @@ class FeedContent extends StatelessWidget {
       poll.isAuth = userPoll.isAuth;
 
       if (!userPoll.finished) return true;
+
       return false;
     }).toList();
   }
@@ -23,9 +27,9 @@ class FeedContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageContent(
-      tabs: [
-        Tab(text: "POPULAR"),
-        Tab(text: "LATEST"),
+      tabs: const [
+        Tab(text: 'POPULAR'),
+        Tab(text: 'LATEST'),
       ],
       emptyMessage: 'You ran out of polls',
       children: [

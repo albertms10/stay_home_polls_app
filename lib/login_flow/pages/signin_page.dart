@@ -8,16 +8,39 @@ import 'package:stay_home_polls_app/login_flow/widgets/text_field.dart';
 import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
+  const SignInPage();
+
   @override
   _SignInPageState createState() => _SignInPageState();
 }
 
 class _SignInPageState extends State<SignInPage> {
-  var _showProgress = false;
-  var _email = TextEditingController();
-  var _password = TextEditingController();
+  GlobalKey<FormState> _formKey;
 
-  final _formKey = GlobalKey<FormState>();
+  TextEditingController _email;
+  TextEditingController _password;
+
+  bool _showProgress;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _formKey = GlobalKey<FormState>();
+
+    _email = TextEditingController();
+    _password = TextEditingController();
+
+    _showProgress = false;
+  }
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+
+    super.dispose();
+  }
 
   void _showSnackbar(String message, [Color backgroundColor = Colors.black87]) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -28,7 +51,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  void _waitAndCheckErrors(Function signInFunction) async {
+  void _waitAndCheckErrors(void Function() signInFunction) async {
     setState(() => _showProgress = true);
     try {
       await signInFunction();
@@ -50,10 +73,12 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   void _createUserWithEmailAndPassword(
-      EmailAndPassword emailAndPassword) async {
+    EmailAndPassword emailAndPassword,
+  ) async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailAndPassword.email.trim(),
-        password: emailAndPassword.password.trim());
+      email: emailAndPassword.email.trim(),
+      password: emailAndPassword.password.trim(),
+    );
   }
 
   void _signIn() {
@@ -64,73 +89,74 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_showProgress) return Center(child: CircularProgressIndicator());
+    if (_showProgress) return const Center(child: CircularProgressIndicator());
 
-    final SignInConfig config = Provider.of<SignInConfig>(context);
+    final config = Provider.of<SignInConfig>(context);
     final primaryColor = Theme.of(context).primaryColor;
     final accentColor = Theme.of(context).accentColor;
 
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SizedBox(height: 120),
-              Image(
+            children: [
+              const SizedBox(height: 120.0),
+              const Image(
                 image: AssetImage('assets/icons/android_icon.png'),
-                height: 100,
+                height: 100.0,
               ),
-              SizedBox(height: 16),
-              AuthPageTitle('StayHomePolls'),
-              SizedBox(height: 32),
+              const SizedBox(height: 16.0),
+              const AuthPageTitle('StayHomePolls'),
+              const SizedBox(height: 32.0),
               SignInTextField(
                 type: SignInTextFieldType.email,
                 controller: _email,
                 accentColor: accentColor,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16.0),
               SignInTextField(
                 type: SignInTextFieldType.password,
                 controller: _password,
                 accentColor: accentColor,
                 action: _signIn,
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32.0),
               SignInButton(
                 color: primaryColor,
                 onPressed: _signIn,
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
+                children: [
+                  const Text(
                     'First time here?',
                     style: TextStyle(
                       color: Colors.black45,
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8.0),
                   FlatButton(
-                    padding: const EdgeInsets.all(8),
-                    child: Text('Register'),
+                    padding: const EdgeInsets.all(8.0),
+                    child: const Text('Register'),
                     textColor: primaryColor,
-                    onPressed: () {
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(
-                              builder: (builder) => SignUpPage()))
-                          .then((result) {
-                        if (result != null && result is EmailAndPassword)
-                          _createUserWithEmailAndPassword(result);
-                      });
+                    onPressed: () async {
+                      final emailAndPassword = await Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => SignUpPage()),
+                      );
+
+                      if (emailAndPassword != null &&
+                          emailAndPassword is EmailAndPassword) {
+                        _createUserWithEmailAndPassword(emailAndPassword);
+                      }
                     },
                   ),
                 ],
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40.0),
               if (config.canSignInAnonymously)
                 FlatButton(
                   child: Text(

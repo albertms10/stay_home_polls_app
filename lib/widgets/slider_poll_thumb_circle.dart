@@ -17,6 +17,8 @@ class SliderPollThumbCircle extends SliderComponentShape {
   Size getPreferredSize(bool isEnabled, bool isDiscrete) =>
       Size.fromRadius(thumbRadius);
 
+  String _getMaxedValue(double value) => (max * value).round().toString();
+
   @override
   void paint(
     PaintingContext context,
@@ -32,33 +34,31 @@ class SliderPollThumbCircle extends SliderComponentShape {
     double textScaleFactor,
     Size sizeWithOverflow,
   }) {
-    final Canvas canvas = context.canvas;
+    final canvas = context.canvas;
 
     final paint = Paint()
       ..color = voted ? Colors.white : Colors.teal
       ..style = PaintingStyle.fill;
 
-    TextSpan span = TextSpan(
+    final textSpan = TextSpan(
       style: TextStyle(
-        fontSize: thumbRadius * .8,
+        fontSize: thumbRadius * 0.8,
         fontWeight: FontWeight.w700,
         color: voted ? Colors.orangeAccent : Colors.white,
       ),
-      text: getValue(value),
+      text: _getMaxedValue(value),
     );
 
-    TextPainter tp = TextPainter(
-        text: span,
+    final textPainter = TextPainter(
+        text: textSpan,
         textAlign: TextAlign.center,
         textDirection: TextDirection.ltr);
-    tp.layout();
+    textPainter.layout();
 
-    Offset textCenter =
-        Offset(center.dx - (tp.width / 2), center.dy - (tp.height / 2));
+    final textCenter = Offset(center.dx - (textPainter.width / 2.0),
+        center.dy - (textPainter.height / 2.0));
 
-    canvas.drawCircle(center, thumbRadius * .9, paint);
-    tp.paint(canvas, textCenter);
+    canvas.drawCircle(center, thumbRadius * 0.9, paint);
+    textPainter.paint(canvas, textCenter);
   }
-
-  String getValue(double value) => (max * value).round().toString();
 }
