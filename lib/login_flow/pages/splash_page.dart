@@ -23,7 +23,7 @@ class SplashPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Image(
-                  image: AssetImage('assets/icons/logo.png'),
+                  image: AssetImage('assets/icons/android_icon.png'),
                   height: 100,
                 ),
                 SizedBox(height: 6),
