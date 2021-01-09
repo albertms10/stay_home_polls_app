@@ -64,7 +64,7 @@ class _PollFormState extends State<PollForm> {
         child: Column(
           children: [
             PollTypeToggleButtons(
-              onPressed: (int index) {
+              onPressed: (index) {
                 setState(() {
                   _formKey.currentState.save();
 

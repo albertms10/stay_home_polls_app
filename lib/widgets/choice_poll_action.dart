@@ -32,8 +32,9 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
             _selectedValue = value;
             _voted = true;
           });
-          final user = Provider.of<User>(context, listen: false);
-          user.vote(widget.choicePoll, value);
+
+          Provider.of<User>(context, listen: false)
+              .vote(widget.choicePoll, value);
         };
 
   int _votePercentage(voteCount, totalCount) =>
