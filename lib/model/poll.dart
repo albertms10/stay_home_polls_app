@@ -155,7 +155,7 @@ class ChoicePoll extends Poll {
           finished: finished,
         );
 
-  ChoicePoll.fromPoll(Poll poll, [this.optionsVoteCount])
+  ChoicePoll.fromPoll(Poll poll, {this.optionsVoteCount})
       : super(
           id: poll.id,
           title: poll.title,

@@ -12,7 +12,7 @@ class User {
     this.polls,
   });
 
-  User.fromMap(Map<String, dynamic> snapshot, String id)
+  User.fromMap(Map<String, dynamic> snapshot, {String id})
       : id = id ?? '',
         displayName = snapshot['displayName'] as String ?? '',
         polls = snapshot['polls'] as List<Poll> ?? [];

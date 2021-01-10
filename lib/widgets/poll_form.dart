@@ -127,7 +127,7 @@ class _PollFormState extends State<PollForm> {
                               ? SliderPoll.fromPoll(_poll)
                               : ChoicePoll.fromPoll(
                                   _poll,
-                                  List.filled(
+                                  optionsVoteCount: List.filled(
                                     _poll.options.length,
                                     0,
                                     growable: false,
