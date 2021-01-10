@@ -17,12 +17,14 @@ class PollsList extends StatefulWidget {
 
 class _PollsListState extends State<PollsList> {
   GlobalKey<AnimatedListState> _listKey;
+  List<Poll> _polls;
 
   @override
   void initState() {
     super.initState();
 
     _listKey = GlobalKey<AnimatedListState>();
+    _polls = widget.polls;
   }
 
   bool shouldDismiss(Poll poll) => !poll.isAuth && poll.voteValue == null;
@@ -37,30 +39,36 @@ class _PollsListState extends State<PollsList> {
 
     return AnimatedList(
       key: _listKey,
-      initialItemCount: widget.polls.length,
+      initialItemCount: _polls.length,
       itemBuilder: (context, index, animation) {
+        final poll = _polls[index];
+
         final container = Container(
-          child: PollTile(poll: widget.polls[index]),
-          margin: index == widget.polls.length - 1
+          child: PollTile(poll: poll),
+          margin: index == _polls.length - 1
               ? const EdgeInsets.only(bottom: 50.0)
               : null,
         );
 
         return SlideTransition(
-          key: ValueKey(widget.polls[index].id),
+          key: ValueKey(poll.id),
           position: animation.drive(
             Tween<Offset>(
               begin: const Offset(0.0, 0.0),
               end: const Offset(0.0, 0.0),
             ),
           ),
-          child: shouldDismiss(widget.polls[index])
+          child: shouldDismiss(poll)
               ? Dismissible(
-                  key: Key(widget.polls[index].id),
+                  key: Key(poll.id),
                   child: container,
                   onDismissed: (direction) {
-                    user.dismiss(widget.polls[index]);
-                    widget.polls.removeAt(index);
+                    user.dismiss(poll);
+                    _listKey.currentState.removeItem(
+                      index,
+                      (context, animation) => const SizedBox(),
+                    );
+                    _polls.removeAt(index);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Dismissed')),
                     );
