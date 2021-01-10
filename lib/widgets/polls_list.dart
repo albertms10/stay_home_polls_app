@@ -33,7 +33,7 @@ class _PollsListState extends State<PollsList> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
 
-    if (widget.polls.isEmpty) {
+    if (_polls.isEmpty) {
       return NoPolls(text: Provider.of<String>(context));
     }
 
