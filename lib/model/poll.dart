@@ -171,7 +171,7 @@ class ChoicePoll extends Poll {
         );
 
   int get totalCount =>
-      optionsVoteCount.reduce((value, element) => value + element);
+      optionsVoteCount.fold(0, (prev, element) => prev + element);
 
   @override
   ChoicePoll.fromFirestore(DocumentSnapshot doc)
