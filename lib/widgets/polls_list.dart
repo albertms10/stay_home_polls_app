@@ -25,6 +25,8 @@ class _PollsListState extends State<PollsList> {
     _listKey = GlobalKey<AnimatedListState>();
   }
 
+  bool shouldDismiss(Poll poll) => !poll.isAuth && poll.voteValue == null;
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
@@ -45,16 +47,15 @@ class _PollsListState extends State<PollsList> {
         );
 
         return SlideTransition(
+          key: ValueKey(widget.polls[index].id),
           position: animation.drive(
             Tween<Offset>(
               begin: const Offset(0.0, 0.0),
               end: const Offset(0.0, 0.0),
             ),
           ),
-          child: widget.polls[index].isAuth ||
-                  widget.polls[index].voteValue != null
-              ? container
-              : Dismissible(
+          child: shouldDismiss(widget.polls[index])
+              ? Dismissible(
                   key: Key(widget.polls[index].id),
                   child: container,
                   onDismissed: (direction) {
@@ -64,7 +65,8 @@ class _PollsListState extends State<PollsList> {
                       const SnackBar(content: Text('Dismissed')),
                     );
                   },
-                ),
+                )
+              : container,
         );
       },
     );
