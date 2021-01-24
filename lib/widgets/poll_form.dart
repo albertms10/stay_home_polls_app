@@ -111,10 +111,12 @@ class _PollFormState extends State<PollForm> {
                       saveValue: _saveOptionValue,
                     ),
                   const SizedBox(height: 16.0),
-                  FlatButton(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    color: Theme.of(context).primaryColor,
-                    textColor: Colors.white,
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Theme.of(context).primaryColor,
+                      onPrimary: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    ),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();

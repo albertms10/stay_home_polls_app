@@ -98,9 +98,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                     const SizedBox(width: 8.0),
-                    FlatButton(
-                      padding: const EdgeInsets.all(8.0),
-                      textColor: primaryColor,
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        onSurface: primaryColor,
+                        padding: const EdgeInsets.all(8.0),
+                      ),
                       onPressed: () => Navigator.of(context).pop(),
                       child: const Text('Sign in'),
                     ),
