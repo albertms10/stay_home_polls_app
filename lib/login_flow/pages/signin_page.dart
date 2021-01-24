@@ -139,9 +139,11 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                   const SizedBox(width: 8.0),
-                  FlatButton(
-                    padding: const EdgeInsets.all(8.0),
-                    textColor: primaryColor,
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      onSurface: primaryColor,
+                      padding: const EdgeInsets.all(8.0),
+                    ),
                     onPressed: () async {
                       final emailAndPassword = await Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => SignUpPage()),
@@ -158,7 +160,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
               const SizedBox(height: 40.0),
               if (config.canSignInAnonymously)
-                FlatButton(
+                TextButton(
                   onPressed: () => _waitAndCheckErrors(_signInAnonymously),
                   child: Text(
                     'Sign in anonymously',

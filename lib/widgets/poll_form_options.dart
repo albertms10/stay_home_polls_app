@@ -94,7 +94,7 @@ class _PollFormOptionsState extends State<PollFormOptions> {
             ),
           ),
         if (_canAddOptions)
-          OutlineButton.icon(
+          OutlinedButton.icon(
             icon: const Icon(Icons.add),
             label: const Text('Add option'),
             onPressed: () => setState(_addController),
