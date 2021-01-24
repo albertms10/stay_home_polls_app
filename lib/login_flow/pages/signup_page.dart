@@ -44,8 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
-    final accentColor = Theme.of(context).accentColor;
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -67,18 +66,18 @@ class _SignUpPageState extends State<SignUpPage> {
                 SignInTextField(
                   type: SignInTextFieldType.email,
                   controller: _email,
-                  accentColor: accentColor,
+                  accentColor: theme.accentColor,
                 ),
                 const SizedBox(height: 24.0),
                 SignInTextField(
                   type: SignInTextFieldType.password,
                   controller: _password,
-                  accentColor: accentColor,
+                  accentColor: theme.accentColor,
                 ),
                 const SizedBox(height: 48.0),
                 SignInButton(
                   text: 'Register',
-                  color: primaryColor,
+                  color: theme.primaryColor,
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       Navigator.of(context).pop(
@@ -100,7 +99,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     const SizedBox(width: 8.0),
                     TextButton(
                       style: TextButton.styleFrom(
-                        onSurface: primaryColor,
+                        onSurface: theme.primaryColor,
                         padding: const EdgeInsets.all(8.0),
                       ),
                       onPressed: () => Navigator.of(context).pop(),
