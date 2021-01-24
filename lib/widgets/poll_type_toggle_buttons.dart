@@ -11,6 +11,8 @@ class PollTypeToggleButtons extends StatelessWidget {
     return ToggleButtons(
       selectedBorderColor: Theme.of(context).primaryColor,
       borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+      onPressed: onPressed,
+      isSelected: isSelected,
       children: const [
         PollTypeToggleButton(
           icon: Icon(Icons.tune),
@@ -21,8 +23,6 @@ class PollTypeToggleButtons extends StatelessWidget {
           title: Text('Choice'),
         ),
       ],
-      onPressed: onPressed,
-      isSelected: isSelected,
     );
   }
 }

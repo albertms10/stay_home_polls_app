@@ -69,7 +69,6 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
         onPressed: () async {
           final poll = await Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const NewPoll()),
@@ -79,6 +78,7 @@ class _HomePageState extends State<HomePage> {
             Provider.of<User>(context, listen: false).addPoll(poll);
           }
         },
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex:
