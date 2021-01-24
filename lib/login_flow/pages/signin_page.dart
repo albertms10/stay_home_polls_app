@@ -141,7 +141,6 @@ class _SignInPageState extends State<SignInPage> {
                   const SizedBox(width: 8.0),
                   FlatButton(
                     padding: const EdgeInsets.all(8.0),
-                    child: const Text('Register'),
                     textColor: primaryColor,
                     onPressed: () async {
                       final emailAndPassword = await Navigator.of(context).push(
@@ -153,17 +152,18 @@ class _SignInPageState extends State<SignInPage> {
                         _createUserWithEmailAndPassword(emailAndPassword);
                       }
                     },
+                    child: const Text('Register'),
                   ),
                 ],
               ),
               const SizedBox(height: 40.0),
               if (config.canSignInAnonymously)
                 FlatButton(
+                  onPressed: () => _waitAndCheckErrors(_signInAnonymously),
                   child: Text(
                     'Sign in anonymously',
                     style: TextStyle(color: Colors.grey[500]),
                   ),
-                  onPressed: () => _waitAndCheckErrors(_signInAnonymously),
                 ),
             ],
           ),

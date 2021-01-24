@@ -113,7 +113,6 @@ class _PollFormState extends State<PollForm> {
                   const SizedBox(height: 16.0),
                   FlatButton(
                     padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: const Text('Create poll'),
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
                     onPressed: () {
@@ -136,6 +135,7 @@ class _PollFormState extends State<PollForm> {
                         );
                       }
                     },
+                    child: const Text('Create poll'),
                   ),
                 ],
               ),

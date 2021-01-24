@@ -18,12 +18,12 @@ class SignInButton extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
       ),
+      color: color,
+      padding: const EdgeInsets.all(16.0),
       child: Text(
         text,
         style: const TextStyle(color: Colors.white, fontSize: 16.0),
       ),
-      color: color,
-      padding: const EdgeInsets.all(16.0),
     );
   }
 }

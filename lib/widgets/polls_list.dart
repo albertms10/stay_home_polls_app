@@ -44,10 +44,10 @@ class _PollsListState extends State<PollsList> {
         final poll = _polls[index];
 
         final container = Container(
-          child: PollTile(poll: poll),
           margin: index == _polls.length - 1
               ? const EdgeInsets.only(bottom: 50.0)
               : null,
+          child: PollTile(poll: poll),
         );
 
         return SlideTransition(
@@ -61,7 +61,6 @@ class _PollsListState extends State<PollsList> {
           child: shouldDismiss(poll)
               ? Dismissible(
                   key: Key(poll.id),
-                  child: container,
                   onDismissed: (direction) {
                     user.dismiss(poll);
                     _listKey.currentState.removeItem(
@@ -73,6 +72,7 @@ class _PollsListState extends State<PollsList> {
                       const SnackBar(content: Text('Dismissed')),
                     );
                   },
+                  child: container,
                 )
               : container,
         );
