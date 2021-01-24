@@ -91,9 +91,8 @@ class _SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     if (_showProgress) return const Center(child: CircularProgressIndicator());
 
+    final theme = Theme.of(context);
     final config = Provider.of<SignInConfig>(context);
-    final primaryColor = Theme.of(context).primaryColor;
-    final accentColor = Theme.of(context).accentColor;
 
     return SingleChildScrollView(
       child: Padding(
@@ -114,18 +113,18 @@ class _SignInPageState extends State<SignInPage> {
               SignInTextField(
                 type: SignInTextFieldType.email,
                 controller: _email,
-                accentColor: accentColor,
+                accentColor: theme.accentColor,
               ),
               const SizedBox(height: 16.0),
               SignInTextField(
                 type: SignInTextFieldType.password,
                 controller: _password,
-                accentColor: accentColor,
+                accentColor: theme.accentColor,
                 action: _signIn,
               ),
               const SizedBox(height: 32.0),
               SignInButton(
-                color: primaryColor,
+                color: theme.primaryColor,
                 onPressed: _signIn,
               ),
               const SizedBox(height: 12.0),
@@ -141,7 +140,7 @@ class _SignInPageState extends State<SignInPage> {
                   const SizedBox(width: 8.0),
                   TextButton(
                     style: TextButton.styleFrom(
-                      onSurface: primaryColor,
+                      onSurface: theme.primaryColor,
                       padding: const EdgeInsets.all(8.0),
                     ),
                     onPressed: () async {
