@@ -5,13 +5,13 @@ enum SignInTextFieldType { email, password }
 class SignInTextField extends StatefulWidget {
   final SignInTextFieldType type;
   final TextEditingController controller;
-  final Color accentColor;
+  final Color fillColor;
   final void Function() action;
 
   const SignInTextField({
     this.type,
     this.controller,
-    this.accentColor,
+    this.fillColor,
     this.action,
   });
 
@@ -50,7 +50,7 @@ class _SignInTextFieldState extends State<SignInTextField> {
         return null;
       },
       decoration: InputDecoration(
-        fillColor: widget.accentColor,
+        fillColor: widget.fillColor,
         border: const OutlineInputBorder(),
         labelText: isPassword ? 'Password' : 'Email',
         labelStyle: TextStyle(color: Colors.grey[600]),

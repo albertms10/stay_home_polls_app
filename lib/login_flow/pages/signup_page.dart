@@ -66,13 +66,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 SignInTextField(
                   type: SignInTextFieldType.email,
                   controller: _email,
-                  accentColor: theme.accentColor,
+                  fillColor: theme.colorScheme.secondary,
                 ),
                 const SizedBox(height: 24.0),
                 SignInTextField(
                   type: SignInTextFieldType.password,
                   controller: _password,
-                  accentColor: theme.accentColor,
+                  fillColor: theme.colorScheme.secondary,
                 ),
                 const SizedBox(height: 48.0),
                 SignInButton(

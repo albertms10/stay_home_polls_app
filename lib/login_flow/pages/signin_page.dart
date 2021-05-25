@@ -51,7 +51,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  void _waitAndCheckErrors(void Function() signInFunction) async {
+  void _waitAndCheckErrors(Future<void> Function() signInFunction) async {
     setState(() => _showProgress = true);
     try {
       await signInFunction();
@@ -113,13 +113,13 @@ class _SignInPageState extends State<SignInPage> {
               SignInTextField(
                 type: SignInTextFieldType.email,
                 controller: _email,
-                accentColor: theme.accentColor,
+                fillColor: theme.colorScheme.secondary,
               ),
               const SizedBox(height: 16.0),
               SignInTextField(
                 type: SignInTextFieldType.password,
                 controller: _password,
-                accentColor: theme.accentColor,
+                fillColor: theme.colorScheme.secondary,
                 action: _signIn,
               ),
               const SizedBox(height: 32.0),
