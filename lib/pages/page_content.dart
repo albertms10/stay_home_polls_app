@@ -29,7 +29,7 @@ class PageContent extends StatelessWidget {
                 labelStyle: AppConstants.of(context)
                     .font
                     .copyWith(fontWeight: FontWeight.bold),
-                labelColor: Theme.of(context).accentColor,
+                labelColor: Theme.of(context).colorScheme.secondary,
                 tabs: tabs,
               ),
             ),
