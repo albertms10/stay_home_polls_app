@@ -37,7 +37,7 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
               .vote(widget.choicePoll, value);
         };
 
-  int _votePercentage(voteCount, totalCount) =>
+  int _votePercentage(int voteCount, int totalCount) =>
       ((voteCount / totalCount) * 100.0).round();
 
   @override
