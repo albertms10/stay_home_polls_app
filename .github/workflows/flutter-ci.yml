@@ -49,7 +49,7 @@ jobs:
     name: Android build
     runs-on: ubuntu-latest
     needs: [analyze]
-    if: $ {{ false }} # ${{ github.event.pull_request.draft == false }}
+    if: ${{ false }} # ${{ github.event.pull_request.draft == false }}
 
     steps:
       - uses: actions/checkout@v2
