@@ -5,18 +5,22 @@
 An app for sharing surveys in an interactive and anonymous way, mainly on sociocultural issues
 produced by the period of confinement by COVID-19 and its causes and consequences.
 
+<div style="display: flex">
+
 ### Sign in
 
-![Sign in](docs/img/sign_in.jpg)
+<img src="docs/img/sign_in.jpg" alt="Sign in" width="300">
 
 ### Popular polls
 
-![Popular polls](docs/img/popular.jpg)
+<img src="docs/img/popular.jpg" alt="Popular polls" width="300">
 
 ### Voted polls
 
-![Voted polls](docs/img/voted.jpg)
+<img src="docs/img/voted.jpg" alt="Voted polls" width="300">
 
 ### New poll
 
-![New poll](docs/img/new_poll.jpg)
+<img src="docs/img/new_poll.jpg" alt="New poll" width="300">
+
+</div>
