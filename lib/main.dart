@@ -31,7 +31,7 @@ class AppConstants extends InheritedWidget {
 }
 
 class StayHomePollsApp extends StatelessWidget {
-  const StayHomePollsApp();
+  const StayHomePollsApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

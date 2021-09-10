@@ -9,7 +9,7 @@ import 'package:stay_home_polls_app/widgets/poll_tile.dart';
 class PollsList extends StatefulWidget {
   final List<Poll> polls;
 
-  const PollsList({this.polls});
+  const PollsList({Key key, this.polls}) : super(key: key);
 
   @override
   _PollsListState createState() => _PollsListState();
@@ -54,8 +54,8 @@ class _PollsListState extends State<PollsList> {
           key: ValueKey(poll.id),
           position: animation.drive(
             Tween<Offset>(
-              begin: const Offset(0.0, 0.0),
-              end: const Offset(0.0, 0.0),
+              begin: Offset.zero,
+              end: Offset.zero,
             ),
           ),
           child: shouldDismiss(poll)
@@ -84,14 +84,14 @@ class _PollsListState extends State<PollsList> {
 class NoPolls extends StatelessWidget {
   final String text;
 
-  const NoPolls({this.text});
+  const NoPolls({Key key, this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final headline4 = Theme.of(context).textTheme.headline4;
 
     const emojis = [
-      '¯\\_(ツ)_/¯',
+      r'¯\_(ツ)_/¯',
       '⚆ _ ⚆',
       '◔̯◔',
       '(╯°□°)╯',

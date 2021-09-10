@@ -4,7 +4,7 @@ import 'package:stay_home_polls_app/widgets/poll_form_options.dart';
 import 'package:stay_home_polls_app/widgets/poll_type_toggle_buttons.dart';
 
 class PollForm extends StatefulWidget {
-  const PollForm();
+  const PollForm({Key key}) : super(key: key);
 
   @override
   _PollFormState createState() => _PollFormState();

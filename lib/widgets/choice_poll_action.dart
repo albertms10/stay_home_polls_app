@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
 import 'package:stay_home_polls_app/model/user.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 class ChoicePollAction extends StatefulWidget {
   final ChoicePoll choicePoll;
 
-  const ChoicePollAction({@required this.choicePoll});
+  const ChoicePollAction({Key key, @required this.choicePoll})
+      : super(key: key);
 
   @override
   _ChoicePollActionState createState() => _ChoicePollActionState();
@@ -54,7 +55,6 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                   child: LinearPercentIndicator(
                     animation: true,
                     lineHeight: 40.0,
-                    animationDuration: 500,
                     percent: optionsVoteCount[i] / totalCount,
                     backgroundColor: Colors.teal[50],
                     linearGradient: LinearGradient(
@@ -67,17 +67,17 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                                 .withOpacity(optionsVoteCount[i] / totalCount),
                           )
                           .toList(),
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 1.0),
+                      begin: FractionalOffset.topLeft,
+                      end: FractionalOffset.bottomRight,
                       stops: const [0.0, 1.0],
-                      tileMode: TileMode.clamp,
                     ),
                     center: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(widget.choicePoll.options[i]),
                         Text(
-                          '${_votePercentage(optionsVoteCount[i], totalCount)}%',
+                          '${_votePercentage(optionsVoteCount[i], totalCount)}'
+                          '%',
                         ),
                       ],
                     ),
@@ -88,7 +88,8 @@ class _ChoicePollActionState extends State<ChoicePollAction> {
                   title: Text(widget.choicePoll.options[i]),
                   secondary: _voted
                       ? Text(
-                          '${_votePercentage(optionsVoteCount[i], totalCount)}%',
+                          '${_votePercentage(optionsVoteCount[i], totalCount)}'
+                          '%',
                         )
                       : null,
                   value: i,

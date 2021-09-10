@@ -14,6 +14,8 @@ class EmailAndPassword {
 }
 
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key key}) : super(key: key);
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }

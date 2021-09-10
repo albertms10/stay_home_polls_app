@@ -7,21 +7,21 @@ environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   async: ^2.4.2
   cloud_firestore: ^0.13.5
   cupertino_icons: ^0.1.2
   firebase_auth: ^0.15.3+1
+  flutter:
+    sdk: flutter
   google_fonts: ^1.1.0
   percent_indicator: ^2.1.1
   provider: ^4.0.1
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.7.3
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.7.3
-  flutter_lints: ^1.0.3
+  very_good_analysis: ^2.3.0
 
 flutter:
   uses-material-design: true

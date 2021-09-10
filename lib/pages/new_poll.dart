@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stay_home_polls_app/main.dart';
 import 'package:stay_home_polls_app/widgets/poll_form.dart';
 
 class NewPoll extends StatelessWidget {
-  const NewPoll();
+  const NewPoll({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class NewPoll extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
         ),
-        brightness: Brightness.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
       ),
       body: const PollForm(),
     );

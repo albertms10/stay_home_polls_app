@@ -3,7 +3,7 @@ import 'package:stay_home_polls_app/login_flow/pages/signin_page.dart';
 import 'package:stay_home_polls_app/main.dart';
 
 class SignInFlowApp extends StatelessWidget {
-  const SignInFlowApp();
+  const SignInFlowApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

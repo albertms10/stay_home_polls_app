@@ -9,7 +9,8 @@ class PollsContainer<T extends Poll> extends StatelessWidget {
   final Stream<List<T>> streamPollsList;
   final List<T> Function(List<T>, List<T>) filterCallback;
 
-  const PollsContainer({this.streamPollsList, this.filterCallback});
+  const PollsContainer({Key key, this.streamPollsList, this.filterCallback})
+      : super(key: key);
 
   StreamBuilder<List<List<T>>> _streamsBuilder({
     Stream<List<List<T>>> streams,
@@ -47,7 +48,7 @@ class PollsContainer<T extends Poll> extends StatelessWidget {
     return _streamsBuilder(
       streams: StreamZip([
         streamPollsList,
-        user.pollsSnapshots(),
+        user.pollsSnapshots() as Stream<List<T>>,
       ]),
       builder: (context, streams) {
         final polls = streams.data.first;

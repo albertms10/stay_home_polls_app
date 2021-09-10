@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:stay_home_polls_app/login_flow/signin_flow_app.dart';
-import 'package:stay_home_polls_app/login_flow/pages/splash_page.dart';
 import 'package:provider/provider.dart';
+import 'package:stay_home_polls_app/login_flow/pages/splash_page.dart';
+import 'package:stay_home_polls_app/login_flow/signin_flow_app.dart';
 import 'package:stay_home_polls_app/model/user.dart';
 
 class SignInConfig {
@@ -16,9 +16,10 @@ class AuthStateSwitch extends StatelessWidget {
   final SignInConfig signInConfig;
 
   const AuthStateSwitch({
+    Key key,
     this.app,
     this.signInConfig = const SignInConfig(),
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

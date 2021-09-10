@@ -8,10 +8,11 @@ class PageContent extends StatelessWidget {
   final String emptyMessage;
 
   const PageContent({
+    Key key,
     @required this.tabs,
     @required this.children,
     this.emptyMessage,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class PageContent extends StatelessWidget {
         child: Scaffold(
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
-            child: Container(
+            child: SizedBox(
               height: 50.0,
               child: TabBar(
                 unselectedLabelColor: Colors.grey,

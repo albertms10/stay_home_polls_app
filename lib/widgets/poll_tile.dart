@@ -6,7 +6,7 @@ import 'package:stay_home_polls_app/widgets/slider_poll_action.dart';
 class PollTile extends StatelessWidget {
   final Poll poll;
 
-  const PollTile({@required this.poll});
+  const PollTile({Key key, @required this.poll}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

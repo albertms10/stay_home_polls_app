@@ -50,13 +50,15 @@ class SliderPollThumbCircle extends SliderComponentShape {
     );
 
     final textPainter = TextPainter(
-        text: textSpan,
-        textAlign: TextAlign.center,
-        textDirection: TextDirection.ltr);
-    textPainter.layout();
+      text: textSpan,
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    )..layout();
 
-    final textCenter = Offset(center.dx - (textPainter.width / 2.0),
-        center.dy - (textPainter.height / 2.0));
+    final textCenter = Offset(
+      center.dx - (textPainter.width / 2.0),
+      center.dy - (textPainter.height / 2.0),
+    );
 
     canvas.drawCircle(center, thumbRadius * 0.9, paint);
     textPainter.paint(canvas, textCenter);

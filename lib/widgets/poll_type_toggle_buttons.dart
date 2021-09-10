@@ -4,7 +4,11 @@ class PollTypeToggleButtons extends StatelessWidget {
   final void Function(int) onPressed;
   final List<bool> isSelected;
 
-  const PollTypeToggleButtons({@required this.onPressed, this.isSelected});
+  const PollTypeToggleButtons({
+    Key key,
+    @required this.onPressed,
+    this.isSelected,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,11 @@ class PollTypeToggleButton extends StatelessWidget {
   final Text title;
   final Icon icon;
 
-  const PollTypeToggleButton({@required this.title, @required this.icon});
+  const PollTypeToggleButton({
+    Key key,
+    @required this.title,
+    @required this.icon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

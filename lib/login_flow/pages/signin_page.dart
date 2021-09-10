@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/login_flow/auth_state_switch.dart';
 import 'package:stay_home_polls_app/login_flow/pages/signup_page.dart';
 import 'package:stay_home_polls_app/login_flow/widgets/auth_page_title.dart';
 import 'package:stay_home_polls_app/login_flow/widgets/button_sign_in.dart';
 import 'package:stay_home_polls_app/login_flow/widgets/text_field.dart';
-import 'package:provider/provider.dart';
 
 class SignInPage extends StatefulWidget {
-  const SignInPage();
+  const SignInPage({Key key}) : super(key: key);
 
   @override
   _SignInPageState createState() => _SignInPageState();
@@ -51,28 +51,30 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  void _waitAndCheckErrors(Future<void> Function() signInFunction) async {
+  Future<void> _waitAndCheckErrors(
+    Future<void> Function() signInFunction,
+  ) async {
     setState(() => _showProgress = true);
     try {
       await signInFunction();
-    } catch (e) {
+    } on Exception catch (e) {
       _showSnackbar(e.toString(), Colors.red);
       setState(() => _showProgress = false);
     }
   }
 
-  void _signInAnonymously() async {
+  Future<void> _signInAnonymously() async {
     await FirebaseAuth.instance.signInAnonymously();
   }
 
-  void _signInWithEmailAndPassword() async {
+  Future<void> _signInWithEmailAndPassword() async {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: _email.text.trim(),
       password: _password.text.trim(),
     );
   }
 
-  void _createUserWithEmailAndPassword(
+  Future<void> _createUserWithEmailAndPassword(
     EmailAndPassword emailAndPassword,
   ) async {
     await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -144,13 +146,16 @@ class _SignInPageState extends State<SignInPage> {
                       padding: const EdgeInsets.all(8.0),
                     ),
                     onPressed: () async {
-                      final emailAndPassword = await Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => SignUpPage()),
+                      final emailAndPassword =
+                          await Navigator.of(context).push<EmailAndPassword>(
+                        MaterialPageRoute(
+                          builder: (context) => const SignUpPage(),
+                        ),
                       );
 
                       if (emailAndPassword != null &&
                           emailAndPassword is EmailAndPassword) {
-                        _createUserWithEmailAndPassword(emailAndPassword);
+                        await _createUserWithEmailAndPassword(emailAndPassword);
                       }
                     },
                     child: const Text('Register'),

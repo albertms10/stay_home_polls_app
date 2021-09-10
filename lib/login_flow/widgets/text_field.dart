@@ -9,11 +9,12 @@ class SignInTextField extends StatefulWidget {
   final void Function() action;
 
   const SignInTextField({
+    Key key,
     this.type,
     this.controller,
     this.fillColor,
     this.action,
-  });
+  }) : super(key: key);
 
   @override
   _SignInTextFieldState createState() => _SignInTextFieldState();

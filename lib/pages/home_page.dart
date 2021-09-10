@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:stay_home_polls_app/main.dart';
 import 'package:stay_home_polls_app/model/poll.dart';
@@ -11,7 +12,7 @@ import 'package:stay_home_polls_app/pages/user_content.dart';
 class HomePage extends StatefulWidget {
   final String title;
 
-  const HomePage({this.title});
+  const HomePage({Key key, this.title}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -37,16 +38,17 @@ class _HomePageState extends State<HomePage> {
               .font
               .copyWith(fontWeight: FontWeight.bold),
         ),
-        brightness: Brightness.dark,
+        systemOverlayStyle: SystemUiOverlayStyle.dark,
         actions: [
           PopupMenuButton<String>(
-            onSelected: (selected) {
+            onSelected: (selected) async {
               switch (selected) {
                 case 'Log out':
-                  return FirebaseAuth.instance.signOut();
+                  await FirebaseAuth.instance.signOut();
+                  return;
 
                 default:
-                  return null;
+                  return;
               }
             },
             itemBuilder: (context) {
@@ -70,13 +72,14 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final poll = await Navigator.of(context).push(
+          final poll = await Navigator.of(context).push<Poll>(
             MaterialPageRoute(builder: (context) => const NewPoll()),
           );
 
-          if (poll != null && poll is Poll) {
-            Provider.of<User>(context, listen: false).addPoll(poll);
-          }
+          if (poll == null) return;
+
+          if (!mounted) return;
+          await Provider.of<User>(context, listen: false).addPoll(poll);
         },
         child: const Icon(Icons.add),
       ),

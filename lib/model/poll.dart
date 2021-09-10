@@ -121,7 +121,7 @@ class SliderPoll extends Poll {
 
   @override
   String toString() {
-    return super.toString() + ' (${options.first}, ${options.last})';
+    return '${super} (${options.first}, ${options.last})';
   }
 }
 
@@ -188,15 +188,17 @@ class ChoicePoll extends Poll {
 
   @override
   String toString() {
-    return super.toString() + ' (${options.length} options)';
+    return '${super} (${options.length} options)';
   }
 }
 
 List<Poll> mapQueryPoll(QuerySnapshot query) {
   return query.documents.map((doc) {
-    if (doc.data['dismissed'] != null && doc.data['dismissed']) return null;
+    if (doc.data['dismissed'] != null && doc.data['dismissed'] as bool) {
+      return null;
+    }
 
-    switch (doc.data['type']) {
+    switch (doc.data['type'] as String) {
       case 'slider':
         return SliderPoll.fromFirestore(doc);
 

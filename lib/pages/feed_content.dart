@@ -4,19 +4,20 @@ import 'package:stay_home_polls_app/pages/page_content.dart';
 import 'package:stay_home_polls_app/widgets/polls_container.dart';
 
 class FeedContent<T extends Poll> extends StatelessWidget {
-  const FeedContent();
+  const FeedContent({Key key}) : super(key: key);
 
   List<T> _filterCallback(List<T> pollsList, List<T> userPollsList) {
     return pollsList.where((poll) {
       final userPoll = userPollsList.firstWhere(
-        (userPoll) => userPoll != null ? poll.id == userPoll.id : false,
+        (userPoll) => userPoll != null && poll.id == userPoll.id,
         orElse: () => null,
       );
 
       if (userPoll == null) return true;
 
-      poll.voteValue = userPoll.voteValue;
-      poll.isAuth = userPoll.isAuth;
+      poll
+        ..voteValue = userPoll.voteValue
+        ..isAuth = userPoll.isAuth;
 
       if (!userPoll.finished) return true;
 

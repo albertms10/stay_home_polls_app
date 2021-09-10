@@ -8,7 +8,8 @@ import 'package:stay_home_polls_app/widgets/slider_poll_track_shape.dart';
 class SliderPollAction extends StatefulWidget {
   final SliderPoll sliderPoll;
 
-  const SliderPollAction({@required this.sliderPoll});
+  const SliderPollAction({Key key, @required this.sliderPoll})
+      : super(key: key);
 
   @override
   _SliderPollActionState createState() => _SliderPollActionState();
@@ -29,7 +30,7 @@ class _SliderPollActionState extends State<SliderPollAction> {
   }
 
   @override
-  void setState(fn) {
+  void setState(VoidCallback fn) {
     if (mounted) super.setState(fn);
   }
 
@@ -90,8 +91,7 @@ class _SliderPollActionState extends State<SliderPollAction> {
         value: _voteValue,
         onChanged: _getVoteFunction(),
         onChangeEnd: _finishedVoting,
-        min: 0,
-        max: 100,
+        max: 100.0,
         divisions: 100,
       ),
     );
@@ -111,10 +111,9 @@ class _SliderPollActionState extends State<SliderPollAction> {
                         Colors.teal[200],
                         Colors.teal[400],
                       ],
-                      begin: const FractionalOffset(0.0, 0.0),
-                      end: const FractionalOffset(1.0, 1.00),
+                      begin: FractionalOffset.topLeft,
+                      end: FractionalOffset.bottomRight,
                       stops: const [0.0, 1.0],
-                      tileMode: TileMode.clamp,
                     ),
                   ),
                   child: slider,

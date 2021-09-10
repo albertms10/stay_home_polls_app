@@ -4,7 +4,7 @@ import 'package:stay_home_polls_app/pages/page_content.dart';
 import 'package:stay_home_polls_app/widgets/polls_container.dart';
 
 class UserContent<T extends Poll> extends StatelessWidget {
-  const UserContent();
+  const UserContent({Key key}) : super(key: key);
 
   List<T> _filterCallback(
     List<T> pollsList,
@@ -13,14 +13,15 @@ class UserContent<T extends Poll> extends StatelessWidget {
   ) {
     return pollsList.where((poll) {
       final userPoll = userPollsList.firstWhere(
-        (userPoll) => userPoll != null ? check(poll, userPoll) : false,
+        (userPoll) => userPoll != null && check(poll, userPoll),
         orElse: () => null,
       );
 
       if (userPoll == null) return false;
 
-      poll.voteValue = userPoll.voteValue;
-      poll.isAuth = userPoll.isAuth;
+      poll
+        ..voteValue = userPoll.voteValue
+        ..isAuth = userPoll.isAuth;
 
       return true;
     }).toList();

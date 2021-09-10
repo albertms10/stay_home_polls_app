@@ -5,7 +5,7 @@ import 'package:stay_home_polls_app/main.dart';
 class SplashPage extends StatelessWidget {
   final String error;
 
-  const SplashPage({this.error});
+  const SplashPage({Key key, this.error}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,6 @@ class SplashPage extends StatelessWidget {
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Image(
                   image: AssetImage('assets/icons/android_icon.png'),

@@ -27,7 +27,7 @@ class User {
       .snapshots()
       .map(mapQueryPoll);
 
-  void addPoll(Poll poll) async {
+  Future<void> addPoll(Poll poll) async {
     final ref = Firestore.instance;
 
     final pollRef = await ref.collection('polls').add(poll.genericToJson());
@@ -38,17 +38,17 @@ class User {
         .setData(poll.userToJson());
   }
 
-  void vote(Poll poll, int value) {
+  Future<void> vote(Poll poll, int value) async {
     final ref = Firestore.instance;
 
-    ref.collection('users/$id/polls').document(poll.id).setData({
+    await ref.collection('users/$id/polls').document(poll.id).setData({
       'isAuth': poll.isAuth,
       'type': poll.type,
       'voteValue': value,
       'finished': false,
     });
 
-    ref.collection('polls').document(poll.id).updateData({
+    await ref.collection('polls').document(poll.id).updateData({
       'voteCount': poll.voteCount + 1,
       if (poll is SliderPoll)
         'voteAverage':
@@ -58,10 +58,9 @@ class User {
           ..replaceRange(value, value + 1, [poll.optionsVoteCount[value] + 1])
     });
 
-    Future.delayed(const Duration(seconds: 5)).then((value) {
-      return ref.collection('users/$id/polls').document(poll.id).updateData({
-        'finished': true,
-      });
+    await Future<void>.delayed(const Duration(seconds: 5));
+    return ref.collection('users/$id/polls').document(poll.id).updateData({
+      'finished': true,
     });
   }
 
